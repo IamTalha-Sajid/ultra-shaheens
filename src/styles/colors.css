@@ -1,0 +1,98 @@
+/**
+ * Barmy Army Logo Color Palette
+ * CSS Custom Properties for global use
+ */
+
+:root {
+  /* Barmy Army Colors */
+  --canary: #f3f754;
+  --celery: #b0bb4c;
+  --racing-green: #121e18;
+  --gray-nickel: #c4c5c3;
+  --la-palma: #3c8a0d;
+  --xanadu: #7a7b7a;
+  --asparagus: #7ca667;
+  --dark-fern: #12400a;
+  --dell: #286411;
+
+  /* RGB Values */
+  --canary-rgb: 243, 247, 84;
+  --celery-rgb: 176, 187, 76;
+  --racing-green-rgb: 18, 30, 24;
+  --gray-nickel-rgb: 196, 197, 195;
+  --la-palma-rgb: 60, 138, 13;
+  --xanadu-rgb: 122, 123, 122;
+  --asparagus-rgb: 124, 166, 103;
+  --dark-fern-rgb: 18, 64, 10;
+  --dell-rgb: 40, 100, 17;
+}
+
+/* Utility classes for quick access */
+.text-canary { color: var(--canary); }
+.text-celery { color: var(--celery); }
+.text-racing-green { color: var(--racing-green); }
+.text-gray-nickel { color: var(--gray-nickel); }
+.text-la-palma { color: var(--la-palma); }
+.text-xanadu { color: var(--xanadu); }
+.text-asparagus { color: var(--asparagus); }
+.text-dark-fern { color: var(--dark-fern); }
+.text-dell { color: var(--dell); }
+
+.bg-canary { background-color: var(--canary); }
+.bg-celery { background-color: var(--celery); }
+.bg-racing-green { background-color: var(--racing-green); }
+.bg-gray-nickel { background-color: var(--gray-nickel); }
+.bg-la-palma { background-color: var(--la-palma); }
+.bg-xanadu { background-color: var(--xanadu); }
+.bg-asparagus { background-color: var(--asparagus); }
+.bg-dark-fern { background-color: var(--dark-fern); }
+.bg-dell { background-color: var(--dell); }
+
+/* Prevent text selection in top bar */
+.top-bar {
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  cursor: default;
+}
+
+/* Animated underline with gap */
+.underline-animated {
+  position: relative;
+}
+
+.underline-animated::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background-color: white;
+  transition: width 0.3s ease-in-out;
+}
+
+.underline-animated:hover::after {
+  width: 100%;
+}
+
+/* For dropdown options - make underline only span text width */
+.dropdown-option .underline-animated {
+  display: inline-block;
+}
+
+.dropdown-option .underline-animated::after {
+  width: 0;
+}
+
+.dropdown-option .underline-animated:hover::after {
+  width: 100%;
+}
+
+/* Disabled state for dropdown options */
+.dropdown-option-disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}

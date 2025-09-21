@@ -77,13 +77,14 @@
   width: 100%;
 }
 
-/* For dropdown options - make underline only span text width */
+/* For dropdown options - make underline only span text width and use white color */
 .dropdown-option .underline-animated {
   display: inline-block;
 }
 
 .dropdown-option .underline-animated::after {
   width: 0;
+  background-color: white;
 }
 
 .dropdown-option .underline-animated:hover::after {

@@ -21,7 +21,7 @@ const Hero: React.FC = () => {
         <div className="absolute top-0 left-0 w-1/2 h-full flex items-center justify-center p-8">
           <div className="text-center text-white">
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight mb-6" style={{ fontFamily: '"din-condensed", sans-serif' }}>
-              PAKISTAN FOOTBALL'S
+              PAKISTAN FOOTBALL&apos;S
               <br />
               <span className="text-canary">ULTRA FANBASE</span>
             </h1>

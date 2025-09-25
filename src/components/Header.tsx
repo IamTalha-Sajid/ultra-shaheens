@@ -5,6 +5,9 @@ import Image from 'next/image';
 
 const Header: React.FC = () => {
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState<boolean>(false);
+  const [mobileDropdown, setMobileDropdown] = useState<string | null>(null);
+  const [isClosing, setIsClosing] = useState<boolean>(false);
   const [hoverTimeout, setHoverTimeout] = useState<NodeJS.Timeout | null>(null);
 
   const handleMouseEnter = (dropdown: string) => {
@@ -22,20 +25,29 @@ const Header: React.FC = () => {
     setHoverTimeout(timeout);
   };
 
+  const handleCloseMobileMenu = () => {
+    setIsClosing(true);
+    setTimeout(() => {
+      setMobileMenuOpen(false);
+      setIsClosing(false);
+      setMobileDropdown(null);
+    }, 300);
+  };
+
 
   return (
     <header className="w-full">
       {/* Top Bar */}
-      <div className="bg-dark-fern text-white py-2 px-4 top-bar">
+      <div className="bg-dark-fern text-white py-3 px-4 top-bar">
         <div className="max-w-7xl mx-auto flex justify-between items-center">
           {/* Left side - Brand text */}
-          <div className="text-base font-bold" style={{ fontFamily: '"din-condensed", sans-serif' }}>
+          <div className="text-sm sm:text-base font-bold" style={{ fontFamily: '"din-condensed", sans-serif' }}>
             We are Ultra Shaheens
           </div>
           
           {/* Right side - Social media icons */}
-          <div className="flex items-center space-x-4">
-            <span className="text-sm font-medium" style={{ fontFamily: '"din-condensed", sans-serif' }}>
+          <div className="flex items-center space-x-3 sm:space-x-4">
+            <span className="text-xs sm:text-sm font-medium hidden sm:block" style={{ fontFamily: '"din-condensed", sans-serif' }}>
               Follow us
             </span>
             {/* X (Twitter) Icon */}
@@ -43,11 +55,11 @@ const Header: React.FC = () => {
               href="https://x.com/ultrashaheens" 
               target="_blank"
               rel="noopener noreferrer"
-              className="text-white hover:text-canary transition-all duration-300 hover:scale-110 hover:drop-shadow-lg"
+              className="text-white hover:text-canary transition-all duration-300 hover:scale-110 hover:drop-shadow-lg p-1"
               aria-label="Follow us on X"
             >
               <svg 
-                className="w-5 h-5" 
+                className="w-5 h-5 sm:w-6 sm:h-6" 
                 fill="currentColor" 
                 viewBox="0 0 24 24"
               >
@@ -60,11 +72,11 @@ const Header: React.FC = () => {
               href="https://www.facebook.com/ultrashaheens/" 
               target="_blank"
               rel="noopener noreferrer"
-              className="text-white hover:text-canary transition-all duration-300 hover:scale-110 hover:drop-shadow-lg"
+              className="text-white hover:text-canary transition-all duration-300 hover:scale-110 hover:drop-shadow-lg p-1"
               aria-label="Follow us on Facebook"
             >
               <svg 
-                className="w-5 h-5" 
+                className="w-5 h-5 sm:w-6 sm:h-6" 
                 fill="currentColor" 
                 viewBox="0 0 24 24"
               >
@@ -77,11 +89,11 @@ const Header: React.FC = () => {
               href="https://www.instagram.com/ultra_shaheens/" 
               target="_blank"
               rel="noopener noreferrer"
-              className="text-white hover:text-canary transition-all duration-300 hover:scale-110 hover:drop-shadow-lg"
+              className="text-white hover:text-canary transition-all duration-300 hover:scale-110 hover:drop-shadow-lg p-1"
               aria-label="Follow us on Instagram"
             >
               <svg 
-                className="w-5 h-5" 
+                className="w-5 h-5 sm:w-6 sm:h-6" 
                 fill="currentColor" 
                 viewBox="0 0 24 24"
               >
@@ -94,11 +106,11 @@ const Header: React.FC = () => {
               href="https://www.linkedin.com/company/ultra-shaheens/" 
               target="_blank"
               rel="noopener noreferrer"
-              className="text-white hover:text-canary transition-all duration-300 hover:scale-110 hover:drop-shadow-lg"
+              className="text-white hover:text-canary transition-all duration-300 hover:scale-110 hover:drop-shadow-lg p-1"
               aria-label="Follow us on LinkedIn"
             >
               <svg 
-                className="w-5 h-5" 
+                className="w-5 h-5 sm:w-6 sm:h-6" 
                 fill="currentColor" 
                 viewBox="0 0 24 24"
               >
@@ -115,13 +127,13 @@ const Header: React.FC = () => {
           <div className="flex justify-between items-center">
             {/* Logo */}
             <div className="flex-shrink-0">
-              <div className="w-48 h-18 flex items-center justify-center">
+              <div className="w-32 sm:w-40 md:w-48 h-12 sm:h-16 md:h-18 flex items-center justify-center">
                 <Image 
                   src="/ultra-shaheens-logo.png" 
                   alt="Ultra Shaheens Logo" 
                   width={192}
                   height={112}
-                  className="h-28 w-auto object-contain"
+                  className="h-16 sm:h-20 md:h-28 w-auto object-contain"
                   priority
                 />
               </div>
@@ -236,7 +248,18 @@ const Header: React.FC = () => {
 
             {/* Mobile Menu Button */}
             <div className="md:hidden">
-              <button className="text-gray-700 hover:text-dell">
+              <button 
+                className="text-gray-700 hover:text-dell transition-colors duration-200 p-2 -m-2 min-h-[44px] min-w-[44px] flex items-center justify-center"
+                onClick={() => {
+                  if (mobileMenuOpen) {
+                    handleCloseMobileMenu();
+                  } else {
+                    setMobileMenuOpen(true);
+                    setMobileDropdown(null);
+                  }
+                }}
+                aria-label="Toggle mobile menu"
+              >
                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
                 </svg>
@@ -245,6 +268,113 @@ const Header: React.FC = () => {
           </div>
         </div>
       </div>
+
+      {/* Mobile Navigation Menu - Slide in from right */}
+      {mobileMenuOpen && (
+        <div className={`fixed top-0 right-0 h-full w-72 sm:w-80 bg-dell shadow-2xl z-50 md:hidden transform transition-transform duration-300 ease-in-out ${isClosing ? 'animate-slide-out-right' : 'animate-slide-in-right'}`}>
+            <div className="flex flex-col h-full">
+              {/* Header with close button */}
+              <div className="flex items-center justify-between p-4 sm:p-6 border-b border-white border-opacity-20">
+                <h2 className="text-lg sm:text-xl font-semibold text-white">Menu</h2>
+                <button 
+                  onClick={handleCloseMobileMenu}
+                  className="text-white hover:text-canary transition-colors duration-200 p-2 -m-2 min-h-[44px] min-w-[44px] flex items-center justify-center"
+                  aria-label="Close menu"
+                >
+                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
+              </div>
+              
+              {/* Menu content */}
+              <div className="flex-1 overflow-y-auto px-4 sm:px-6 py-4 sm:py-6 space-y-6">
+                {/* Membership */}
+                <div>
+                  <button
+                    className="w-full text-left text-white hover:text-canary font-semibold transition-colors duration-200 uppercase tracking-wide leading-none text-base sm:text-lg flex items-center justify-between py-3 px-2 -mx-2 min-h-[48px]"
+                    style={{ fontFamily: '"din-condensed", sans-serif' }}
+                    onClick={() => setMobileDropdown(mobileDropdown === 'membership' ? null : 'membership')}
+                  >
+                    <span>Membership</span>
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                    </svg>
+                  </button>
+                  {mobileDropdown === 'membership' && (
+                    <div className="mt-3 pl-4 space-y-3">
+                      <a href="#" className="block text-sm sm:text-base text-gray-200 hover:text-canary transition-colors duration-200 py-2 px-2 -mx-2 min-h-[44px] flex items-center">
+                        Become a member
+                      </a>
+                      <span className="block text-sm sm:text-base text-gray-400 py-2 px-2 -mx-2 min-h-[44px] flex items-center">
+                        Members rewards (Coming soon)
+                      </span>
+                    </div>
+                  )}
+                </div>
+
+                {/* Blogs */}
+                <div>
+                  <a
+                    href="#"
+                    className="block text-white hover:text-canary font-semibold transition-colors duration-200 uppercase tracking-wide leading-none text-base sm:text-lg py-3 px-2 -mx-2 min-h-[48px] flex items-center"
+                    style={{ fontFamily: '"din-condensed", sans-serif' }}
+                  >
+                    Blogs
+                  </a>
+                </div>
+
+                {/* Partners */}
+                <div>
+                  <button
+                    className="w-full text-left text-white hover:text-canary font-semibold transition-colors duration-200 uppercase tracking-wide leading-none text-base sm:text-lg flex items-center justify-between py-3 px-2 -mx-2 min-h-[48px]"
+                    style={{ fontFamily: '"din-condensed", sans-serif' }}
+                    onClick={() => setMobileDropdown(mobileDropdown === 'partners' ? null : 'partners')}
+                  >
+                    <span>Partners</span>
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                    </svg>
+                  </button>
+                  {mobileDropdown === 'partners' && (
+                    <div className="mt-3 pl-4">
+                      <a href="#" className="block text-sm sm:text-base text-gray-200 hover:text-canary transition-colors duration-200 py-2 px-2 -mx-2 min-h-[44px] flex items-center">
+                        iWEAR
+                      </a>
+                    </div>
+                  )}
+                </div>
+
+                {/* About Us */}
+                <div>
+                  <button
+                    className="w-full text-left text-white hover:text-canary font-semibold transition-colors duration-200 uppercase tracking-wide leading-none text-base sm:text-lg flex items-center justify-between py-3 px-2 -mx-2 min-h-[48px]"
+                    style={{ fontFamily: '"din-condensed", sans-serif' }}
+                    onClick={() => setMobileDropdown(mobileDropdown === 'about' ? null : 'about')}
+                  >
+                    <span>About Us</span>
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                    </svg>
+                  </button>
+                  {mobileDropdown === 'about' && (
+                    <div className="mt-3 pl-4 space-y-3">
+                      <a href="#" className="block text-sm sm:text-base text-gray-200 hover:text-canary transition-colors duration-200 py-2 px-2 -mx-2 min-h-[44px] flex items-center">
+                        Who are we?
+                      </a>
+                      <a href="#" className="block text-sm sm:text-base text-gray-200 hover:text-canary transition-colors duration-200 py-2 px-2 -mx-2 min-h-[44px] flex items-center">
+                        Code of Conduct
+                      </a>
+                      <a href="#" className="block text-sm sm:text-base text-gray-200 hover:text-canary transition-colors duration-200 py-2 px-2 -mx-2 min-h-[44px] flex items-center">
+                        FAQs
+                      </a>
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+          </div>
+      )}
     </header>
   );
 };

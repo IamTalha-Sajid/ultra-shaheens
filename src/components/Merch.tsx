@@ -24,9 +24,9 @@ const Merch: React.FC = () => {
               <button className="bg-canary text-dark-fern hover:bg-yellow-400 hover:scale-110 hover:shadow-2xl hover:shadow-canary/50 font-bold py-3 sm:py-4 px-6 sm:px-8 rounded-lg transition-all duration-300 uppercase tracking-wide text-sm sm:text-base md:text-lg transform drop-shadow-lg" style={{ fontFamily: '"din-condensed", sans-serif' }}>
                 GRAB YOURS NOW
               </button>
-              <button className="bg-transparent text-white border-2 border-canary hover:bg-canary hover:text-dark-fern hover:scale-110 hover:shadow-2xl hover:shadow-canary/30 font-bold py-3 sm:py-4 px-6 sm:px-8 rounded-lg transition-all duration-300 uppercase tracking-wide text-sm sm:text-base md:text-lg transform" style={{ fontFamily: '"din-condensed", sans-serif' }}>
+              <a href="https://www.theiwear.com/collections/ultra-shaheens" target="_blank" rel="noopener noreferrer" className="bg-transparent text-white border-2 border-canary hover:bg-canary hover:text-dark-fern hover:scale-110 hover:shadow-2xl hover:shadow-canary/30 font-bold py-3 sm:py-4 px-6 sm:px-8 rounded-lg transition-all duration-300 uppercase tracking-wide text-sm sm:text-base md:text-lg transform" style={{ fontFamily: '"din-condensed", sans-serif' }}>
                 CHECK IT OUT
-              </button>
+              </a>
             </div>
           </div>
 

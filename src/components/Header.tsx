@@ -204,10 +204,10 @@ const Header: React.FC = () => {
                      style={{ display: 'block' }}
                    >
                      <div className="py-4">
-                      <a href="#" className="block px-4 py-3 text-sm text-white hover:text-canary transition-colors duration-200 font-semibold uppercase tracking-wide leading-none dropdown-option">
-                        <span className="underline-animated" style={{ fontFamily: '"din-condensed", sans-serif' }}>Shop Now</span>
+                      <a href="https://www.theiwear.com/" className="block px-4 py-3 text-sm text-white hover:text-canary transition-colors duration-200 font-semibold uppercase tracking-wide leading-none dropdown-option">
+                        <span className="underline-animated" style={{ fontFamily: '"din-condensed", sans-serif' }}>iWEAR</span>
                       </a>
-                      <a href="#" className="block px-4 py-3 text-sm text-white hover:text-canary transition-colors duration-200 font-semibold uppercase tracking-wide leading-none dropdown-option">
+                      <a href="https://www.theiwear.com/collections/ultra-shaheens" className="block px-4 py-3 text-sm text-white hover:text-canary transition-colors duration-200 font-semibold uppercase tracking-wide leading-none dropdown-option">
                         <span className="underline-animated" style={{ fontFamily: '"din-condensed", sans-serif' }}>View Collection</span>
                       </a>
                     </div>

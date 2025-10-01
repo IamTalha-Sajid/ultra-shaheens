@@ -20,7 +20,7 @@ const Footer: React.FC = () => {
               />
             </div>
             <p className="text-sm sm:text-base text-gray-300 leading-relaxed mb-4 sm:mb-6 max-w-md">
-              Pakistan's most passionate football community. We unite fans, create unforgettable experiences, 
+              Pakistan&apos;s most passionate football community. We unite fans, create unforgettable experiences, 
               and support our national team with unwavering dedication and pride.
             </p>
             <div className="flex flex-col sm:flex-row items-start sm:items-center space-y-2 sm:space-y-0 sm:space-x-4">
@@ -90,7 +90,7 @@ const Footer: React.FC = () => {
             </h3>
             <ul className="space-y-2 sm:space-y-3">
               <li>
-                <a href="#cta" className="text-gray-300 hover:text-canary transition-colors duration-200 text-sm sm:text-base">
+                <a href="https://forms.gle/xek7ovwUwodKYrkA7" target="_blank" rel="noopener noreferrer" className="text-gray-300 hover:text-canary transition-colors duration-200 text-sm sm:text-base">
                   Become a Member
                 </a>
               </li>

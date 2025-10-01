@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 
 const Header: React.FC = () => {
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
@@ -127,16 +128,18 @@ const Header: React.FC = () => {
           <div className="flex justify-between items-center">
             {/* Logo */}
             <div className="flex-shrink-0">
-              <div className="w-32 sm:w-40 md:w-48 h-12 sm:h-16 md:h-18 flex items-center justify-center">
-                <Image 
-                  src="/ultra-shaheens-logo.png" 
-                  alt="Ultra Shaheens Logo" 
-                  width={192}
-                  height={112}
-                  className="h-16 sm:h-20 md:h-28 w-auto object-contain"
-                  priority
-                />
-              </div>
+              <Link href="/" className="block">
+                <div className="w-32 sm:w-40 md:w-48 h-12 sm:h-16 md:h-18 flex items-center justify-center">
+                  <Image 
+                    src="/ultra-shaheens-logo.png" 
+                    alt="Ultra Shaheens Logo" 
+                    width={192}
+                    height={112}
+                    className="h-16 sm:h-20 md:h-28 w-auto object-contain hover:opacity-80 transition-opacity duration-200"
+                    priority
+                  />
+                </div>
+              </Link>
             </div>
 
             {/* Navigation Menu */}
@@ -161,7 +164,7 @@ const Header: React.FC = () => {
                      className="absolute top-full left-0 mt-2 w-48 bg-dark-fern rounded-md shadow-lg z-50"
                    >
                      <div className="py-4">
-                      <a href="#" className="block px-4 py-3 text-sm text-white hover:text-canary transition-colors duration-200 font-semibold uppercase tracking-wide leading-none dropdown-option">
+                      <a href="https://forms.gle/xek7ovwUwodKYrkA7" target="_blank" rel="noopener noreferrer" className="block px-4 py-3 text-sm text-white hover:text-canary transition-colors duration-200 font-semibold uppercase tracking-wide leading-none dropdown-option">
                         <span className="underline-animated" style={{ fontFamily: '"din-condensed", sans-serif' }}>Become a member</span>
                       </a>
                       <span className="block px-4 py-3 text-sm text-gray-300 font-semibold uppercase tracking-wide leading-none dropdown-option-disabled" style={{ fontFamily: '"din-condensed", sans-serif' }}>
@@ -175,7 +178,7 @@ const Header: React.FC = () => {
               {/* Blogs */}
               <div className="relative">
                 <a
-                  href="#"
+                  href="/blogs"
                   className="text-black hover:text-dell font-semibold transition-colors duration-200 uppercase tracking-wide leading-none text-base flex items-center"
                   style={{ fontFamily: '"din-condensed", sans-serif' }}
                 >
@@ -235,13 +238,13 @@ const Header: React.FC = () => {
                      className="absolute top-full left-0 mt-2 w-48 bg-dark-fern rounded-md shadow-lg z-50"
                    >
                      <div className="py-4">
-                      <a href="#" className="block px-4 py-3 text-sm text-white hover:text-canary transition-colors duration-200 font-semibold uppercase tracking-wide leading-none dropdown-option">
+                      <a href="/about-us" className="block px-4 py-3 text-sm text-white hover:text-canary transition-colors duration-200 font-semibold uppercase tracking-wide leading-none dropdown-option">
                         <span className="underline-animated" style={{ fontFamily: '"din-condensed", sans-serif' }}>Who are we?</span>
                       </a>
-                      <a href="#" className="block px-4 py-3 text-sm text-white hover:text-canary transition-colors duration-200 font-semibold uppercase tracking-wide leading-none dropdown-option">
+                      <a href="/code-of-conduct" className="block px-4 py-3 text-sm text-white hover:text-canary transition-colors duration-200 font-semibold uppercase tracking-wide leading-none dropdown-option">
                         <span className="underline-animated" style={{ fontFamily: '"din-condensed", sans-serif' }}>Code of Conduct</span>
                       </a>
-                      <a href="#" className="block px-4 py-3 text-sm text-white hover:text-canary transition-colors duration-200 font-semibold uppercase leading-none dropdown-option">
+                      <a href="/faq" className="block px-4 py-3 text-sm text-white hover:text-canary transition-colors duration-200 font-semibold uppercase leading-none dropdown-option">
                         <span className="underline-animated" style={{ fontFamily: '"din-condensed", sans-serif' }}>FAQs</span>
                       </a>
                     </div>
@@ -307,7 +310,7 @@ const Header: React.FC = () => {
                   </button>
                   {mobileDropdown === 'membership' && (
                     <div className="mt-3 pl-4 space-y-3">
-                      <a href="#" className="block text-sm sm:text-base text-gray-200 hover:text-canary transition-colors duration-200 py-2 px-2 -mx-2 min-h-[44px] flex items-center">
+                      <a href="https://forms.gle/xek7ovwUwodKYrkA7" target="_blank" rel="noopener noreferrer" className="block text-sm sm:text-base text-gray-200 hover:text-canary transition-colors duration-200 py-2 px-2 -mx-2 min-h-[44px] flex items-center">
                         Become a member
                       </a>
                       <span className="block text-sm sm:text-base text-gray-400 py-2 px-2 -mx-2 min-h-[44px] flex items-center">
@@ -320,7 +323,7 @@ const Header: React.FC = () => {
                 {/* Blogs */}
                 <div>
                   <a
-                    href="#"
+                    href="/blogs"
                     className="block text-white hover:text-canary font-semibold transition-colors duration-200 uppercase tracking-wide leading-none text-base sm:text-lg py-3 px-2 -mx-2 min-h-[48px] flex items-center"
                     style={{ fontFamily: '"din-condensed", sans-serif' }}
                   >
@@ -366,15 +369,15 @@ const Header: React.FC = () => {
                   </button>
                   {mobileDropdown === 'about' && (
                     <div className="mt-3 pl-4 space-y-3">
-                      <a href="#" className="block text-sm sm:text-base text-gray-200 hover:text-canary transition-colors duration-200 py-2 px-2 -mx-2 min-h-[44px] flex items-center">
-                        Who are we?
-                      </a>
-                      <a href="#" className="block text-sm sm:text-base text-gray-200 hover:text-canary transition-colors duration-200 py-2 px-2 -mx-2 min-h-[44px] flex items-center">
-                        Code of Conduct
-                      </a>
-                      <a href="#" className="block text-sm sm:text-base text-gray-200 hover:text-canary transition-colors duration-200 py-2 px-2 -mx-2 min-h-[44px] flex items-center">
-                        FAQs
-                      </a>
+                             <a href="/about-us" className="block text-sm sm:text-base text-gray-200 hover:text-canary transition-colors duration-200 py-2 px-2 -mx-2 min-h-[44px] flex items-center">
+                               Who are we?
+                             </a>
+                             <a href="/code-of-conduct" className="block text-sm sm:text-base text-gray-200 hover:text-canary transition-colors duration-200 py-2 px-2 -mx-2 min-h-[44px] flex items-center">
+                               Code of Conduct
+                             </a>
+                             <a href="/faq" className="block text-sm sm:text-base text-gray-200 hover:text-canary transition-colors duration-200 py-2 px-2 -mx-2 min-h-[44px] flex items-center">
+                               FAQs
+                             </a>
                     </div>
                   )}
                 </div>

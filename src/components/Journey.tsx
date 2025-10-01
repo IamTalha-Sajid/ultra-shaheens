@@ -45,11 +45,11 @@ const Journey: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section Header */}
         <div className="text-center mb-16 sm:mb-20">
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-racing-green mb-6" style={{ fontFamily: '"din-condensed", sans-serif' }}>
-            Our Journey
-          </h2>
-          <p className="text-lg sm:text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-            From humble beginnings to becoming Pakistan's most passionate football community. 
+                 <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-racing-green mb-6" style={{ fontFamily: '"din-condensed", sans-serif' }}>
+                   Our Journey
+                 </h2>
+                 <p className="text-lg sm:text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+                   From humble beginnings to becoming Pakistan&apos;s most passionate football community.
             Every milestone tells a story of dedication, unity, and unwavering support.
           </p>
         </div>

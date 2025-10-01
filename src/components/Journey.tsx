@@ -40,7 +40,7 @@ const Journey: React.FC = () => {
   ];
 
   return (
-    <section className="w-full bg-white py-16 sm:py-20 lg:py-24 relative overflow-hidden">
+    <section id="journey" className="w-full bg-white py-16 sm:py-20 lg:py-24 relative overflow-hidden">
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section Header */}

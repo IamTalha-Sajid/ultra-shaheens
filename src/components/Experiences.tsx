@@ -39,7 +39,7 @@ const Experiences: React.FC = () => {
   ];
 
   return (
-    <section className="w-full bg-white py-12 sm:py-16 lg:py-20 relative">
+    <section id="experiences" className="w-full bg-white py-12 sm:py-16 lg:py-20 relative">
       {/* Logo background with 20% opacity */}
       <div className="absolute inset-0 hidden md:flex items-center justify-start opacity-20 pointer-events-none">
         <Image 

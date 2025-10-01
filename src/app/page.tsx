@@ -3,6 +3,8 @@ import Hero from "@/components/Hero";
 import Experiences from "@/components/Experiences";
 import Merch from "@/components/Merch";
 import Journey from "@/components/Journey";
+import CTA from "@/components/CTA";
+import Footer from "@/components/Footer";
 
 export default function Home() {
   return (
@@ -12,6 +14,8 @@ export default function Home() {
         <Experiences />
         <Merch />
         <Journey />
+        <CTA />
+        <Footer />
       </div>
   );
 }

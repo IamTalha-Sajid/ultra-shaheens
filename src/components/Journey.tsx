@@ -36,6 +36,14 @@ const Journey: React.FC = () => {
       description: "A historic moment! Representing our community at the Pakistan Football Federation's official dinner. Gotten recognition from the PFF president, along with meeting the new head coach of Pakistan, Nolberto Solano. Had the honor of presenting the ultra shaheens jersey to the new coach.",
       image: "/journey-pff-dinner.jpg",
       isLeft: false
+    },
+    {
+      id: 5,
+      date: "October 9th, 2025",
+      title: "Pakistan vs Afghanistan - AFC Asian Cup Qualifiers",
+      description: "A historic match day! Ali Tareen joined the Ultra Shaheens community as we witnessed Pakistan's most dominating performance in AFC history. The energy was electric as our team delivered an outstanding display, showcasing the true potential of Pakistani football. This match will be remembered as a turning point in our football journey.",
+      image: "/pakistan-vs-afghanistan.jpg",
+      isLeft: true
     }
   ];
 

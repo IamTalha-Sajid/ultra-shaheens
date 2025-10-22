@@ -186,6 +186,17 @@ const Header: React.FC = () => {
                 </a>
               </div>
 
+              {/* Fundraising */}
+              <div className="relative">
+                <a
+                  href="/fundraising"
+                  className="text-black hover:text-dell font-semibold transition-colors duration-200 uppercase tracking-wide leading-none text-base flex items-center"
+                  style={{ fontFamily: '"din-condensed", sans-serif' }}
+                >
+                  <span className="underline-animated">Fundraising</span>
+                </a>
+              </div>
+
               {/* Merchandise Dropdown */}
               <div 
                 className="relative"
@@ -328,6 +339,17 @@ const Header: React.FC = () => {
                     style={{ fontFamily: '"din-condensed", sans-serif' }}
                   >
                     Blogs
+                  </a>
+                </div>
+
+                {/* Fundraising */}
+                <div>
+                  <a
+                    href="/fundraising"
+                    className="block text-white hover:text-canary font-semibold transition-colors duration-200 uppercase tracking-wide leading-none text-base sm:text-lg py-3 px-2 -mx-2 min-h-[48px] flex items-center"
+                    style={{ fontFamily: '"din-condensed", sans-serif' }}
+                  >
+                    Fundraising
                   </a>
                 </div>
 

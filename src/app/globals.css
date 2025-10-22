@@ -75,3 +75,25 @@ body {
 .rotate-y-180 {
   transform: rotateY(180deg);
 }
+
+/* Progress bar animation */
+@keyframes progressFill {
+  0% {
+    width: 0%;
+    transform: translateX(-100%);
+  }
+  100% {
+    width: var(--progress-width, 38%);
+    transform: translateX(0);
+  }
+}
+
+/* Shimmer animation for progress bar */
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}

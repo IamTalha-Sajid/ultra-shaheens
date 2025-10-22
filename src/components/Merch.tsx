@@ -42,7 +42,15 @@ const Merch: React.FC = () => {
               
               {/* Flip Card Container */}
               <div className="relative z-10 w-full h-full perspective-1000">
-                <div className={`relative w-full h-full transform-style-preserve-3d transition-transform duration-700 ${isFlipped ? 'rotate-y-180' : ''} md:hover:rotate-y-180`}>
+                <div 
+                  className={`relative w-full h-full transform-style-preserve-3d transition-transform duration-700 ${isFlipped ? 'rotate-y-180' : ''} md:hover:rotate-y-180 cursor-pointer md:cursor-default`}
+                  onClick={() => {
+                    // Only handle click on mobile
+                    if (window.innerWidth < 768) {
+                      setIsFlipped(!isFlipped);
+                    }
+                  }}
+                >
                   {/* Front Side - Merch-01.png */}
                   <div className="absolute inset-0 w-full h-full backface-hidden">
                     <Image

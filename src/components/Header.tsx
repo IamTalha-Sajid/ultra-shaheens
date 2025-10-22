@@ -345,10 +345,10 @@ const Header: React.FC = () => {
                   </button>
                   {mobileDropdown === 'merchandise' && (
                     <div className="mt-3 pl-4 space-y-3">
-                      <a href="#" className="block text-sm sm:text-base text-gray-200 hover:text-canary transition-colors duration-200 py-2 px-2 -mx-2 min-h-[44px] flex items-center">
-                        Shop Now
+                      <a href="https://www.theiwear.com/" className="block text-sm sm:text-base text-gray-200 hover:text-canary transition-colors duration-200 py-2 px-2 -mx-2 min-h-[44px] flex items-center">
+                        iWEAR
                       </a>
-                      <a href="#" className="block text-sm sm:text-base text-gray-200 hover:text-canary transition-colors duration-200 py-2 px-2 -mx-2 min-h-[44px] flex items-center">
+                      <a href="https://www.theiwear.com/collections/ultra-shaheens" className="block text-sm sm:text-base text-gray-200 hover:text-canary transition-colors duration-200 py-2 px-2 -mx-2 min-h-[44px] flex items-center">
                         View Collection
                       </a>
                     </div>

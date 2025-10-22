@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState, useEffect } from 'react';
-import Image from 'next/image';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 
@@ -42,7 +41,7 @@ const FundraisingPage: React.FC = () => {
              <span className="text-canary">FOR UPCOMING MATCH</span>
            </h1>
            <p className="text-lg sm:text-xl text-gray-200 max-w-3xl mx-auto">
-            Help us bring the energy! We're raising funds for a drum to create an electrifying atmosphere at the upcoming Pakistan vs Syrua match.
+            Help us bring the energy! We&apos;re raising funds for a drum to create an electrifying atmosphere at the upcoming Pakistan vs Syria match.
           </p>
         </div>
 
@@ -81,9 +80,8 @@ const FundraisingPage: React.FC = () => {
                 className="bg-gradient-to-r from-canary to-yellow-400 h-full rounded-full relative overflow-hidden"
                 style={{ 
                   width: `${animatedProgress}%`,
-                  transition: 'width 2.5s cubic-bezier(0.4, 0, 0.2, 1)',
-                  '--progress-width': `${animatedProgress}%`
-                }}
+                  transition: 'width 2.5s cubic-bezier(0.4, 0, 0.2, 1)'
+                } as React.CSSProperties}
               >
                 {/* Animated shimmer effect for eager motion */}
                 <div 
@@ -154,7 +152,7 @@ const FundraisingPage: React.FC = () => {
 
           <div className="mt-6 p-4 bg-canary bg-opacity-20 rounded-lg">
             <p className="text-sm text-racing-green text-center">
-              <strong>Note:</strong> Please mention "Drum Fundraising" in the transaction description when making your contribution.
+              <strong>Note:</strong> Please mention &quot;Drum Fundraising&quot; in the transaction description when making your contribution.
             </p>
           </div>
         </div>
@@ -163,7 +161,7 @@ const FundraisingPage: React.FC = () => {
         <div className="text-center">
           <div className="bg-gradient-to-r from-dell to-la-palma text-white p-6 sm:p-8 rounded-2xl">
             <h3 className="text-xl sm:text-2xl font-bold mb-4" style={{ fontFamily: '"din-condensed", sans-serif' }}>
-              LET'S MAKE SOME NOISE!
+              LET&apos;S MAKE SOME NOISE!
             </h3>
             <p className="text-sm sm:text-base mb-6">
               Every contribution brings us closer to creating an unforgettable atmosphere at the match. 

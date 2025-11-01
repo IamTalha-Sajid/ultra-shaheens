@@ -197,36 +197,15 @@ const Header: React.FC = () => {
                 </a>
               </div>
 
-              {/* Merchandise Dropdown */}
-              <div 
-                className="relative"
-                onMouseEnter={() => handleMouseEnter('merchandise')}
-                onMouseLeave={handleMouseLeave}
-              >
-                <button
-                  className="text-black hover:text-dell font-semibold transition-colors duration-200 flex items-center space-x-1 uppercase tracking-wide leading-none text-base"
+              {/* Merchandise */}
+              <div className="relative">
+                <a
+                  href="/merchandise"
+                  className="text-black hover:text-dell font-semibold transition-colors duration-200 uppercase tracking-wide leading-none text-base flex items-center"
                   style={{ fontFamily: '"din-condensed", sans-serif' }}
                 >
                   <span className="underline-animated">Merchandise</span>
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                  </svg>
-                </button>
-                 {activeDropdown === 'merchandise' && (
-                   <div 
-                     className="absolute top-full left-0 mt-2 w-48 bg-dark-fern rounded-md shadow-lg z-50"
-                     style={{ display: 'block' }}
-                   >
-                     <div className="py-4">
-                      <a href="https://www.theiwear.com/" className="block px-4 py-3 text-sm text-white hover:text-canary transition-colors duration-200 font-semibold uppercase tracking-wide leading-none dropdown-option">
-                        <span className="underline-animated" style={{ fontFamily: '"din-condensed", sans-serif' }}>iWEAR</span>
-                      </a>
-                      <a href="https://www.theiwear.com/collections/ultra-shaheens" className="block px-4 py-3 text-sm text-white hover:text-canary transition-colors duration-200 font-semibold uppercase tracking-wide leading-none dropdown-option">
-                        <span className="underline-animated" style={{ fontFamily: '"din-condensed", sans-serif' }}>View Collection</span>
-                      </a>
-                    </div>
-                  </div>
-                )}
+                </a>
               </div>
 
               {/* About Us Dropdown */}
@@ -355,26 +334,13 @@ const Header: React.FC = () => {
 
                 {/* Merchandise */}
                 <div>
-                  <button
-                    className="w-full text-left text-white hover:text-canary font-semibold transition-colors duration-200 uppercase tracking-wide leading-none text-base sm:text-lg flex items-center justify-between py-3 px-2 -mx-2 min-h-[48px]"
+                  <a
+                    href="/merchandise"
+                    className="block text-white hover:text-canary font-semibold transition-colors duration-200 uppercase tracking-wide leading-none text-base sm:text-lg py-3 px-2 -mx-2 min-h-[48px] flex items-center"
                     style={{ fontFamily: '"din-condensed", sans-serif' }}
-                    onClick={() => setMobileDropdown(mobileDropdown === 'merchandise' ? null : 'merchandise')}
                   >
-                    <span>Merchandise</span>
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                    </svg>
-                  </button>
-                  {mobileDropdown === 'merchandise' && (
-                    <div className="mt-3 pl-4 space-y-3">
-                      <a href="https://www.theiwear.com/" className="block text-sm sm:text-base text-gray-200 hover:text-canary transition-colors duration-200 py-2 px-2 -mx-2 min-h-[44px] flex items-center">
-                        iWEAR
-                      </a>
-                      <a href="https://www.theiwear.com/collections/ultra-shaheens" className="block text-sm sm:text-base text-gray-200 hover:text-canary transition-colors duration-200 py-2 px-2 -mx-2 min-h-[44px] flex items-center">
-                        View Collection
-                      </a>
-                    </div>
-                  )}
+                    Merchandise
+                  </a>
                 </div>
 
                 {/* About Us */}

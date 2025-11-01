@@ -41,7 +41,7 @@ const Journey: React.FC = () => {
       id: 5,
       date: "October 9th, 2025",
       title: "Pakistan vs Afghanistan - AFC Asian Cup Qualifiers",
-      description: "A historic match day! Ali Tareen joined the Ultra Shaheens community as we witnessed Pakistan's most dominating performance in AFC history. The energy was electric as our team delivered an outstanding display, showcasing the true potential of Pakistani football. This match will be remembered as a turning point in our football journey.",
+      description: "A historic match day! Ali Tareen joined the Ultra Shaheens community as we witnessed Pakistan's most dominating performance in AFC history. The energy was electric as our team delivered an outstanding display, showcasing the true potential of Pakistani football. This match will be remembered as a turning point in our football journey with new coach Nolberto Solano.",
       image: "/pakistan-vs-afghanistan.jpg",
       isLeft: true
     }

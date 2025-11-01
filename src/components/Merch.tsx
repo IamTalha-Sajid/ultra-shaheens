@@ -22,9 +22,7 @@ const Merch: React.FC = () => {
             </p>
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center lg:justify-start">
               <a 
-                href="https://www.theiwear.com/collections/ultra-shaheens"
-                target="_blank"
-                rel="noopener noreferrer"
+                href="/merchandise"
                 className="bg-canary text-dark-fern hover:bg-yellow-400 hover:scale-110 hover:shadow-2xl hover:shadow-canary/50 font-bold py-3 sm:py-4 px-6 sm:px-8 rounded-lg transition-all duration-300 uppercase tracking-wide text-sm sm:text-base md:text-lg transform drop-shadow-lg"
                 style={{ fontFamily: '"din-condensed", sans-serif' }}
               >

@@ -7,7 +7,7 @@ import Footer from '@/components/Footer';
 const FundraisingPage: React.FC = () => {
   const [animatedProgress, setAnimatedProgress] = useState(0);
   
-  const totalAmount = 13000;
+  const totalAmount = 15000;
   const raisedAmount = 5000;
   const percentage = Math.round((raisedAmount / totalAmount) * 100);
   const remainingAmount = totalAmount - raisedAmount;

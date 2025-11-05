@@ -8,7 +8,7 @@ const FundraisingPage: React.FC = () => {
   const [animatedProgress, setAnimatedProgress] = useState(0);
   
   const totalAmount = 15000;
-  const raisedAmount = 6284;
+  const raisedAmount = 9384;
   const percentage = Math.round((raisedAmount / totalAmount) * 100);
   const remainingAmount = totalAmount - raisedAmount;
 
@@ -96,6 +96,96 @@ const FundraisingPage: React.FC = () => {
             
             <div className="text-sm text-gray-200 font-semibold">
               Goal: PKR {totalAmount.toLocaleString()}
+            </div>
+          </div>
+        </div>
+
+        {/* Top Contributors Section */}
+        <div className="bg-gradient-to-br from-racing-green to-dark-fern rounded-2xl p-6 sm:p-8 lg:p-12 mb-12 text-white">
+          <h2 className="text-2xl sm:text-3xl font-bold mb-6 sm:mb-8 text-center" style={{ fontFamily: '"din-condensed", sans-serif' }}>
+            TOP CONTRIBUTORS
+          </h2>
+          
+          <div className="space-y-4 sm:space-y-6 max-w-2xl mx-auto">
+            {/* 1st Place */}
+            <div className="bg-gradient-to-r from-canary/20 to-canary/10 border-2 border-canary rounded-xl p-4 sm:p-5 md:p-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-4 hover:scale-[1.02] transition-transform duration-200">
+              <div className="flex items-center gap-3 sm:gap-4 w-full sm:w-auto">
+                <div className="flex-shrink-0 w-10 h-10 sm:w-12 sm:h-12 bg-canary rounded-full flex items-center justify-center text-racing-green font-bold text-base sm:text-lg md:text-xl" style={{ fontFamily: '"din-condensed", sans-serif' }}>
+                  1
+                </div>
+                <div className="flex-1 min-w-0">
+                  <div className="text-sm sm:text-base md:text-lg font-bold text-canary truncate sm:whitespace-normal" style={{ fontFamily: '"din-condensed", sans-serif' }}>
+                    Haseebullah Qureshi
+                  </div>
+                  <div className="text-xs sm:text-sm text-gray-300">Top Contributor</div>
+                </div>
+              </div>
+              <div className="text-left sm:text-right w-full sm:w-auto flex-shrink-0">
+                <div className="text-lg sm:text-xl md:text-2xl font-bold text-canary" style={{ fontFamily: '"din-condensed", sans-serif' }}>
+                  PKR 3,000
+                </div>
+              </div>
+            </div>
+
+            {/* 2nd Place */}
+            <div className="bg-gradient-to-r from-white/10 to-white/5 border-2 border-gray-400 rounded-xl p-4 sm:p-5 md:p-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-4 hover:scale-[1.02] transition-transform duration-200">
+              <div className="flex items-center gap-3 sm:gap-4 w-full sm:w-auto">
+                <div className="flex-shrink-0 w-10 h-10 sm:w-12 sm:h-12 bg-gray-400 rounded-full flex items-center justify-center text-white font-bold text-base sm:text-lg md:text-xl" style={{ fontFamily: '"din-condensed", sans-serif' }}>
+                  2
+                </div>
+                <div className="flex-1 min-w-0">
+                  <div className="text-sm sm:text-base md:text-lg font-bold text-white truncate sm:whitespace-normal" style={{ fontFamily: '"din-condensed", sans-serif' }}>
+                    Amir Ali
+                  </div>
+                  <div className="text-xs sm:text-sm text-gray-300">Second Place</div>
+                </div>
+              </div>
+              <div className="text-left sm:text-right w-full sm:w-auto flex-shrink-0">
+                <div className="text-lg sm:text-xl md:text-2xl font-bold text-white" style={{ fontFamily: '"din-condensed", sans-serif' }}>
+                  PKR 1,500
+                </div>
+              </div>
+            </div>
+
+            {/* 3rd Place - Tied */}
+            <div className="space-y-3 sm:space-y-4">
+              <div className="bg-gradient-to-r from-asparagus/20 to-asparagus/10 border-2 border-asparagus rounded-xl p-4 sm:p-5 md:p-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-4 hover:scale-[1.02] transition-transform duration-200">
+                <div className="flex items-center gap-3 sm:gap-4 w-full sm:w-auto">
+                  <div className="flex-shrink-0 w-10 h-10 sm:w-12 sm:h-12 bg-asparagus rounded-full flex items-center justify-center text-white font-bold text-base sm:text-lg md:text-xl" style={{ fontFamily: '"din-condensed", sans-serif' }}>
+                    3
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <div className="text-sm sm:text-base md:text-lg font-bold text-asparagus truncate sm:whitespace-normal" style={{ fontFamily: '"din-condensed", sans-serif' }}>
+                      Shumail Sajid
+                    </div>
+                    <div className="text-xs sm:text-sm text-gray-300">Third Place</div>
+                  </div>
+                </div>
+                <div className="text-left sm:text-right w-full sm:w-auto flex-shrink-0">
+                  <div className="text-lg sm:text-xl md:text-2xl font-bold text-asparagus" style={{ fontFamily: '"din-condensed", sans-serif' }}>
+                    PKR 1,000
+                  </div>
+                </div>
+              </div>
+              
+              <div className="bg-gradient-to-r from-asparagus/20 to-asparagus/10 border-2 border-asparagus rounded-xl p-4 sm:p-5 md:p-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-4 hover:scale-[1.02] transition-transform duration-200">
+                <div className="flex items-center gap-3 sm:gap-4 w-full sm:w-auto">
+                  <div className="flex-shrink-0 w-10 h-10 sm:w-12 sm:h-12 bg-asparagus rounded-full flex items-center justify-center text-white font-bold text-base sm:text-lg md:text-xl" style={{ fontFamily: '"din-condensed", sans-serif' }}>
+                    3
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <div className="text-sm sm:text-base md:text-lg font-bold text-asparagus truncate sm:whitespace-normal" style={{ fontFamily: '"din-condensed", sans-serif' }}>
+                      Muhammad Sheharyar
+                    </div>
+                    <div className="text-xs sm:text-sm text-gray-300">Third Place</div>
+                  </div>
+                </div>
+                <div className="text-left sm:text-right w-full sm:w-auto flex-shrink-0">
+                  <div className="text-lg sm:text-xl md:text-2xl font-bold text-asparagus" style={{ fontFamily: '"din-condensed", sans-serif' }}>
+                    PKR 1,000
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>

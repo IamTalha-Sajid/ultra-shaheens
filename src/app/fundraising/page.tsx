@@ -8,7 +8,7 @@ const FundraisingPage: React.FC = () => {
   const [animatedProgress, setAnimatedProgress] = useState(0);
   
   const totalAmount = 15000;
-  const raisedAmount = 5000;
+  const raisedAmount = 6284;
   const percentage = Math.round((raisedAmount / totalAmount) * 100);
   const remainingAmount = totalAmount - raisedAmount;
 
@@ -103,7 +103,7 @@ const FundraisingPage: React.FC = () => {
         {/* Bank Details Section */}
         <div className="bg-white border-2 border-dell rounded-2xl p-6 sm:p-8 mb-12">
           <h3 className="text-2xl sm:text-3xl font-bold text-racing-green mb-6 text-center" style={{ fontFamily: '"din-condensed", sans-serif' }}>
-            BANK DETAILS
+            Sada Pay Account Details
           </h3>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

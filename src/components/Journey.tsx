@@ -7,8 +7,8 @@ const Journey: React.FC = () => {
   const milestones = [
     {
       id: 1,
-      date: "November 23rd, 2023",
-      title: "Beginnings of Ultra Shaheens",
+      date: "November 21st, 2023",
+      title: "Beginnings of Ultra Shaheens and First Match",
       description: "The birth of Pakistan's most passionate football fanbase. Founded with the vision to unite football lovers across the nation and create an unforgettable matchday experience.",
       image: "/created-ultra-shaheens.jpg",
       isLeft: true
@@ -16,7 +16,7 @@ const Journey: React.FC = () => {
     {
       id: 2,
       date: "March 21st, 2024",
-      title: "First Official Match as Ultra Shaheens Community",
+      title: "Second Official Match as Ultra Shaheens Community",
       description: "Our debut match support! Over 50 passionate fans gathered to cheer for Pakistan in our first official outing. The energy was electric and the atmosphere unforgettable.",
       image: "/journey-first-match.jpg",
       isLeft: false
@@ -25,7 +25,7 @@ const Journey: React.FC = () => {
       id: 3,
       date: "June 9th, 2024",
       title: "Pakistan vs Saudi Arabia Match",
-      description: "Building momentum! Our second match saw even more supporters join the cause. The community was growing stronger with each game, creating lasting memories and friendships.",
+      description: "Building momentum! Our third match saw even more supporters join the cause. The community was growing stronger with each game, creating lasting memories and friendships.",
       image: "/journey-second-match.jpg",
       isLeft: true
     },

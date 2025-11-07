@@ -5,37 +5,37 @@ const Experiences: React.FC = () => {
   const experiences = [
     {
       id: 1,
-      title: "Pakistan vs Afghanistan",
-      subtitle: "Home Game Preview",
-      event: "AFC Asian Cup 2027 Qualifiers — Group stage (Group E)",
-      date: "October 9, 2025",
-      description: "Join us for an electrifying home match as Pakistan takes on Afghanistan in the AFC Asian Cup 2027 Qualifiers. Experience the passion of Pakistani football with thousands of fellow supporters in our home stadium. This crucial Group E match will determine our path to the Asian Cup.",
-      buttonText: "GET MATCH TICKETS",
-      image: "/pakistan-afghanistan-home.jpg",
-      isHome: true
-    },
-    {
-      id: 2,
-      title: "Afghanistan vs Pakistan",
-      subtitle: "Match Screening",
-      event: "AFC Asian Cup 2027 Qualifiers — Group stage (Group E)",
-      date: "October 14, 2025",
-      description: "Since this is an away match, we're organizing an exclusive match screening event for all Ultra Shaheens members. Join us at our official screening venue to support Pakistan together with fellow fans. Experience the same passion and energy as being at the stadium and cheer for our team.",
-      buttonText: "JOIN SCREENING",
-      image: "/afghanistan-pakistan-away.png",
-      isHome: false
-    },
-    {
-      id: 3,
       title: "Pakistan vs Syria",
       subtitle: "Match Preview",
       event: "AFC Asian Cup 2027 Qualifiers — Group stage (Group E)",
       date: "November 18, 2025",
-      description: "The final group stage match against Syria will be decisive for our qualification hopes. Join the Ultra Shaheens community for this crucial encounter as we push for a spot in the AFC Asian Cup 2027 finals. Every voice counts in this must-win match and every supporter matters.",
+      description: "It’s the home showdown in Group E! Experience the passion as Pakistan hosts Syria in a high-stakes AFC Asian Cup 2027 Qualifier. Let’s fill the stands with green, bring your loudest support, and help propel the team closer to the Cup!",
       buttonText: "GET MATCH TICKETS",
       image: "/pakistan-syria-home.jpg",
       isHome: true
-    }
+    },
+    {
+      id: 2,
+      title: "Pakistan vs Myanmar",
+      subtitle: "Match Preview",
+      event: "AFC Asian Cup 2027 Qualifiers — Group stage (Group E)",
+      date: "March 31, 2026",
+      description: "Close out the group stage with intensity! Pakistan faces Myanmar in a match that could make history for our qualification dream. Stand with the Ultra Shaheens and let’s make the stadium roar for the boys in green—every chant counts!",
+      buttonText: "GET MATCH TICKETS",
+      image: "/afghanistan-pakistan-away.png",
+      isHome: true   
+    },
+    // {
+    //   id: 3,
+    //   title: "TBD",
+    //   subtitle: "TBD",
+    //   event: "TBD",
+    //   date: "TBD",
+    //   description: "TBD",
+    //   buttonText: "TBD",
+    //   image: "/pakistan-vs-afghanistan.jpg",
+    //   isHome: false
+    // }
   ];
 
   return (
@@ -60,7 +60,7 @@ const Experiences: React.FC = () => {
         </div>
 
         {/* Experiences Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+        <div className={`grid grid-cols-1 ${experiences.length === 2 ? 'md:grid-cols-2 md:max-w-4xl md:mx-auto lg:grid-cols-2 lg:max-w-4xl lg:mx-auto' : 'md:grid-cols-2 lg:grid-cols-3'} gap-6 lg:gap-8`}>
           {experiences.map((experience) => (
             <div key={experience.id} className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl hover:scale-105 transition-all duration-300 cursor-pointer">
               {/* Image Section */}

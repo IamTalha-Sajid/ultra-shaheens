@@ -3,8 +3,11 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter, usePathname } from 'next/navigation';
 
 const Header: React.FC = () => {
+  const router = useRouter();
+  const pathname = usePathname();
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState<boolean>(false);
   const [mobileDropdown, setMobileDropdown] = useState<string | null>(null);
@@ -33,6 +36,38 @@ const Header: React.FC = () => {
       setIsClosing(false);
       setMobileDropdown(null);
     }, 300);
+  };
+
+  const handleScrollToSection = (sectionId: string) => {
+    // Close mobile menu if open
+    if (mobileMenuOpen) {
+      handleCloseMobileMenu();
+    }
+    
+    // Scroll function
+    const scrollToElement = () => {
+      const element = document.getElementById(sectionId);
+      if (element) {
+        // Get the exact position of the element's top edge
+        const elementTop = element.offsetTop;
+        // Scroll to the very top of the section
+        window.scrollTo({
+          top: elementTop,
+          behavior: 'smooth'
+        });
+      }
+    };
+    
+    // Check if we're on the home page
+    if (pathname !== '/') {
+      // Navigate to home page with hash, then scroll after navigation
+      router.push('/#' + sectionId);
+      // Wait for navigation to complete, then scroll
+      setTimeout(scrollToElement, 300);
+    } else {
+      // Smooth scroll to section immediately
+      scrollToElement();
+    }
   };
 
 
@@ -208,6 +243,17 @@ const Header: React.FC = () => {
                 </a>
               </div>
 
+              {/* Our Story */}
+              <div className="relative">
+                <button
+                  onClick={() => handleScrollToSection('journey')}
+                  className="text-black hover:text-dell font-semibold transition-colors duration-200 uppercase tracking-wide leading-none text-base flex items-center bg-transparent border-none p-0 cursor-pointer"
+                  style={{ fontFamily: '"din-condensed", sans-serif' }}
+                >
+                  <span className="underline-animated">Our Story</span>
+                </button>
+              </div>
+
               {/* About Us Dropdown */}
               <div 
                 className="relative"
@@ -341,6 +387,17 @@ const Header: React.FC = () => {
                   >
                     Merchandise
                   </a>
+                </div>
+
+                {/* Our Story */}
+                <div>
+                  <button
+                    onClick={() => handleScrollToSection('journey')}
+                    className="w-full text-left text-white hover:text-canary font-semibold transition-colors duration-200 uppercase tracking-wide leading-none text-base sm:text-lg py-3 px-2 -mx-2 min-h-[48px] flex items-center"
+                    style={{ fontFamily: '"din-condensed", sans-serif' }}
+                  >
+                    Our Story
+                  </button>
                 </div>
 
                 {/* About Us */}

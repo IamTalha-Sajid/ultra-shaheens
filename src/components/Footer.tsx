@@ -154,7 +154,7 @@ const Footer: React.FC = () => {
           <div className="flex flex-col gap-3 sm:gap-4">
             <div className="flex flex-col sm:flex-row justify-between items-center gap-3 sm:gap-4">
               <div className="text-xs sm:text-sm text-gray-400 text-center sm:text-left">
-                © 2025 Ultra Shaheens. All rights reserved. Made with passion for Pakistan Football.
+                © 2025 Ultra Shaheens. All rights reserved.
               </div>
               <div className="flex items-center space-x-4 sm:space-x-6 text-xs sm:text-sm text-gray-400">
                 <span className="hidden sm:inline">Powered by</span>

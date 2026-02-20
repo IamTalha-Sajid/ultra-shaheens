@@ -6,9 +6,9 @@ import Footer from '@/components/Footer';
 
 const FundraisingPage: React.FC = () => {
   const [animatedProgress, setAnimatedProgress] = useState(0);
-  
+
   const totalAmount = 15000;
-  const raisedAmount = 23601;
+  const raisedAmount = 29641;
   const percentage = Math.min(Math.round((raisedAmount / totalAmount) * 100), 100);
   const remainingAmount = Math.max(totalAmount - raisedAmount, 0);
   const isCompleted = raisedAmount >= totalAmount;
@@ -18,7 +18,7 @@ const FundraisingPage: React.FC = () => {
     const timer = setTimeout(() => {
       setAnimatedProgress(Math.min(percentage, 100));
     }, 300);
-    
+
     return () => clearTimeout(timer);
   }, [percentage]);
 
@@ -31,17 +31,17 @@ const FundraisingPage: React.FC = () => {
   return (
     <div className="font-sans min-h-screen bg-dark-fern">
       <Header />
-      
+
       {/* Main Content */}
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-20">
         {/* Header Section */}
         <div className="text-center mb-12 sm:mb-16">
-           <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6" style={{ fontFamily: '"din-condensed", sans-serif' }}>
-             DRUM FUNDRAISING
-             <br />
-             <span className="text-canary">FOR UPCOMING MATCH</span>
-           </h1>
-           <p className="text-lg sm:text-xl text-gray-200 max-w-3xl mx-auto">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6" style={{ fontFamily: '"din-condensed", sans-serif' }}>
+            DRUM FUNDRAISING
+            <br />
+            <span className="text-canary">FOR UPCOMING MATCH</span>
+          </h1>
+          <p className="text-lg sm:text-xl text-gray-200 max-w-3xl mx-auto">
             Help us bring the energy! We&apos;re raising funds for a drum to create an electrifying atmosphere at the upcoming Pakistan vs Syria match.
           </p>
         </div>
@@ -62,7 +62,7 @@ const FundraisingPage: React.FC = () => {
             <h2 className="text-2xl sm:text-3xl font-bold mb-4" style={{ fontFamily: '"din-condensed", sans-serif' }}>
               FUNDRAISING PROGRESS
             </h2>
-            
+
             {/* Amount Display */}
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 mb-8">
               <div className="text-center">
@@ -89,15 +89,15 @@ const FundraisingPage: React.FC = () => {
 
             {/* Progress Bar */}
             <div className="w-full bg-gray-800 rounded-full h-4 sm:h-6 mb-4 overflow-hidden relative">
-              <div 
+              <div
                 className={`h-full rounded-full relative overflow-hidden ${isCompleted ? 'bg-gradient-to-r from-canary via-yellow-400 to-canary' : 'bg-gradient-to-r from-canary to-yellow-400'}`}
-                style={{ 
+                style={{
                   width: `${Math.min(animatedProgress, 100)}%`,
                   transition: 'width 2.5s cubic-bezier(0.4, 0, 0.2, 1)'
                 } as React.CSSProperties}
               >
                 {/* Animated shimmer effect for eager motion */}
-                <div 
+                <div
                   className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent opacity-40"
                   style={{
                     animation: 'shimmer 2s ease-in-out infinite',
@@ -106,7 +106,7 @@ const FundraisingPage: React.FC = () => {
                 ></div>
               </div>
             </div>
-            
+
             <div className="text-sm text-gray-200 font-semibold">
               Goal: PKR {totalAmount.toLocaleString()} {isCompleted && `(Exceeded by PKR ${(raisedAmount - totalAmount).toLocaleString()}!)`}
             </div>
@@ -118,7 +118,7 @@ const FundraisingPage: React.FC = () => {
           <h2 className="text-2xl sm:text-3xl font-bold mb-6 sm:mb-8 text-center" style={{ fontFamily: '"din-condensed", sans-serif' }}>
             TOP CONTRIBUTORS
           </h2>
-          
+
           <div className="space-y-4 sm:space-y-6 max-w-2xl mx-auto">
             {/* 1st Place */}
             <div className="bg-gradient-to-r from-canary/20 to-canary/10 border-2 border-canary rounded-xl p-4 sm:p-5 md:p-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-4 hover:scale-[1.02] transition-transform duration-200">
@@ -191,13 +191,13 @@ const FundraisingPage: React.FC = () => {
                 THANK YOU!
               </h2>
               <p className="text-base sm:text-lg md:text-xl text-racing-green mb-4 sm:mb-6 leading-relaxed font-medium">
-                We are overwhelmed with gratitude for your incredible generosity and support. 
-                Thanks to amazing contributors like you, we have successfully reached and exceeded 
+                We are overwhelmed with gratitude for your incredible generosity and support.
+                Thanks to amazing contributors like you, we have successfully reached and exceeded
                 our fundraising goal!
               </p>
               <p className="text-base sm:text-lg text-gray-700 font-semibold leading-relaxed">
-                Your contributions will help us bring the energy and passion to the stadium, 
-                creating an unforgettable atmosphere for Pakistan football. Together, we are making 
+                Your contributions will help us bring the energy and passion to the stadium,
+                creating an unforgettable atmosphere for Pakistan football. Together, we are making
                 history and supporting our team with unwavering dedication.
               </p>
               <div className="mt-6 sm:mt-8 text-3xl sm:text-4xl">
@@ -212,14 +212,14 @@ const FundraisingPage: React.FC = () => {
           <h3 className="text-2xl sm:text-3xl font-bold text-racing-green mb-6 text-center" style={{ fontFamily: '"din-condensed", sans-serif' }}>
             Sada Pay Account Details
           </h3>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* Account Holder */}
             <div className="bg-gray-50 p-4 rounded-lg">
               <div className="text-sm text-gray-600 mb-2">Account Holder</div>
               <div className="text-lg font-semibold text-racing-green flex items-center justify-between">
                 <span>Usama Mushtaq Bhutta</span>
-                <button 
+                <button
                   onClick={() => copyToClipboard('Usama Mushtaq Bhutta')}
                   className="text-dell hover:text-la-palma transition-colors"
                 >
@@ -233,7 +233,7 @@ const FundraisingPage: React.FC = () => {
               <div className="text-sm text-gray-600 mb-2">Account Number</div>
               <div className="text-lg font-semibold text-racing-green flex items-center justify-between">
                 <span>03359169165</span>
-                <button 
+                <button
                   onClick={() => copyToClipboard('03359169165')}
                   className="text-dell hover:text-la-palma transition-colors"
                 >
@@ -247,7 +247,7 @@ const FundraisingPage: React.FC = () => {
               <div className="text-sm text-gray-600 mb-2">IBAN</div>
               <div className="text-lg font-semibold text-racing-green flex items-center justify-between">
                 <span className="break-all">PK77SADA0000003359169165</span>
-                <button 
+                <button
                   onClick={() => copyToClipboard('PK77SADA0000003359169165')}
                   className="text-dell hover:text-la-palma transition-colors ml-2 flex-shrink-0"
                 >
@@ -271,20 +271,20 @@ const FundraisingPage: React.FC = () => {
               LET&apos;S MAKE SOME NOISE!
             </h3>
             <p className="text-sm sm:text-base mb-6">
-              Every contribution brings us closer to creating an unforgettable atmosphere at the match. 
+              Every contribution brings us closer to creating an unforgettable atmosphere at the match.
               Help us reach our goal and support Pakistan football!
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <a 
-                href="https://forms.gle/xek7ovwUwodKYrkA7" 
-                target="_blank" 
+              <a
+                href="https://forms.gle/xek7ovwUwodKYrkA7"
+                target="_blank"
                 rel="noopener noreferrer"
                 className="bg-canary text-dark-fern hover:bg-yellow-400 hover:scale-105 font-bold py-3 px-6 rounded-lg transition-all duration-300 uppercase tracking-wide"
                 style={{ fontFamily: '"din-condensed", sans-serif' }}
               >
                 JOIN ULTRA SHAHEENS
               </a>
-              <button 
+              <button
                 onClick={() => copyToClipboard('PK77SADA0000003359169165')}
                 className="bg-transparent border-2 border-canary text-canary hover:bg-canary hover:text-dark-fern font-bold py-3 px-6 rounded-lg transition-all duration-300 uppercase tracking-wide"
                 style={{ fontFamily: '"din-condensed", sans-serif' }}
@@ -295,7 +295,7 @@ const FundraisingPage: React.FC = () => {
           </div>
         </div>
       </div>
-      
+
       <Footer />
     </div>
   );

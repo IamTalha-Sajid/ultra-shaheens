@@ -4,14 +4,51 @@ import React, { useState, useEffect } from 'react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 
+interface FundraisingData {
+  match: string;
+  raisedAmount: number;
+  goalAmount?: number;
+  isCompleted: boolean;
+  contributors: Array<{
+    name: string;
+    amount: number;
+    position: number;
+  }>;
+}
+
 const FundraisingPage: React.FC = () => {
+  // Current Fundraising: Pakistan vs Myanmar
+  const currentFundraising: FundraisingData = {
+    match: "Pakistan vs Myanmar",
+    raisedAmount: 10002,
+    goalAmount: undefined, // No goal set
+    isCompleted: false,
+    contributors: [
+      { name: "Ahmed Basat", amount: 10002, position: 1 }
+    ]
+  };
+
+  // Previous Fundraising: Syria Game
+  const previousFundraising: FundraisingData = {
+    match: "Syria Game",
+    raisedAmount: 29641,
+    goalAmount: 15000,
+    isCompleted: true,
+    contributors: [
+      { name: "Teymoor Sohail", amount: 6100, position: 1 },
+      { name: "Addel Mirza", amount: 5616, position: 2 },
+      { name: "Haseebullah Qureshi", amount: 3000, position: 3 }
+    ]
+  };
+
   const [animatedProgress, setAnimatedProgress] = useState(0);
   
-  const totalAmount = 15000;
-  const raisedAmount = 29641;
-  const percentage = Math.min(Math.round((raisedAmount / totalAmount) * 100), 100);
-  const remainingAmount = Math.max(totalAmount - raisedAmount, 0);
-  const isCompleted = raisedAmount >= totalAmount;
+  const percentage = currentFundraising.goalAmount 
+    ? Math.min(Math.round((currentFundraising.raisedAmount / currentFundraising.goalAmount) * 100), 100)
+    : 100;
+  const remainingAmount = currentFundraising.goalAmount 
+    ? Math.max(currentFundraising.goalAmount - currentFundraising.raisedAmount, 0)
+    : 0;
 
   useEffect(() => {
     // Animate progress bar on page load with eager left-to-right motion
@@ -28,28 +65,34 @@ const FundraisingPage: React.FC = () => {
     alert('Copied to clipboard!');
   };
 
-  return (
-    <div className="font-sans min-h-screen bg-dark-fern">
-      <Header />
-      
-      {/* Main Content */}
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-20">
-        {/* Header Section */}
-        <div className="text-center mb-12 sm:mb-16">
-           <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6" style={{ fontFamily: '"din-condensed", sans-serif' }}>
-             DRUM FUNDRAISING
-             <br />
-             <span className="text-canary">FOR UPCOMING MATCH</span>
-           </h1>
-           <p className="text-lg sm:text-xl text-gray-200 max-w-3xl mx-auto">
-            Help us bring the energy! We&apos;re raising funds for a drum to create an electrifying atmosphere at the upcoming Pakistan vs Syria match.
-          </p>
-        </div>
+  const renderFundraisingSection = (fundraising: FundraisingData, isCurrent: boolean) => {
+    const sectionPercentage = fundraising.goalAmount 
+      ? Math.min(Math.round((fundraising.raisedAmount / fundraising.goalAmount) * 100), 100)
+      : 100;
+    const sectionRemaining = fundraising.goalAmount 
+      ? Math.max(fundraising.goalAmount - fundraising.raisedAmount, 0)
+      : 0;
 
+    return (
+      <div className="mb-12">
         {/* Progress Section */}
         <div className="bg-gradient-to-br from-racing-green to-dark-fern rounded-2xl p-6 sm:p-8 lg:p-12 mb-12 text-white">
+          {isCurrent && (
+            <div className="text-center mb-4">
+              <span className="inline-block px-4 py-2 bg-canary text-racing-green rounded-full text-sm font-bold uppercase tracking-wide" style={{ fontFamily: '"din-condensed", sans-serif' }}>
+                CURRENT FUNDRAISING
+              </span>
+            </div>
+          )}
+          {!isCurrent && (
+            <div className="text-center mb-4">
+              <span className="inline-block px-4 py-2 bg-gray-500 text-white rounded-full text-sm font-bold uppercase tracking-wide" style={{ fontFamily: '"din-condensed", sans-serif' }}>
+                ✓ COMPLETED
+              </span>
+            </div>
+          )}
           <div className="text-center mb-8">
-            {isCompleted && (
+            {fundraising.isCompleted && (
               <div className="mb-6 p-4 sm:p-6 bg-canary/20 border-2 border-canary rounded-xl">
                 <div className="text-2xl sm:text-3xl md:text-4xl font-bold text-canary mb-2" style={{ fontFamily: '"din-condensed", sans-serif' }}>
                   🎉 FUNDRAISING COMPLETED! 🎉
@@ -60,56 +103,80 @@ const FundraisingPage: React.FC = () => {
               </div>
             )}
             <h2 className="text-2xl sm:text-3xl font-bold mb-4" style={{ fontFamily: '"din-condensed", sans-serif' }}>
-              FUNDRAISING PROGRESS
+              {fundraising.match.toUpperCase()} - FUNDRAISING PROGRESS
             </h2>
             
             {/* Amount Display */}
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 mb-8">
               <div className="text-center">
                 <div className="text-3xl sm:text-4xl font-bold text-canary mb-2" style={{ fontFamily: '"din-condensed", sans-serif' }}>
-                  PKR {raisedAmount.toLocaleString()}
+                  PKR {fundraising.raisedAmount.toLocaleString()}
                 </div>
                 <div className="text-sm sm:text-base text-gray-200 font-semibold">Raised</div>
               </div>
-              <div className="text-center">
-                <div className="text-3xl sm:text-4xl font-bold text-white mb-2" style={{ fontFamily: '"din-condensed", sans-serif' }}>
-                  {percentage}%
-                </div>
-                <div className="text-sm sm:text-base text-gray-300">Complete</div>
-              </div>
-              <div className="text-center">
-                <div className="text-3xl sm:text-4xl font-bold text-asparagus mb-2" style={{ fontFamily: '"din-condensed", sans-serif' }}>
-                  {isCompleted ? 'PKR 0' : `PKR ${remainingAmount.toLocaleString()}`}
-                </div>
-                <div className="text-sm sm:text-base text-gray-300">
-                  {isCompleted ? 'Completed!' : 'Remaining'}
-                </div>
-              </div>
+              {fundraising.goalAmount && (
+                <>
+                  <div className="text-center">
+                    <div className="text-3xl sm:text-4xl font-bold text-white mb-2" style={{ fontFamily: '"din-condensed", sans-serif' }}>
+                      {sectionPercentage}%
+                    </div>
+                    <div className="text-sm sm:text-base text-gray-300">Complete</div>
+                  </div>
+                  <div className="text-center">
+                    <div className="text-3xl sm:text-4xl font-bold text-asparagus mb-2" style={{ fontFamily: '"din-condensed", sans-serif' }}>
+                      {fundraising.isCompleted ? 'PKR 0' : `PKR ${sectionRemaining.toLocaleString()}`}
+                    </div>
+                    <div className="text-sm sm:text-base text-gray-300">
+                      {fundraising.isCompleted ? 'Completed!' : 'Remaining'}
+                    </div>
+                  </div>
+                </>
+              )}
+              {!fundraising.goalAmount && (
+                <>
+                  <div className="text-center">
+                    <div className="text-3xl sm:text-4xl font-bold text-white mb-2" style={{ fontFamily: '"din-condensed", sans-serif' }}>
+                      —
+                    </div>
+                    <div className="text-sm sm:text-base text-gray-300">No Goal Set</div>
+                  </div>
+                  <div className="text-center">
+                    <div className="text-3xl sm:text-4xl font-bold text-asparagus mb-2" style={{ fontFamily: '"din-condensed", sans-serif' }}>
+                      —
+                    </div>
+                    <div className="text-sm sm:text-base text-gray-300">Ongoing</div>
+                  </div>
+                </>
+              )}
             </div>
 
             {/* Progress Bar */}
-            <div className="w-full bg-gray-800 rounded-full h-4 sm:h-6 mb-4 overflow-hidden relative">
-              <div 
-                className={`h-full rounded-full relative overflow-hidden ${isCompleted ? 'bg-gradient-to-r from-canary via-yellow-400 to-canary' : 'bg-gradient-to-r from-canary to-yellow-400'}`}
-                style={{ 
-                  width: `${Math.min(animatedProgress, 100)}%`,
-                  transition: 'width 2.5s cubic-bezier(0.4, 0, 0.2, 1)'
-                } as React.CSSProperties}
-              >
-                {/* Animated shimmer effect for eager motion */}
+            {fundraising.goalAmount && (
+              <div className="w-full bg-gray-800 rounded-full h-4 sm:h-6 mb-4 overflow-hidden relative">
                 <div 
-                  className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent opacity-40"
-                  style={{
-                    animation: 'shimmer 2s ease-in-out infinite',
-                    animationDelay: '0.5s'
-                  }}
-                ></div>
+                  className={`h-full rounded-full relative overflow-hidden ${fundraising.isCompleted ? 'bg-gradient-to-r from-canary via-yellow-400 to-canary' : 'bg-gradient-to-r from-canary to-yellow-400'}`}
+                  style={{ 
+                    width: `${Math.min(sectionPercentage, 100)}%`,
+                    transition: 'width 2.5s cubic-bezier(0.4, 0, 0.2, 1)'
+                  } as React.CSSProperties}
+                >
+                  {/* Animated shimmer effect for eager motion */}
+                  <div 
+                    className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent opacity-40"
+                    style={{
+                      animation: 'shimmer 2s ease-in-out infinite',
+                      animationDelay: '0.5s'
+                    }}
+                  ></div>
+                </div>
               </div>
-            </div>
+            )}
             
-            <div className="text-sm text-gray-200 font-semibold">
-              Goal: PKR {totalAmount.toLocaleString()} {isCompleted && `(Exceeded by PKR ${(raisedAmount - totalAmount).toLocaleString()}!)`}
-            </div>
+            {fundraising.goalAmount && (
+              <div className="text-sm text-gray-200 font-semibold">
+                Goal: PKR {fundraising.goalAmount.toLocaleString()} {fundraising.isCompleted && `(Exceeded by PKR ${(fundraising.raisedAmount - fundraising.goalAmount).toLocaleString()}!)`}
+              </div>
+            )}
           </div>
         </div>
 
@@ -120,70 +187,109 @@ const FundraisingPage: React.FC = () => {
           </h2>
           
           <div className="space-y-4 sm:space-y-6 max-w-2xl mx-auto">
-            {/* 1st Place */}
-            <div className="bg-gradient-to-r from-canary/20 to-canary/10 border-2 border-canary rounded-xl p-4 sm:p-5 md:p-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-4 hover:scale-[1.02] transition-transform duration-200">
-              <div className="flex items-center gap-3 sm:gap-4 w-full sm:w-auto">
-                <div className="flex-shrink-0 w-10 h-10 sm:w-12 sm:h-12 bg-canary rounded-full flex items-center justify-center text-racing-green font-bold text-base sm:text-lg md:text-xl" style={{ fontFamily: '"din-condensed", sans-serif' }}>
-                  1
-                </div>
-                <div className="flex-1 min-w-0">
-                  <div className="text-sm sm:text-base md:text-lg font-bold text-canary truncate sm:whitespace-normal" style={{ fontFamily: '"din-condensed", sans-serif' }}>
-                    Teymoor Sohail
-                  </div>
-                  <div className="text-xs sm:text-sm text-gray-300">Top Contributor</div>
-                </div>
-              </div>
-              <div className="text-left sm:text-right w-full sm:w-auto flex-shrink-0">
-                <div className="text-lg sm:text-xl md:text-2xl font-bold text-canary" style={{ fontFamily: '"din-condensed", sans-serif' }}>
-                  PKR 6,100
-                </div>
-              </div>
-            </div>
+            {/* Render contributors */}
+            {fundraising.contributors.map((contributor) => {
+              const positionStyles = {
+                1: {
+                  bg: "from-canary/20 to-canary/10",
+                  border: "border-canary",
+                  badgeBg: "bg-canary",
+                  badgeText: "text-racing-green",
+                  textColor: "text-canary",
+                  label: "Top Contributor"
+                },
+                2: {
+                  bg: "from-white/10 to-white/5",
+                  border: "border-gray-400",
+                  badgeBg: "bg-gray-400",
+                  badgeText: "text-white",
+                  textColor: "text-white",
+                  label: "Second Place"
+                },
+                3: {
+                  bg: "from-asparagus/20 to-asparagus/10",
+                  border: "border-asparagus",
+                  badgeBg: "bg-asparagus",
+                  badgeText: "text-white",
+                  textColor: "text-asparagus",
+                  label: "Third Place"
+                }
+              };
 
-            {/* 2nd Place */}
-            <div className="bg-gradient-to-r from-white/10 to-white/5 border-2 border-gray-400 rounded-xl p-4 sm:p-5 md:p-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-4 hover:scale-[1.02] transition-transform duration-200">
-              <div className="flex items-center gap-3 sm:gap-4 w-full sm:w-auto">
-                <div className="flex-shrink-0 w-10 h-10 sm:w-12 sm:h-12 bg-gray-400 rounded-full flex items-center justify-center text-white font-bold text-base sm:text-lg md:text-xl" style={{ fontFamily: '"din-condensed", sans-serif' }}>
-                  2
-                </div>
-                <div className="flex-1 min-w-0">
-                  <div className="text-sm sm:text-base md:text-lg font-bold text-white truncate sm:whitespace-normal" style={{ fontFamily: '"din-condensed", sans-serif' }}>
-                    Addel Mirza
-                  </div>
-                  <div className="text-xs sm:text-sm text-gray-300">Second Place</div>
-                </div>
-              </div>
-              <div className="text-left sm:text-right w-full sm:w-auto flex-shrink-0">
-                <div className="text-lg sm:text-xl md:text-2xl font-bold text-white" style={{ fontFamily: '"din-condensed", sans-serif' }}>
-                  PKR 5,616
-                </div>
-              </div>
-            </div>
+              const style = positionStyles[contributor.position as keyof typeof positionStyles] || positionStyles[2];
 
-            {/* 3rd Place */}
-            <div className="bg-gradient-to-r from-asparagus/20 to-asparagus/10 border-2 border-asparagus rounded-xl p-4 sm:p-5 md:p-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-4 hover:scale-[1.02] transition-transform duration-200">
-              <div className="flex items-center gap-3 sm:gap-4 w-full sm:w-auto">
-                <div className="flex-shrink-0 w-10 h-10 sm:w-12 sm:h-12 bg-asparagus rounded-full flex items-center justify-center text-white font-bold text-base sm:text-lg md:text-xl" style={{ fontFamily: '"din-condensed", sans-serif' }}>
-                  3
-                </div>
-                <div className="flex-1 min-w-0">
-                  <div className="text-sm sm:text-base md:text-lg font-bold text-asparagus truncate sm:whitespace-normal" style={{ fontFamily: '"din-condensed", sans-serif' }}>
-                    Haseebullah Qureshi
+              return (
+                <div key={contributor.position} className={`bg-gradient-to-r ${style.bg} border-2 ${style.border} rounded-xl p-4 sm:p-5 md:p-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-4 hover:scale-[1.02] transition-transform duration-200`}>
+                  <div className="flex items-center gap-3 sm:gap-4 w-full sm:w-auto">
+                    <div className={`flex-shrink-0 w-10 h-10 sm:w-12 sm:h-12 ${style.badgeBg} rounded-full flex items-center justify-center ${style.badgeText} font-bold text-base sm:text-lg md:text-xl`} style={{ fontFamily: '"din-condensed", sans-serif' }}>
+                      {contributor.position}
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <div className={`text-sm sm:text-base md:text-lg font-bold ${style.textColor} truncate sm:whitespace-normal`} style={{ fontFamily: '"din-condensed", sans-serif' }}>
+                        {contributor.name}
+                      </div>
+                      <div className="text-xs sm:text-sm text-gray-300">{style.label}</div>
+                    </div>
                   </div>
-                  <div className="text-xs sm:text-sm text-gray-300">Third Place</div>
+                  <div className="text-left sm:text-right w-full sm:w-auto flex-shrink-0">
+                    <div className={`text-lg sm:text-xl md:text-2xl font-bold ${style.textColor}`} style={{ fontFamily: '"din-condensed", sans-serif' }}>
+                      PKR {contributor.amount.toLocaleString()}
+                    </div>
+                  </div>
                 </div>
-              </div>
-              <div className="text-left sm:text-right w-full sm:w-auto flex-shrink-0">
-                <div className="text-lg sm:text-xl md:text-2xl font-bold text-asparagus" style={{ fontFamily: '"din-condensed", sans-serif' }}>
-                  PKR 3,000
-                </div>
-              </div>
-            </div>
+              );
+            })}
+
+            {/* Show empty slots for current fundraising if less than 3 contributors */}
+            {isCurrent && fundraising.contributors.length < 3 && (
+              <>
+                {fundraising.contributors.length < 2 && (
+                  <div className="bg-gradient-to-r from-white/5 to-white/2 border-2 border-gray-600 border-dashed rounded-xl p-4 sm:p-5 md:p-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-4 opacity-50">
+                    <div className="flex items-center gap-3 sm:gap-4 w-full sm:w-auto">
+                      <div className="flex-shrink-0 w-10 h-10 sm:w-12 sm:h-12 bg-gray-600 rounded-full flex items-center justify-center text-white font-bold text-base sm:text-lg md:text-xl" style={{ fontFamily: '"din-condensed", sans-serif' }}>
+                        2
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <div className="text-sm sm:text-base md:text-lg font-bold text-gray-400 truncate sm:whitespace-normal" style={{ fontFamily: '"din-condensed", sans-serif' }}>
+                          —
+                        </div>
+                        <div className="text-xs sm:text-sm text-gray-500">Second Place</div>
+                      </div>
+                    </div>
+                    <div className="text-left sm:text-right w-full sm:w-auto flex-shrink-0">
+                      <div className="text-lg sm:text-xl md:text-2xl font-bold text-gray-400" style={{ fontFamily: '"din-condensed", sans-serif' }}>
+                        —
+                      </div>
+                    </div>
+                  </div>
+                )}
+                {fundraising.contributors.length < 3 && (
+                  <div className="bg-gradient-to-r from-white/5 to-white/2 border-2 border-gray-600 border-dashed rounded-xl p-4 sm:p-5 md:p-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-4 opacity-50">
+                    <div className="flex items-center gap-3 sm:gap-4 w-full sm:w-auto">
+                      <div className="flex-shrink-0 w-10 h-10 sm:w-12 sm:h-12 bg-gray-600 rounded-full flex items-center justify-center text-white font-bold text-base sm:text-lg md:text-xl" style={{ fontFamily: '"din-condensed", sans-serif' }}>
+                        3
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <div className="text-sm sm:text-base md:text-lg font-bold text-gray-400 truncate sm:whitespace-normal" style={{ fontFamily: '"din-condensed", sans-serif' }}>
+                          —
+                        </div>
+                        <div className="text-xs sm:text-sm text-gray-500">Third Place</div>
+                      </div>
+                    </div>
+                    <div className="text-left sm:text-right w-full sm:w-auto flex-shrink-0">
+                      <div className="text-lg sm:text-xl md:text-2xl font-bold text-gray-400" style={{ fontFamily: '"din-condensed", sans-serif' }}>
+                        —
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </>
+            )}
           </div>
         </div>
 
-        {/* Thank You Section */}
-        {isCompleted && (
+        {/* Thank You Section - only for completed fundraisings */}
+        {fundraising.isCompleted && (
           <div className="bg-white border-2 border-canary rounded-2xl p-6 sm:p-8 lg:p-12 mb-12 text-center shadow-2xl">
             <div className="max-w-3xl mx-auto">
               <div className="text-4xl sm:text-5xl md:text-6xl mb-4">🙏</div>
@@ -206,6 +312,38 @@ const FundraisingPage: React.FC = () => {
             </div>
           </div>
         )}
+      </div>
+    );
+  };
+
+  return (
+    <div className="font-sans min-h-screen bg-dark-fern">
+      <Header />
+      
+      {/* Main Content */}
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-20">
+        {/* Header Section */}
+        <div className="text-center mb-12 sm:mb-16">
+           <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6" style={{ fontFamily: '"din-condensed", sans-serif' }}>
+             DRUM FUNDRAISING
+             <br />
+             <span className="text-canary">FOR UPCOMING MATCH</span>
+           </h1>
+           <p className="text-lg sm:text-xl text-gray-200 max-w-3xl mx-auto">
+            Help us bring the energy! We&apos;re raising funds for a drum to create an electrifying atmosphere at the upcoming Pakistan vs Myanmar match.
+          </p>
+        </div>
+
+        {/* Current Fundraising Section */}
+        {renderFundraisingSection(currentFundraising, true)}
+
+        {/* Previous Fundraisings Section */}
+        <div className="mt-16 mb-12">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-8 text-center" style={{ fontFamily: '"din-condensed", sans-serif' }}>
+            PREVIOUS FUNDRAISINGS
+          </h2>
+          {renderFundraisingSection(previousFundraising, false)}
+        </div>
 
         {/* Bank Details Section */}
         <div className="bg-white border-2 border-dell rounded-2xl p-6 sm:p-8 mb-12">

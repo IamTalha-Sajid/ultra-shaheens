@@ -44,6 +44,14 @@ const Journey: React.FC = () => {
       description: "A historic match day! Ali Tareen joined the Ultra Shaheens community as we witnessed Pakistan's most dominating performance in AFC history. The energy was electric as our team delivered an outstanding display, showcasing the true potential of Pakistani football. This match will be remembered as a turning point in our football journey with new coach Nolberto Solano.",
       image: "/pakistan-vs-afghanistan.jpg",
       isLeft: true
+    },
+    {
+      id: 6,
+      date: "November 18th, 2025",
+      title: "Pakistan vs Syria - AFC Asian Cup Qualifiers",
+      description: "Heavy loss but we held our heads up high. Ali Tareen joined us again and we got drums beating for first time in Ultra Shaheens stand.",
+      image: "/pakistan-syria-home-match.jpg",
+      isLeft: false
     }
   ];
 

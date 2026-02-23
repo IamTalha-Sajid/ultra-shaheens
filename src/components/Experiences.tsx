@@ -5,22 +5,11 @@ const Experiences: React.FC = () => {
   const experiences = [
     {
       id: 1,
-      title: "Pakistan vs Syria",
-      subtitle: "Match Preview",
-      event: "AFC Asian Cup 2027 Qualifiers — Group stage (Group E)",
-      date: "November 18, 2025",
-      description: "It’s the home showdown in Group E! Experience the passion as Pakistan hosts Syria in a high-stakes AFC Asian Cup 2027 Qualifier. Let’s fill the stands with green, bring your loudest support, and help propel the team closer to the Cup!",
-      buttonText: "GET MATCH TICKETS",
-      image: "/pakistan-syria-home.jpg",
-      isHome: true
-    },
-    {
-      id: 2,
       title: "Pakistan vs Myanmar",
       subtitle: "Match Preview",
       event: "AFC Asian Cup 2027 Qualifiers — Group stage (Group E)",
       date: "March 31, 2026",
-      description: "Close out the group stage with intensity! Pakistan faces Myanmar in a match that could make history for our qualification dream. Stand with the Ultra Shaheens and let’s make the stadium roar for the boys in green—every chant counts!",
+      description: "Close out the group stage with intensity! Pakistan faces Myanmar in a match that could make history for our qualification dream. Stand with the Ultra Shaheens and let's make the stadium roar for the boys in green—every chant counts!",
       buttonText: "GET MATCH TICKETS",
       image: "/afghanistan-pakistan-away.png",
       isHome: true   

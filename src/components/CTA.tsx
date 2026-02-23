@@ -79,7 +79,7 @@ const CTA: React.FC = () => {
             </div>
             <div className="text-center">
               <div className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-canary mb-1 sm:mb-2" style={{ fontFamily: '"din-condensed", sans-serif' }}>
-                09+
+                10+
               </div>
               <div className="text-xs sm:text-sm md:text-base text-gray-300 uppercase tracking-wide font-semibold">
                 Match Events

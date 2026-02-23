@@ -154,7 +154,7 @@ const Footer: React.FC = () => {
           <div className="flex flex-col gap-3 sm:gap-4">
             <div className="flex flex-col sm:flex-row justify-between items-center gap-3 sm:gap-4">
               <div className="text-xs sm:text-sm text-gray-400 text-center sm:text-left">
-                © 2025 Ultra Shaheens. All rights reserved.
+                © 2026 Ultra Shaheens. All rights reserved.
               </div>
               <div className="flex items-center space-x-4 sm:space-x-6 text-xs sm:text-sm text-gray-400">
                 <span className="hidden sm:inline">Powered by</span>
@@ -167,7 +167,7 @@ const Footer: React.FC = () => {
               <p className="text-xs sm:text-sm text-gray-400">
                 Made in Love with Pakistan Football by{' '}
                 <a 
-                  href="https://www.talhasajid.dev" 
+                  href="https://www.talha.is-a.dev" 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="text-canary hover:text-yellow-400 transition-colors duration-200 font-semibold"

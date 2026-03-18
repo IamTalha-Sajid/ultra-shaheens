@@ -20,12 +20,13 @@ const FundraisingPage: React.FC = () => {
   // Current Fundraising: Pakistan vs Myanmar
   const currentFundraising: FundraisingData = {
     match: "Pakistan vs Myanmar",
-    raisedAmount: 10193,
+    raisedAmount: 20193,
     goalAmount: undefined, // No goal set
     isCompleted: false,
     contributors: [
       { name: "Ahmed Basat", amount: 10002, position: 1 },
-      { name: "From Previous Campaign", amount: 191, position: 2 }
+      { name: "Shumail Sajid", amount: 10000, position: 2 },
+      { name: "From Previous Campaign", amount: 191, position: 3 }
     ]
   };
 
@@ -326,12 +327,12 @@ const FundraisingPage: React.FC = () => {
         {/* Header Section */}
         <div className="text-center mb-12 sm:mb-16">
           <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6" style={{ fontFamily: '"din-condensed", sans-serif' }}>
-            DRUM FUNDRAISING
+            FUNDRAISING
             <br />
             <span className="text-canary">FOR UPCOMING MATCH</span>
           </h1>
           <p className="text-lg sm:text-xl text-gray-200 max-w-3xl mx-auto">
-            Help us bring the energy! We&apos;re raising funds for a drum to create an electrifying atmosphere at the upcoming Pakistan vs Myanmar match.
+            Help us bring the energy! We&apos;re raising funds for smoke bombs, placards and other stuff to create an electrifying atmosphere at the upcoming Pakistan vs Myanmar match.
           </p>
         </div>
 
@@ -398,7 +399,7 @@ const FundraisingPage: React.FC = () => {
 
           <div className="mt-6 p-4 bg-canary bg-opacity-20 rounded-lg">
             <p className="text-sm text-racing-green text-center">
-              <strong>Note:</strong> Please mention &quot;Drum Fundraising&quot; in the transaction description when making your contribution.
+              <strong>Note:</strong> Please mention &quot;Fundraising&quot; in the transaction description when making your contribution.
             </p>
           </div>
         </div>

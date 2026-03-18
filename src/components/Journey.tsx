@@ -34,7 +34,7 @@ const Journey: React.FC = () => {
       date: "August 21st, 2025",
       title: "Attended Official PFF Dinner",
       description: "We were part of a historic moment as our executive committee represented our community at the Pakistan Football Federation's official dinner. We got recognition from the PFF president Mohsen Gillani and new head coach of Pakistan, Nolberto Solano. We had the honor of presenting the ultra shaheens jersey to the new coach.",
-      image: "/journey-pff-dinner.jpg",
+      image: "/Journey-ID-4.jpeg",
       isLeft: false
     },
     {

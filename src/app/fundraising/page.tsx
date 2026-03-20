@@ -1,6 +1,7 @@
-"use client";
+'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import Image from 'next/image';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 
@@ -44,397 +45,259 @@ const FundraisingPage: React.FC = () => {
   };
 
   const [animatedProgress, setAnimatedProgress] = useState(0);
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+  const [isHovering, setIsHovering] = useState(false);
+  const [mounted, setMounted] = useState(false);
+  const mainRef = useRef<HTMLElement>(null);
 
   const percentage = currentFundraising.goalAmount
     ? Math.min(Math.round((currentFundraising.raisedAmount / currentFundraising.goalAmount) * 100), 100)
     : 100;
-  const remainingAmount = currentFundraising.goalAmount
-    ? Math.max(currentFundraising.goalAmount - currentFundraising.raisedAmount, 0)
-    : 0;
 
   useEffect(() => {
-    // Animate progress bar on page load with eager left-to-right motion
+    setMounted(true);
     const timer = setTimeout(() => {
       setAnimatedProgress(Math.min(percentage, 100));
     }, 300);
-
     return () => clearTimeout(timer);
   }, [percentage]);
 
+  const handleMouseMove = (e: React.MouseEvent<HTMLElement>) => {
+    if (!mainRef.current) return;
+    const rect = mainRef.current.getBoundingClientRect();
+    setMousePos({
+      x: e.clientX - rect.left,
+      y: e.clientY - rect.top,
+    });
+  };
+
   const copyToClipboard = (text: string) => {
     navigator.clipboard.writeText(text);
-    // You could add a toast notification here
     alert('Copied to clipboard!');
   };
 
-  const renderFundraisingSection = (fundraising: FundraisingData, isCurrent: boolean) => {
-    const sectionPercentage = fundraising.goalAmount
-      ? Math.min(Math.round((fundraising.raisedAmount / fundraising.goalAmount) * 100), 100)
-      : 100;
-    const sectionRemaining = fundraising.goalAmount
-      ? Math.max(fundraising.goalAmount - fundraising.raisedAmount, 0)
-      : 0;
+  return (
+    <div className="font-sans min-h-screen bg-gradient-to-b from-[#05110a] via-[#0b1f13] to-[#040806] text-white overflow-hidden relative">
+      <Header />
 
-    return (
-      <div className="mb-12">
-        {/* Progress Section */}
-        <div className="bg-gradient-to-br from-racing-green to-dark-fern rounded-2xl p-6 sm:p-8 lg:p-12 mb-12 text-white">
-          {isCurrent && (
-            <div className="text-center mb-4">
-              <span className="inline-block px-4 py-2 bg-canary text-racing-green rounded-full text-sm font-bold uppercase tracking-wide" style={{ fontFamily: '"din-condensed", sans-serif' }}>
-                CURRENT FUNDRAISING
-              </span>
+      {/* Global Interactive Tracking Flashlight Overlay */}
+      <div
+        className="pointer-events-none fixed inset-0 z-0 transition-opacity duration-700 ease-in-out mix-blend-overlay"
+        style={{
+          opacity: isHovering && mounted ? 1 : 0,
+          background: mounted ? `radial-gradient(1200px circle at ${mousePos.x}px ${mousePos.y}px, rgba(255, 255, 255, 0.1), transparent 40%)` : 'transparent'
+        }}
+      ></div>
+
+      {/* Content wrapper */}
+      <main
+        ref={mainRef}
+        onMouseMove={handleMouseMove}
+        onMouseEnter={() => setIsHovering(true)}
+        onMouseLeave={() => setIsHovering(false)}
+        className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-36 md:pt-48 pb-16 min-h-[calc(100vh-200px)]"
+      >
+        {/* Background Faint Watermark Logo */}
+        <div className="absolute inset-x-0 top-32 flex items-center justify-center opacity-[0.03] pointer-events-none">
+          <Image
+            src="/ultra-shaheens-logo.png"
+            alt="Ultra Shaheens Logo Background"
+            width={800}
+            height={800}
+            className="w-[80vw] max-w-4xl object-contain"
+          />
+        </div>
+
+        {/* Page Header */}
+        <div className="text-center mb-16 relative z-10">
+          <h1 className="text-5xl sm:text-6xl md:text-7xl font-bold text-white mb-6 drop-shadow-md tracking-wide" style={{ fontFamily: '"din-condensed", sans-serif' }}>
+            FUNDRAISING
+            <br />
+            <span className="text-canary drop-shadow-[0_0_15px_rgba(255,255,0,0.4)]">FOR UPCOMING MATCH</span>
+          </h1>
+          <p className="text-lg sm:text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed font-medium">
+            Help us bring the energy! We&apos;re raising funds for smoke bombs, placards, and other stuff to create an electrifying atmosphere at the upcoming Pakistan vs Myanmar match.
+          </p>
+        </div>
+
+        {/* MAIN CURRENT FUNDRAISING GLASS CARD */}
+        <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-[3rem] p-8 sm:p-12 lg:p-16 shadow-[0_30px_60px_rgba(0,0,0,0.5)] relative overflow-hidden group mb-16">
+          {/* Inner banner glow */}
+          <div className="absolute inset-0 bg-gradient-to-tr from-canary/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"></div>
+
+          <div className="text-center mb-6">
+            <span className="inline-block px-5 py-2 bg-canary text-black rounded-full text-base font-bold uppercase tracking-widest shadow-[0_0_15px_rgba(255,255,0,0.3)]" style={{ fontFamily: '"din-condensed", sans-serif' }}>
+              CURRENT ACTIVE FUNDRAISING
+            </span>
+          </div>
+
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-10 text-center tracking-wide drop-shadow-lg text-white" style={{ fontFamily: '"din-condensed", sans-serif' }}>
+            {currentFundraising.match.toUpperCase()}
+          </h2>
+
+          {/* Amount Display */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-8 mb-12 max-w-4xl mx-auto">
+            <div className="text-center bg-black/20 p-8 rounded-3xl border border-white/5 relative overflow-hidden group/stats hover:border-canary/30 transition-all duration-300">
+              <div className="absolute inset-0 bg-canary/5 opacity-0 group-hover/stats:opacity-100 transition-opacity"></div>
+              <div className="text-4xl sm:text-5xl font-bold text-canary mb-2 drop-shadow-[0_0_10px_rgba(255,255,0,0.4)]" style={{ fontFamily: '"din-condensed", sans-serif' }}>
+                PKR {currentFundraising.raisedAmount.toLocaleString()}
+              </div>
+              <div className="text-sm sm:text-base text-gray-400 font-bold tracking-widest uppercase">Total Raised</div>
             </div>
-          )}
-          {!isCurrent && (
-            <div className="text-center mb-4">
-              <span className="inline-block px-4 py-2 bg-gray-500 text-white rounded-full text-sm font-bold uppercase tracking-wide" style={{ fontFamily: '"din-condensed", sans-serif' }}>
-                ✓ COMPLETED
-              </span>
+
+            <div className="text-center bg-black/20 p-8 rounded-3xl border border-white/5 relative overflow-hidden group/stats hover:border-canary/30 transition-all duration-300">
+              <div className="absolute inset-0 bg-canary/5 opacity-0 group-hover/stats:opacity-100 transition-opacity"></div>
+              <div className="text-4xl sm:text-5xl font-bold text-white mb-2 drop-shadow-md" style={{ fontFamily: '"din-condensed", sans-serif' }}>
+                {currentFundraising.goalAmount ? `PKR ${currentFundraising.goalAmount.toLocaleString()}` : '—'}
+              </div>
+              <div className="text-sm sm:text-base text-gray-400 font-bold tracking-widest uppercase">Target Goal</div>
             </div>
-          )}
+          </div>
+
+          {/* Status Note */}
           <div className="text-center mb-8">
-            {fundraising.isCompleted && (
-              <div className="mb-6 p-4 sm:p-6 bg-canary/20 border-2 border-canary rounded-xl">
-                <div className="text-2xl sm:text-3xl md:text-4xl font-bold text-canary mb-2" style={{ fontFamily: '"din-condensed", sans-serif' }}>
-                  🎉 FUNDRAISING COMPLETED! 🎉
-                </div>
-                <p className="text-base sm:text-lg text-gray-100">
-                  Thank you for your incredible support! Together we&apos;ve exceeded our goal!
-                </p>
-              </div>
-            )}
-            <h2 className="text-2xl sm:text-3xl font-bold mb-4" style={{ fontFamily: '"din-condensed", sans-serif' }}>
-              {fundraising.match.toUpperCase()} - FUNDRAISING PROGRESS
-            </h2>
+            <p className="text-gray-300 font-medium">Currently, there is no hard cap set. Fundings are open to bring maximum passion to the stands.</p>
+          </div>
 
-            {/* Amount Display */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 mb-8">
-              <div className="text-center">
-                <div className="text-3xl sm:text-4xl font-bold text-canary mb-2" style={{ fontFamily: '"din-condensed", sans-serif' }}>
-                  PKR {fundraising.raisedAmount.toLocaleString()}
+          {/* Top Contributors for Current Campaign */}
+          <div className="border-t border-white/10 pt-10 mt-10">
+            <h3 className="text-2xl sm:text-3xl font-bold mb-8 text-center" style={{ fontFamily: '"din-condensed", sans-serif' }}>
+              TOP SUPPORTERS
+            </h3>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {currentFundraising.contributors.map((contributor) => (
+                <div key={contributor.position} className="bg-white/5 border border-white/10 hover:border-canary/40 hover:bg-white/10 p-6 rounded-2xl flex flex-col items-center justify-center transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_0_20px_rgba(255,255,0,0.15)] group/card">
+                  <div className={`w-12 h-12 flex items-center justify-center rounded-full font-bold text-xl mb-4 ${contributor.position === 1 ? 'bg-canary text-black shadow-[0_0_15px_rgba(255,255,0,0.5)]' : contributor.position === 2 ? 'bg-gray-400 text-white' : 'bg-[#C5B358] text-white'}`} style={{ fontFamily: '"din-condensed", sans-serif' }}>
+                    #{contributor.position}
+                  </div>
+                  <div className="text-lg font-bold text-white text-center mb-1 group-hover/card:text-canary transition-colors" style={{ fontFamily: '"din-condensed", sans-serif' }}>
+                    {contributor.name}
+                  </div>
+                  <div className="text-xl font-bold text-canary">PKR {contributor.amount.toLocaleString()}</div>
                 </div>
-                <div className="text-sm sm:text-base text-gray-200 font-semibold">Raised</div>
-              </div>
-              {fundraising.goalAmount && (
-                <>
-                  <div className="text-center">
-                    <div className="text-3xl sm:text-4xl font-bold text-white mb-2" style={{ fontFamily: '"din-condensed", sans-serif' }}>
-                      {sectionPercentage}%
-                    </div>
-                    <div className="text-sm sm:text-base text-gray-300">Complete</div>
-                  </div>
-                  <div className="text-center">
-                    <div className="text-3xl sm:text-4xl font-bold text-asparagus mb-2" style={{ fontFamily: '"din-condensed", sans-serif' }}>
-                      {fundraising.isCompleted ? 'PKR 0' : `PKR ${sectionRemaining.toLocaleString()}`}
-                    </div>
-                    <div className="text-sm sm:text-base text-gray-300">
-                      {fundraising.isCompleted ? 'Completed!' : 'Remaining'}
-                    </div>
-                  </div>
-                </>
-              )}
-              {!fundraising.goalAmount && (
-                <>
-                  <div className="text-center">
-                    <div className="text-3xl sm:text-4xl font-bold text-white mb-2" style={{ fontFamily: '"din-condensed", sans-serif' }}>
-                      —
-                    </div>
-                    <div className="text-sm sm:text-base text-gray-300">No Goal Set</div>
-                  </div>
-                  <div className="text-center">
-                    <div className="text-3xl sm:text-4xl font-bold text-asparagus mb-2" style={{ fontFamily: '"din-condensed", sans-serif' }}>
-                      —
-                    </div>
-                    <div className="text-sm sm:text-base text-gray-300">Ongoing</div>
-                  </div>
-                </>
-              )}
+              ))}
             </div>
-
-            {/* Progress Bar */}
-            {fundraising.goalAmount && (
-              <div className="w-full bg-gray-800 rounded-full h-4 sm:h-6 mb-4 overflow-hidden relative">
-                <div
-                  className={`h-full rounded-full relative overflow-hidden ${fundraising.isCompleted ? 'bg-gradient-to-r from-canary via-yellow-400 to-canary' : 'bg-gradient-to-r from-canary to-yellow-400'}`}
-                  style={{
-                    width: `${Math.min(sectionPercentage, 100)}%`,
-                    transition: 'width 2.5s cubic-bezier(0.4, 0, 0.2, 1)'
-                  } as React.CSSProperties}
-                >
-                  {/* Animated shimmer effect for eager motion */}
-                  <div
-                    className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent opacity-40"
-                    style={{
-                      animation: 'shimmer 2s ease-in-out infinite',
-                      animationDelay: '0.5s'
-                    }}
-                  ></div>
-                </div>
-              </div>
-            )}
-
-            {fundraising.goalAmount && (
-              <div className="text-sm text-gray-200 font-semibold">
-                Goal: PKR {fundraising.goalAmount.toLocaleString()} {fundraising.isCompleted && `(Exceeded by PKR ${(fundraising.raisedAmount - fundraising.goalAmount).toLocaleString()}!)`}
-              </div>
-            )}
           </div>
         </div>
 
-        {/* Top Contributors Section */}
-        <div className="bg-gradient-to-br from-racing-green to-dark-fern rounded-2xl p-6 sm:p-8 lg:p-12 mb-12 text-white">
-          <h2 className="text-2xl sm:text-3xl font-bold mb-6 sm:mb-8 text-center" style={{ fontFamily: '"din-condensed", sans-serif' }}>
-            TOP CONTRIBUTORS
+        {/* BANK DETAILS / HOW TO DONATE GLASS CARD */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-20 relative z-10">
+          <div className="lg:col-span-7 bg-white/5 backdrop-blur-xl border border-white/10 p-8 sm:p-10 rounded-3xl shadow-xl">
+            <h3 className="text-2xl sm:text-3xl font-bold text-white mb-6 uppercase tracking-widest" style={{ fontFamily: '"din-condensed", sans-serif' }}>
+              Donate directly via <span className="text-canary">Sada Pay</span>
+            </h3>
+
+            <div className="space-y-4">
+              <div className="bg-black/30 p-5 rounded-2xl flex flex-col sm:flex-row items-start sm:items-center justify-between group">
+                <div>
+                  <div className="text-xs text-gray-400 uppercase tracking-widest mb-1 font-bold">Account Holder</div>
+                  <div className="text-lg text-white font-medium">Usama Mushtaq Bhutta</div>
+                </div>
+                <button onClick={() => copyToClipboard('Usama Mushtaq Bhutta')} className="mt-3 sm:mt-0 p-2 bg-white/10 hover:bg-canary hover:text-black rounded-lg transition-colors duration-300" aria-label="Copy">
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg>
+                </button>
+              </div>
+
+              <div className="bg-black/30 p-5 rounded-2xl flex flex-col sm:flex-row items-start sm:items-center justify-between group">
+                <div>
+                  <div className="text-xs text-gray-400 uppercase tracking-widest mb-1 font-bold">Account Number</div>
+                  <div className="text-lg text-white font-medium">03359169165</div>
+                </div>
+                <button onClick={() => copyToClipboard('03359169165')} className="mt-3 sm:mt-0 p-2 bg-white/10 hover:bg-canary hover:text-black rounded-lg transition-colors duration-300" aria-label="Copy">
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg>
+                </button>
+              </div>
+
+              <div className="bg-black/30 p-5 rounded-2xl flex flex-col sm:flex-row items-start sm:items-center justify-between group border border-transparent hover:border-canary/20 transition-all duration-300">
+                <div className="overflow-hidden">
+                  <div className="text-xs text-gray-400 uppercase tracking-widest mb-1 font-bold">IBAN (International / Interbank)</div>
+                  <div className="text-sm sm:text-base md:text-lg text-canary font-medium break-all tracking-wider">PK77SADA0000003359169165</div>
+                </div>
+                <button onClick={() => copyToClipboard('PK77SADA0000003359169165')} className="mt-3 sm:mt-0 p-3 bg-canary text-black hover:bg-white rounded-lg transition-colors duration-300 flex-shrink-0 font-bold flex items-center gap-2 text-sm uppercase" style={{ fontFamily: '"din-condensed", sans-serif' }}>
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg>
+                  Copy IBAN
+                </button>
+              </div>
+
+              <p className="text-xs text-gray-400 mt-4 italic">* Please mention "Fundraising" in your transaction narrative.</p>
+            </div>
+          </div>
+
+          <div className="lg:col-span-5 bg-gradient-to-br from-canary/10 to-transparent border border-canary/20 p-8 sm:p-10 rounded-3xl shadow-xl flex flex-col justify-center items-center text-center">
+            <h3 className="text-3xl sm:text-4xl font-bold text-white mb-4 uppercase" style={{ fontFamily: '"din-condensed", sans-serif' }}>
+              LET'S MAKE <br /><span className="text-canary drop-shadow-[0_0_10px_rgba(255,255,0,0.5)]">SOME NOISE!</span>
+            </h3>
+            <p className="text-gray-300 mb-8 leading-relaxed">
+              Join the official fan club, bring your passion to the stands, and let's chant together until the final whistle.
+            </p>
+            <a
+              href="https://forms.gle/xek7ovwUwodKYrkA7"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-full bg-canary text-black hover:bg-white hover:scale-105 shadow-lg hover:shadow-[0_0_30px_rgba(255,255,0,0.6)] font-bold py-4 px-8 rounded-xl transition-all duration-300 uppercase tracking-widest text-lg"
+              style={{ fontFamily: '"din-condensed", sans-serif' }}
+            >
+              BECOME A MEMBER
+            </a>
+          </div>
+        </div>
+
+        {/* PREVIOUS FUNDRAISING COMPACT SECTION */}
+        <div className="bg-black/40 border border-white/5 rounded-3xl p-6 sm:p-10 relative overflow-hidden backdrop-blur-md">
+          <h2 className="text-xl sm:text-2xl font-bold text-gray-400 mb-6 uppercase tracking-widest border-b border-white/10 pb-4" style={{ fontFamily: '"din-condensed", sans-serif' }}>
+            Previous Campaigns
           </h2>
 
-          <div className="space-y-4 sm:space-y-6 max-w-2xl mx-auto">
-            {/* Render contributors */}
-            {fundraising.contributors.map((contributor) => {
-              const positionStyles = {
-                1: {
-                  bg: "from-canary/20 to-canary/10",
-                  border: "border-canary",
-                  badgeBg: "bg-canary",
-                  badgeText: "text-racing-green",
-                  textColor: "text-canary",
-                  label: "Top Contributor"
-                },
-                2: {
-                  bg: "from-white/10 to-white/5",
-                  border: "border-gray-400",
-                  badgeBg: "bg-gray-400",
-                  badgeText: "text-white",
-                  textColor: "text-white",
-                  label: "Second Place"
-                },
-                3: {
-                  bg: "from-asparagus/20 to-asparagus/10",
-                  border: "border-asparagus",
-                  badgeBg: "bg-asparagus",
-                  badgeText: "text-white",
-                  textColor: "text-asparagus",
-                  label: "Third Place"
-                }
-              };
+          <div className="flex flex-col md:flex-row items-center justify-between gap-6">
+            <div className="flex-1">
+              <h3 className="text-2xl sm:text-3xl font-bold text-white mb-2" style={{ fontFamily: '"din-condensed", sans-serif' }}>
+                {previousFundraising.match.toUpperCase()}
+              </h3>
+              <div className="flex items-center gap-3">
+                <span className="px-3 py-1 bg-white/10 text-gray-300 text-xs font-bold rounded-full uppercase tracking-wider">Completed</span>
+                <span className="text-canary font-bold">Goal Exceeded</span>
+              </div>
+            </div>
 
-              const style = positionStyles[contributor.position as keyof typeof positionStyles] || positionStyles[2];
+            <div className="flex gap-8 text-center md:text-right w-full md:w-auto border-t md:border-t-0 border-white/10 pt-4 md:pt-0">
+              <div>
+                <div className="text-lg text-gray-400 uppercase tracking-widest font-bold text-xs mb-1">Target</div>
+                <div className="text-xl font-bold text-gray-300" style={{ fontFamily: '"din-condensed", sans-serif' }}>PKR {previousFundraising.goalAmount?.toLocaleString()}</div>
+              </div>
+              <div>
+                <div className="text-lg text-gray-400 uppercase tracking-widest font-bold text-xs mb-1">Raised</div>
+                <div className="text-2xl font-bold text-canary drop-shadow-[0_0_8px_rgba(255,255,0,0.3)]" style={{ fontFamily: '"din-condensed", sans-serif' }}>PKR {previousFundraising.raisedAmount.toLocaleString()}</div>
+              </div>
+            </div>
+          </div>
 
-              return (
-                <div key={contributor.position} className={`bg-gradient-to-r ${style.bg} border-2 ${style.border} rounded-xl p-4 sm:p-5 md:p-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-4 hover:scale-[1.02] transition-transform duration-200`}>
-                  <div className="flex items-center gap-3 sm:gap-4 w-full sm:w-auto">
-                    <div className={`flex-shrink-0 w-10 h-10 sm:w-12 sm:h-12 ${style.badgeBg} rounded-full flex items-center justify-center ${style.badgeText} font-bold text-base sm:text-lg md:text-xl`} style={{ fontFamily: '"din-condensed", sans-serif' }}>
-                      {contributor.position}
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <div className={`text-sm sm:text-base md:text-lg font-bold ${style.textColor} truncate sm:whitespace-normal`} style={{ fontFamily: '"din-condensed", sans-serif' }}>
-                        {contributor.name}
-                      </div>
-                      <div className="text-xs sm:text-sm text-gray-300">{style.label}</div>
-                    </div>
+          {/* Previous Campaign Contributors */}
+          <div className="mt-8 pt-6 border-t border-white/5">
+            <h4 className="text-xs text-gray-500 uppercase tracking-widest font-bold mb-4 font-sans">Top Contributors</h4>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              {previousFundraising.contributors.map((contributor) => (
+                <div key={contributor.position} className="flex items-center gap-3 bg-white/5 border border-white/5 p-3 rounded-xl hover:border-canary/30 hover:bg-white/10 transition-colors duration-300">
+                  {/* Position Badge */}
+                  <div className={`w-8 h-8 flex-shrink-0 flex items-center justify-center rounded-full font-bold text-sm ${contributor.position === 1 ? 'bg-canary text-black shadow-[0_0_10px_rgba(255,255,0,0.4)]' : contributor.position === 2 ? 'bg-gray-400 text-white' : 'bg-[#C5B358] text-white'}`} style={{ fontFamily: '"din-condensed", sans-serif' }}>
+                    #{contributor.position}
                   </div>
-                  <div className="text-left sm:text-right w-full sm:w-auto flex-shrink-0">
-                    <div className={`text-lg sm:text-xl md:text-2xl font-bold ${style.textColor}`} style={{ fontFamily: '"din-condensed", sans-serif' }}>
+                  {/* Info Wrapper */}
+                  <div className="flex-1 min-w-0">
+                    <div className="text-white text-base tracking-wide font-bold truncate mb-0.5" style={{ fontFamily: '"din-condensed", sans-serif' }}>
+                      {contributor.name}
+                    </div>
+                    <div className="text-canary text-xs font-bold">
                       PKR {contributor.amount.toLocaleString()}
                     </div>
                   </div>
                 </div>
-              );
-            })}
-
-            {/* Show empty slots for current fundraising if less than 3 contributors */}
-            {isCurrent && fundraising.contributors.length < 3 && (
-              <>
-                {fundraising.contributors.length < 2 && (
-                  <div className="bg-gradient-to-r from-white/5 to-white/2 border-2 border-gray-600 border-dashed rounded-xl p-4 sm:p-5 md:p-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-4 opacity-50">
-                    <div className="flex items-center gap-3 sm:gap-4 w-full sm:w-auto">
-                      <div className="flex-shrink-0 w-10 h-10 sm:w-12 sm:h-12 bg-gray-600 rounded-full flex items-center justify-center text-white font-bold text-base sm:text-lg md:text-xl" style={{ fontFamily: '"din-condensed", sans-serif' }}>
-                        2
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <div className="text-sm sm:text-base md:text-lg font-bold text-gray-400 truncate sm:whitespace-normal" style={{ fontFamily: '"din-condensed", sans-serif' }}>
-                          —
-                        </div>
-                        <div className="text-xs sm:text-sm text-gray-500">Second Place</div>
-                      </div>
-                    </div>
-                    <div className="text-left sm:text-right w-full sm:w-auto flex-shrink-0">
-                      <div className="text-lg sm:text-xl md:text-2xl font-bold text-gray-400" style={{ fontFamily: '"din-condensed", sans-serif' }}>
-                        —
-                      </div>
-                    </div>
-                  </div>
-                )}
-                {fundraising.contributors.length < 3 && (
-                  <div className="bg-gradient-to-r from-white/5 to-white/2 border-2 border-gray-600 border-dashed rounded-xl p-4 sm:p-5 md:p-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-4 opacity-50">
-                    <div className="flex items-center gap-3 sm:gap-4 w-full sm:w-auto">
-                      <div className="flex-shrink-0 w-10 h-10 sm:w-12 sm:h-12 bg-gray-600 rounded-full flex items-center justify-center text-white font-bold text-base sm:text-lg md:text-xl" style={{ fontFamily: '"din-condensed", sans-serif' }}>
-                        3
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <div className="text-sm sm:text-base md:text-lg font-bold text-gray-400 truncate sm:whitespace-normal" style={{ fontFamily: '"din-condensed", sans-serif' }}>
-                          —
-                        </div>
-                        <div className="text-xs sm:text-sm text-gray-500">Third Place</div>
-                      </div>
-                    </div>
-                    <div className="text-left sm:text-right w-full sm:w-auto flex-shrink-0">
-                      <div className="text-lg sm:text-xl md:text-2xl font-bold text-gray-400" style={{ fontFamily: '"din-condensed", sans-serif' }}>
-                        —
-                      </div>
-                    </div>
-                  </div>
-                )}
-              </>
-            )}
-          </div>
-        </div>
-
-        {/* Thank You Section - only for completed fundraisings */}
-        {fundraising.isCompleted && (
-          <div className="bg-white border-2 border-canary rounded-2xl p-6 sm:p-8 lg:p-12 mb-12 text-center shadow-2xl">
-            <div className="max-w-3xl mx-auto">
-              <div className="text-4xl sm:text-5xl md:text-6xl mb-4">🙏</div>
-              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-racing-green mb-4 sm:mb-6" style={{ fontFamily: '"din-condensed", sans-serif' }}>
-                THANK YOU!
-              </h2>
-              <p className="text-base sm:text-lg md:text-xl text-racing-green mb-4 sm:mb-6 leading-relaxed font-medium">
-                We are overwhelmed with gratitude for your incredible generosity and support.
-                Thanks to amazing contributors like you, we have successfully reached and exceeded
-                our fundraising goal!
-              </p>
-              <p className="text-base sm:text-lg text-gray-700 font-semibold leading-relaxed">
-                Your contributions will help us bring the energy and passion to the stadium,
-                creating an unforgettable atmosphere for Pakistan football. Together, we are making
-                history and supporting our team with unwavering dedication.
-              </p>
-              <div className="mt-6 sm:mt-8 text-3xl sm:text-4xl">
-                🎉 🇵🇰 ⚽ 🎉
-              </div>
-            </div>
-          </div>
-        )}
-      </div>
-    );
-  };
-
-  return (
-    <div className="font-sans min-h-screen bg-dark-fern">
-      <Header />
-
-      {/* Main Content */}
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-20">
-        {/* Header Section */}
-        <div className="text-center mb-12 sm:mb-16">
-          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6" style={{ fontFamily: '"din-condensed", sans-serif' }}>
-            FUNDRAISING
-            <br />
-            <span className="text-canary">FOR UPCOMING MATCH</span>
-          </h1>
-          <p className="text-lg sm:text-xl text-gray-200 max-w-3xl mx-auto">
-            Help us bring the energy! We&apos;re raising funds for smoke bombs, placards and other stuff to create an electrifying atmosphere at the upcoming Pakistan vs Myanmar match.
-          </p>
-        </div>
-
-        {/* Current Fundraising Section */}
-        {renderFundraisingSection(currentFundraising, true)}
-
-        {/* Previous Fundraisings Section */}
-        <div className="mt-16 mb-12">
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-8 text-center" style={{ fontFamily: '"din-condensed", sans-serif' }}>
-            PREVIOUS FUNDRAISINGS
-          </h2>
-          {renderFundraisingSection(previousFundraising, false)}
-        </div>
-
-        {/* Bank Details Section */}
-        <div className="bg-white border-2 border-dell rounded-2xl p-6 sm:p-8 mb-12">
-          <h3 className="text-2xl sm:text-3xl font-bold text-racing-green mb-6 text-center" style={{ fontFamily: '"din-condensed", sans-serif' }}>
-            Sada Pay Account Details
-          </h3>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {/* Account Holder */}
-            <div className="bg-gray-50 p-4 rounded-lg">
-              <div className="text-sm text-gray-600 mb-2">Account Holder</div>
-              <div className="text-lg font-semibold text-racing-green flex items-center justify-between">
-                <span>Usama Mushtaq Bhutta</span>
-                <button
-                  onClick={() => copyToClipboard('Usama Mushtaq Bhutta')}
-                  className="text-dell hover:text-la-palma transition-colors"
-                >
-                  📋
-                </button>
-              </div>
-            </div>
-
-            {/* Account Number */}
-            <div className="bg-gray-50 p-4 rounded-lg">
-              <div className="text-sm text-gray-600 mb-2">Account Number</div>
-              <div className="text-lg font-semibold text-racing-green flex items-center justify-between">
-                <span>03359169165</span>
-                <button
-                  onClick={() => copyToClipboard('03359169165')}
-                  className="text-dell hover:text-la-palma transition-colors"
-                >
-                  📋
-                </button>
-              </div>
-            </div>
-
-            {/* IBAN */}
-            <div className="bg-gray-50 p-4 rounded-lg md:col-span-2">
-              <div className="text-sm text-gray-600 mb-2">IBAN</div>
-              <div className="text-lg font-semibold text-racing-green flex items-center justify-between">
-                <span className="break-all">PK77SADA0000003359169165</span>
-                <button
-                  onClick={() => copyToClipboard('PK77SADA0000003359169165')}
-                  className="text-dell hover:text-la-palma transition-colors ml-2 flex-shrink-0"
-                >
-                  📋
-                </button>
-              </div>
+              ))}
             </div>
           </div>
 
-          <div className="mt-6 p-4 bg-canary bg-opacity-20 rounded-lg">
-            <p className="text-sm text-racing-green text-center">
-              <strong>Note:</strong> Please mention &quot;Fundraising&quot; in the transaction description when making your contribution.
-            </p>
-          </div>
         </div>
 
-        {/* Call to Action */}
-        <div className="text-center">
-          <div className="bg-gradient-to-r from-dell to-la-palma text-white p-6 sm:p-8 rounded-2xl">
-            <h3 className="text-xl sm:text-2xl font-bold mb-4" style={{ fontFamily: '"din-condensed", sans-serif' }}>
-              LET&apos;S MAKE SOME NOISE!
-            </h3>
-            <p className="text-sm sm:text-base mb-6">
-              Every contribution brings us closer to creating an unforgettable atmosphere at the match.
-              Help us reach our goal and support Pakistan football!
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <a
-                href="https://forms.gle/xek7ovwUwodKYrkA7"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="bg-canary text-dark-fern hover:bg-yellow-400 hover:scale-105 font-bold py-3 px-6 rounded-lg transition-all duration-300 uppercase tracking-wide"
-                style={{ fontFamily: '"din-condensed", sans-serif' }}
-              >
-                JOIN ULTRA SHAHEENS
-              </a>
-              <button
-                onClick={() => copyToClipboard('PK77SADA0000003359169165')}
-                className="bg-transparent border-2 border-canary text-canary hover:bg-canary hover:text-dark-fern font-bold py-3 px-6 rounded-lg transition-all duration-300 uppercase tracking-wide"
-                style={{ fontFamily: '"din-condensed", sans-serif' }}
-              >
-                COPY IBAN
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
+      </main>
 
       <Footer />
     </div>

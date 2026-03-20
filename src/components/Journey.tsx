@@ -1,7 +1,121 @@
-"use client";
+'use client';
 
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
+
+const MilestoneRow = ({ milestone, index, total }: { milestone: any, index: number, total: number }) => {
+  const ref = useRef<HTMLDivElement>(null);
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+        }
+      },
+      { threshold: 0.15, rootMargin: '0px 0px -50px 0px' }
+    );
+    if (ref.current) observer.observe(ref.current);
+    return () => observer.disconnect();
+  }, []);
+
+  // Card & Image Animation Class: Slides in gracefully
+  const slideClass = isVisible
+    ? 'opacity-100 translate-x-0 translate-y-0'
+    : `opacity-0 translate-y-16 lg:translate-y-0 ${milestone.isLeft ? 'lg:-translate-x-20' : 'lg:translate-x-20'}`;
+
+  // SVG Zig-Zag Map Line: Stays perfectly stationary, fades in with a heavy delay AFTER cards slide
+  const lineClass = isVisible
+    ? 'opacity-60 transition-opacity duration-1000 delay-[800ms]'
+    : 'opacity-0 transition-opacity duration-300';
+
+  // Connecting Dots: Fade in slightly faster
+  const dotClass = isVisible
+    ? 'opacity-100 transition-opacity duration-[1200ms] delay-300'
+    : 'opacity-0 transition-opacity duration-300';
+
+  return (
+    <div ref={ref} className={`relative flex flex-col lg:flex-row items-center gap-8 lg:gap-16 ${milestone.isLeft ? 'lg:flex-row-reverse' : ''} pl-16 lg:pl-0`}>
+
+      {/* Dashed Map Connecting Line for Mobile */}
+      {index < total - 1 && (
+        <div className={`absolute top-1/2 left-6 h-[calc(100%+4rem)] sm:h-[calc(100%+6rem)] w-[2px] border-l-[3px] border-dashed border-canary/30 -z-10 lg:hidden transform -translate-x-1/2 ${lineClass}`}></div>
+      )}
+
+      {/* Curved Zig-Zag Map Line for Desktop */}
+      {index < total - 1 && (
+        <div className={`hidden lg:block absolute top-[50%] h-[calc(100%+8rem)] w-[40%] -z-10 ${milestone.isLeft ? 'left-1/2' : 'right-1/2'} ${lineClass}`}>
+          <svg className="w-full h-full drop-shadow-[0_0_10px_rgba(255,255,0,0.5)]" preserveAspectRatio="none" viewBox="0 0 100 100">
+            <path
+              d={milestone.isLeft ? "M0,0 C100,0 100,100 0,100" : "M100,0 C0,0 0,100 100,100"}
+              fill="none"
+              stroke="#FFCC00"
+              strokeWidth="1.5"
+              strokeDasharray="6 8"
+              vectorEffect="non-scaling-stroke"
+              strokeLinecap="round"
+            />
+          </svg>
+        </div>
+      )}
+
+      {/* Mobile / Absolute Timeline Dot - Stationary Fade */}
+      <div className={`absolute left-6 top-1/2 lg:static lg:top-auto flex items-center justify-center transform -translate-x-1/2 -translate-y-1/2 lg:translate-x-0 lg:translate-y-0 z-50 flex-shrink-0 ${dotClass}`}>
+        <div className="relative flex items-center justify-center w-8 h-8 lg:w-12 lg:h-12">
+          <div className="absolute inset-0 bg-canary rounded-full animate-ping opacity-30 blur-sm"></div>
+          <div className="w-4 h-4 lg:w-6 lg:h-6 bg-canary rounded-full shadow-[0_0_20px_rgba(255,255,0,0.9)] z-10"></div>
+          <div className="absolute inset-0 border-[3px] border-white/30 rounded-full lg:scale-[1.2]"></div>
+        </div>
+      </div>
+
+      {/* Text Content - Glass Card (Slides in) */}
+      <div className={`flex-1 w-full transition-all duration-[1200ms] cubic-bezier(0.25, 0.46, 0.45, 0.94) ${slideClass} bg-white/5 backdrop-blur-xl border border-white/10 p-6 sm:p-8 lg:p-10 rounded-[2rem] shadow-[0_20px_40px_rgba(0,0,0,0.4)] hover:bg-white/10 hover:border-canary/30 group relative overflow-hidden ${milestone.isLeft ? 'lg:text-right' : 'lg:text-left'}`}>
+        {/* Internal Glow Effect on hover */}
+        <div className="absolute inset-0 bg-gradient-to-tr from-canary/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
+
+        <div className="relative z-10 w-full flex flex-col items-start lg:items-[unset]">
+          {/* Date Tag */}
+          <div className={`inline-flex items-center px-4 py-1.5 rounded-full bg-black/60 border border-white/10 text-canary font-bold tracking-widest text-xs sm:text-sm lg:text-base mb-5 uppercase shadow-inner ${milestone.isLeft ? 'lg:self-end' : 'lg:self-start'}`} style={{ fontFamily: '"din-condensed", sans-serif' }}>
+            {milestone.date}
+          </div>
+
+          <h3 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white mb-4 leading-tight uppercase drop-shadow w-full" style={{ fontFamily: '"din-condensed", sans-serif' }}>
+            {milestone.title}
+          </h3>
+
+          <p className="text-gray-300 leading-relaxed text-sm sm:text-base lg:text-lg drop-shadow-sm w-full">
+            {milestone.description}
+          </p>
+        </div>
+      </div>
+
+      {/* Heroic Image Section (Slides in) */}
+      <div className={`flex-1 w-full transition-all duration-[1200ms] cubic-bezier(0.25, 0.46, 0.45, 0.94) ${slideClass} relative z-20 group perspective-[1000px]`}>
+        <div className="relative w-full h-56 sm:h-72 lg:h-[400px] rounded-[2rem] overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.6)] border border-white/10 group-hover:border-canary/30 transition-all duration-700 transform group-hover:-translate-y-2">
+          <Image
+            src={milestone.image}
+            alt={milestone.title}
+            fill
+            className="object-cover object-center transition-transform duration-[2000ms] ease-out group-hover:scale-110"
+            onError={(e) => {
+              e.currentTarget.src = '/ultra-shaheens-logo.png';
+              e.currentTarget.className = "object-contain object-center scale-50 opacity-20";
+            }}
+          />
+          {/* Gradient Depth Overlay */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-70 group-hover:opacity-100 transition-opacity duration-500"></div>
+
+          {/* Faint Image Chapter Number */}
+          <div className="absolute bottom-4 left-6 sm:bottom-6 sm:left-8 text-white/30 font-bold text-6xl sm:text-7xl lg:text-8xl select-none transition-all duration-500 group-hover:text-canary/80 group-hover:scale-110 drop-shadow-2xl" style={{ fontFamily: '"din-condensed", sans-serif' }}>
+            {String(index + 1).padStart(2, '0')}
+          </div>
+        </div>
+      </div>
+
+    </div>
+  );
+};
 
 const Journey: React.FC = () => {
   const milestones = [
@@ -9,7 +123,7 @@ const Journey: React.FC = () => {
       id: 1,
       date: "November 21st, 2023",
       title: "Beginnings of Ultra Shaheens and First Match",
-      description: "Pakistan's most passionate football fanbase was born. It was founded with a vision to unite football lovers across the nation and create an unforgettable matchday experience.",
+      description: "Pakistan's most passionate football fanbase was officially born. Founded with a powerful vision to unite football lovers across the nation, we created an unforgettable matchday experience from day one.",
       image: "/created-ultra-shaheens.jpg",
       isLeft: true
     },
@@ -17,7 +131,7 @@ const Journey: React.FC = () => {
       id: 2,
       date: "March 21st, 2024",
       title: "Second Official Match as Ultra Shaheens Community",
-      description: "Over 50 passionate fans gathered to cheer for Pakistan in our second official outing. The energy being electric and the atmosphere unforgettable.",
+      description: "Over 50 dedicated fans gathered to cheer for Pakistan during our second official outing. The stadium energy was absolutely electric, making the growing community atmosphere completely unforgettable for everyone.",
       image: "/journey-first-match.jpg",
       isLeft: false
     },
@@ -25,7 +139,7 @@ const Journey: React.FC = () => {
       id: 3,
       date: "June 6th, 2024",
       title: "Pakistan vs Saudi Arabia Match",
-      description: "We built momentum! Our third match saw 100s of supporters join the cause. The community was growing stronger with each game, creating lasting memories and friendships.",
+      description: "We built massive momentum! Our critical third match saw hundreds of roaring supporters join the cause. The community grew rapidly, forging lasting memories and deep football friendships within the stands.",
       image: "/journey-second-match.jpg",
       isLeft: true
     },
@@ -33,130 +147,88 @@ const Journey: React.FC = () => {
       id: 4,
       date: "August 21st, 2025",
       title: "Attended Official PFF Dinner",
-      description: "We were part of a historic moment as our executive committee represented our community at the Pakistan Football Federation's official dinner. We got recognition from the PFF president Mohsen Gillani and new head coach of Pakistan, Nolberto Solano. We had the honor of presenting the ultra shaheens jersey to the new coach.",
+      description: "Our executive committee proudly represented the fanbase at the Pakistan Football Federation's official dinner. We earned true recognition from PFF leadership and presented our jersey to the national head coach.",
       image: "/Journey-ID-4.jpeg",
       isLeft: false
     },
     {
       id: 5,
       date: "October 9th, 2025",
-      title: "Pakistan vs Afghanistan - AFC Asian Cup Qualifiers",
-      description: "Ali Tareen joined the Ultra Shaheens community as we witnessed Pakistan's most dominating performance. The energy was immense as our team delivered an outstanding display, showcasing the true potential of Pakistani football.",
+      title: "Pakistan vs Afghanistan",
+      description: "Ali Tareen joined the Ultra Shaheens stands as we witnessed Pakistan's most dominating performance yet. The immense crowd energy fueled an outstanding display that showcased true Pakistani football potential.",
       image: "/pakistan-vs-afghanistan.jpg",
       isLeft: true
     },
     {
       id: 6,
       date: "November 18th, 2025",
-      title: "Pakistan vs Syria - AFC Asian Cup Qualifiers",
-      description: "We faced a heavy loss but we held our heads high. Ali Tareen joined us again and we got drums beating for the first time in Ultra Shaheens' green stands.",
+      title: "Pakistan vs Syria",
+      description: "Despite a tough result on the pitch, our fans held their heads incredibly high. With drums beating for the very first time, the green stands roared with unyielding national pride.",
       image: "/pakistan-syria-home-match.jpg",
       isLeft: false
     }
   ];
 
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+  const [isHovering, setIsHovering] = useState(false);
+  const sectionRef = useRef<HTMLElement>(null);
+
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => { setMounted(true); }, []);
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLElement>) => {
+    if (!sectionRef.current) return;
+    const rect = sectionRef.current.getBoundingClientRect();
+    setMousePos({
+      x: e.clientX - rect.left,
+      y: e.clientY - rect.top,
+    });
+  };
+
   return (
-    <section id="journey" className="w-full bg-white py-16 sm:py-20 lg:py-24 relative overflow-hidden">
+    <section
+      id="journey"
+      ref={sectionRef}
+      onMouseMove={handleMouseMove}
+      onMouseEnter={() => setIsHovering(true)}
+      onMouseLeave={() => setIsHovering(false)}
+      className="w-full bg-transparent py-16 sm:py-24 lg:py-32 relative overflow-hidden"
+    >
+      {/* Dynamic Background Glows */}
+      <div className="absolute top-[10%] right-[10%] w-[600px] h-[600px] bg-dark-fern/20 rounded-full blur-[150px] pointer-events-none transform translate-y-1/2"></div>
+      <div className="absolute bottom-[20%] left-[10%] w-[500px] h-[500px] bg-canary/10 rounded-full blur-[150px] pointer-events-none transform -translate-y-1/2"></div>
+
+      {/* Global Interactive Tracking Flashlight Overlay */}
+      <div
+        className="pointer-events-none absolute inset-0 z-0 transition-opacity duration-700 ease-in-out mix-blend-overlay"
+        style={{
+          opacity: isHovering && mounted ? 1 : 0,
+          background: mounted ? `radial-gradient(1200px circle at ${mousePos.x}px ${mousePos.y}px, rgba(255, 255, 255, 0.1), transparent 40%)` : 'transparent'
+        }}
+      ></div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+
         {/* Section Header */}
-        <div className="text-center mb-16 sm:mb-20">
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-racing-green mb-6" style={{ fontFamily: '"din-condensed", sans-serif' }}>
-            Our Journey
+        <div className="text-center mb-16 sm:mb-24 lg:mb-32">
+          <h2 className="text-4xl sm:text-5xl lg:text-7xl font-bold text-white mb-6 uppercase tracking-widest drop-shadow-md" style={{ fontFamily: '"din-condensed", sans-serif' }}>
+            OUR <span className="text-canary drop-shadow-[0_0_15px_rgba(255,255,0,0.3)]">STORY</span>
           </h2>
-          <p className="text-lg sm:text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+          <p className="text-base sm:text-lg lg:text-xl text-gray-400 max-w-3xl mx-auto leading-relaxed">
             From humble beginnings to becoming Pakistan&apos;s most passionate football community.
-            Every milestone tells a story of dedication, unity, and unwavering support.
+            Every milestone tells a story of <strong className="text-white">dedication</strong>, <strong className="text-white">unity</strong>, and unwavering support.
           </p>
         </div>
 
-        {/* Timeline */}
+        {/* Timeline Container */}
         <div className="relative">
-          {/* Central Line - Desktop Only */}
-          <div className="absolute left-1/2 transform -translate-x-1/2 top-0 bottom-0 w-2 bg-dell hidden lg:block z-0"></div>
-
-          {/* Mobile Timeline Line - Hidden */}
-          <div className="absolute left-1/2 transform -translate-x-1/2 top-0 bottom-0 w-2 bg-dell hidden z-0"></div>
-
-          {/* Timeline Items */}
-          <div className="space-y-12 sm:space-y-16 lg:space-y-24 relative z-20">
+          {/* Timeline Items List */}
+          <div className="space-y-16 sm:space-y-24 lg:space-y-32 relative z-20">
             {milestones.map((milestone, index) => (
-              <div key={milestone.id} className={`flex flex-col lg:flex-row items-center gap-6 sm:gap-8 lg:gap-12 ${milestone.isLeft ? 'lg:flex-row-reverse' : ''}`}>
-                {/* Content */}
-                <div className={`flex-1 w-full relative z-20 bg-transparent ${milestone.isLeft ? 'lg:text-right' : 'lg:text-left'}`}>
-                  {/* Background Logo for each text section */}
-                  <div className="absolute inset-0 flex items-center justify-center opacity-10 pointer-events-none z-0">
-                    <Image
-                      src="/ultra-shaheens-logo.png"
-                      alt="Ultra Shaheens Logo Background"
-                      width={192}
-                      height={112}
-                      className="h-96 sm:h-[500px] lg:h-[600px] w-auto object-contain"
-                    />
-                  </div>
-
-                  <div className={`max-w-lg mx-auto lg:mx-0 relative z-10 ${milestone.isLeft ? 'lg:ml-auto' : 'lg:mr-auto'}`}>
-                    {/* Date */}
-                    <div className="inline-flex items-center px-3 sm:px-4 py-2 rounded-full bg-canary text-racing-green font-bold text-xs sm:text-sm lg:text-base mb-3 sm:mb-4" style={{ fontFamily: '"din-condensed", sans-serif' }}>
-                      {milestone.date}
-                    </div>
-
-                    {/* Title */}
-                    <h3 className="text-xl sm:text-2xl lg:text-3xl xl:text-4xl font-bold text-racing-green mb-3 sm:mb-4 leading-tight" style={{ fontFamily: '"din-condensed", sans-serif' }}>
-                      {milestone.title}
-                    </h3>
-
-                    {/* Description */}
-                    <p className="text-gray-700 leading-relaxed text-sm sm:text-base lg:text-lg">
-                      {milestone.description}
-                    </p>
-                  </div>
-                </div>
-
-                {/* Timeline Dot - Mobile */}
-                <div className="relative z-50 flex-shrink-0 lg:hidden">
-                  <div className="w-4 h-4 bg-dell rounded-full border-2 border-white shadow-lg"></div>
-                  <div className="absolute inset-0 w-4 h-4 bg-canary rounded-full animate-ping opacity-20"></div>
-                </div>
-
-                {/* Timeline Dot - Desktop */}
-                <div className="relative z-50 flex-shrink-0 hidden lg:block">
-                  <div className="w-6 h-6 bg-dell rounded-full border-4 border-white shadow-lg"></div>
-                  <div className="absolute inset-0 w-6 h-6 bg-canary rounded-full animate-ping opacity-20"></div>
-                </div>
-
-                {/* Image */}
-                <div className="flex-1 w-full relative z-20 bg-transparent">
-                  <div className="relative w-full h-48 sm:h-64 md:h-80 lg:h-96 rounded-xl sm:rounded-2xl overflow-hidden shadow-xl sm:shadow-2xl group">
-                    <Image
-                      src={milestone.image}
-                      alt={milestone.title}
-                      width={600}
-                      height={400}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                      onError={(e) => {
-                        console.log('Image failed to load:', milestone.image);
-                        e.currentTarget.src = '/ultra-shaheens-logo.png';
-                      }}
-                    />
-
-                    {/* Overlay */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-
-                    {/* Green Hover Overlay */}
-                    <div className="absolute inset-0 bg-dell opacity-0 group-hover:opacity-30 transition-opacity duration-300"></div>
-
-                    {/* Image Number */}
-                    <div className="absolute top-3 right-3 sm:top-4 sm:right-4 bg-dell text-white font-bold text-sm sm:text-base lg:text-lg px-2 py-1 sm:px-3 sm:py-1 rounded-full shadow-lg" style={{ fontFamily: '"din-condensed", sans-serif' }}>
-                      {String(index + 1).padStart(2, '0')}
-                    </div>
-                  </div>
-                </div>
-              </div>
+              <MilestoneRow key={milestone.id} milestone={milestone} index={index} total={milestones.length} />
             ))}
           </div>
         </div>
-
       </div>
     </section>
   );

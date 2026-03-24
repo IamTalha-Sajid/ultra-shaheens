@@ -3,11 +3,8 @@
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useRouter, usePathname } from 'next/navigation';
 
 const Header: React.FC = () => {
-  const router = useRouter();
-  const pathname = usePathname();
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState<boolean>(false);
   const [mobileDropdown, setMobileDropdown] = useState<string | null>(null);
@@ -45,38 +42,6 @@ const Header: React.FC = () => {
       setIsClosing(false);
       setMobileDropdown(null);
     }, 300);
-  };
-
-  const handleScrollToSection = (sectionId: string) => {
-    // Close mobile menu if open
-    if (mobileMenuOpen) {
-      handleCloseMobileMenu();
-    }
-
-    // Scroll function
-    const scrollToElement = () => {
-      const element = document.getElementById(sectionId);
-      if (element) {
-        // Get the exact position of the element's top edge
-        const elementTop = element.offsetTop;
-        // Scroll to the very top of the section
-        window.scrollTo({
-          top: elementTop,
-          behavior: 'smooth'
-        });
-      }
-    };
-
-    // Check if we're on the home page
-    if (pathname !== '/') {
-      // Navigate to home page with hash, then scroll after navigation
-      router.push('/#' + sectionId);
-      // Wait for navigation to complete, then scroll
-      setTimeout(scrollToElement, 300);
-    } else {
-      // Smooth scroll to section immediately
-      scrollToElement();
-    }
   };
 
   return (
@@ -199,14 +164,15 @@ const Header: React.FC = () => {
                 </button>
                 {/* Glass Dropdown */}
                 <div className={`absolute top-full left-1/2 -translate-x-1/2 pt-3 w-56 z-50 transition-all duration-300 origin-top ${activeDropdown === 'membership' ? 'opacity-100 scale-100 visible' : 'opacity-0 scale-95 invisible'}`}>
-                  <div className="rounded-2xl bg-black/50 backdrop-blur-2xl border border-white/20 shadow-[0_8px_32px_0_rgba(0,0,0,0.5)] overflow-hidden">
-                    <div className="flex flex-col">
-                      <a href="https://forms.gle/xek7ovwUwodKYrkA7" target="_blank" rel="noopener noreferrer" className="px-5 py-4 text-sm text-white hover:text-canary hover:bg-white/10 transition-all duration-200 font-semibold uppercase tracking-wide">
+                  <div className="rounded-3xl bg-[rgba(8,33,24,0.9)] backdrop-blur-xl border border-white/20 shadow-[0_8px_32px_0_rgba(0,0,0,0.45)] overflow-hidden relative">
+                    <div className="absolute inset-0 bg-gradient-to-r from-white/10 to-transparent opacity-30 pointer-events-none rounded-3xl"></div>
+                    <div className="flex flex-col relative z-10">
+                      <a href="https://forms.gle/xek7ovwUwodKYrkA7" target="_blank" rel="noopener noreferrer" className="px-5 py-4 text-sm text-white bg-white/10 hover:text-canary hover:bg-white/20 transition-all duration-200 font-semibold uppercase tracking-wide">
                         <span style={{ fontFamily: '"din-condensed", sans-serif' }}>Become a member</span>
                       </a>
-                      <div className="px-5 py-4 text-sm text-gray-400 font-semibold uppercase tracking-wide border-t border-white/10">
+                      <div className="px-5 py-4 text-sm text-gray-200 font-semibold uppercase tracking-wide border-t border-white/20 bg-white/10">
                         <span style={{ fontFamily: '"din-condensed", sans-serif' }}>Members rewards</span>
-                        <span className="block text-xs mt-1 text-gray-400/80 capitalize tracking-normal italic font-sans">(Coming soon)</span>
+                        <span className="block text-xs mt-1 text-gray-300/90 capitalize tracking-normal italic font-sans">(Coming soon)</span>
                       </div>
                     </div>
                   </div>
@@ -231,10 +197,10 @@ const Header: React.FC = () => {
                 Merchandise
               </Link>
 
-              {/* Our Story */}
-              <button onClick={() => handleScrollToSection('journey')} className="text-white hover:text-canary hover:drop-shadow-[0_0_8px_rgba(255,255,0,0.5)] font-semibold transition-all duration-300 flex items-center space-x-1 uppercase tracking-wider text-sm lg:text-base border-b-2 border-transparent hover:border-canary py-1" style={{ fontFamily: '"din-condensed", sans-serif' }}>
-                Our Story
-              </button>
+              {/* Our Dugout */}
+              <Link href="/our-dugout" className="text-white hover:text-canary hover:drop-shadow-[0_0_8px_rgba(255,255,0,0.5)] font-semibold transition-all duration-300 flex items-center space-x-1 uppercase tracking-wider text-sm lg:text-base border-b-2 border-transparent hover:border-canary py-1" style={{ fontFamily: '"din-condensed", sans-serif' }}>
+                Our Dugout
+              </Link>
 
               {/* About Us Dropdown */}
               <div className="relative" onMouseEnter={() => handleMouseEnter('about')} onMouseLeave={handleMouseLeave}>
@@ -243,19 +209,20 @@ const Header: React.FC = () => {
                   <svg className={`w-4 h-4 transition-transform duration-300 ${activeDropdown === 'about' ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
                 </button>
                 <div className={`absolute top-full right-0 pt-3 w-48 z-50 transition-all duration-300 origin-top ${activeDropdown === 'about' ? 'opacity-100 scale-100 visible' : 'opacity-0 scale-95 invisible'}`}>
-                  <div className="rounded-2xl bg-black/50 backdrop-blur-2xl border border-white/20 shadow-[0_8px_32px_0_rgba(0,0,0,0.5)] overflow-hidden">
-                    <div className="flex flex-col">
-                      <Link href="/about-us" className="px-5 py-3 text-sm text-white hover:text-canary hover:bg-white/10 transition-all duration-200 font-semibold uppercase tracking-wide">
+                  <div className="rounded-3xl bg-[rgba(8,33,24,0.9)] backdrop-blur-xl border border-white/20 shadow-[0_8px_32px_0_rgba(0,0,0,0.45)] overflow-hidden relative">
+                    <div className="absolute inset-0 bg-gradient-to-r from-white/10 to-transparent opacity-30 pointer-events-none rounded-3xl"></div>
+                    <div className="flex flex-col relative z-10">
+                      <Link href="/about-us" className="px-5 py-3 text-sm text-white bg-white/10 hover:text-canary hover:bg-white/20 transition-all duration-200 font-semibold uppercase tracking-wide">
                         <span style={{ fontFamily: '"din-condensed", sans-serif' }}>Who are we?</span>
-                        <span className="block text-xs mt-0.5 text-gray-400/80 capitalize tracking-normal italic font-sans">(Coming soon)</span>
+                        <span className="block text-xs mt-0.5 text-gray-300/90 capitalize tracking-normal italic font-sans">(Coming soon)</span>
                       </Link>
-                      <Link href="/code-of-conduct" className="px-5 py-3 text-sm text-white hover:text-canary hover:bg-white/10 transition-all duration-200 font-semibold uppercase tracking-wide border-t border-white/10">
+                      <Link href="/code-of-conduct" className="px-5 py-3 text-sm text-white bg-white/10 hover:text-canary hover:bg-white/20 transition-all duration-200 font-semibold uppercase tracking-wide border-t border-white/20">
                         <span style={{ fontFamily: '"din-condensed", sans-serif' }}>Code of Conduct</span>
-                        <span className="block text-xs mt-0.5 text-gray-400/80 capitalize tracking-normal italic font-sans">(Coming soon)</span>
+                        <span className="block text-xs mt-0.5 text-gray-300/90 capitalize tracking-normal italic font-sans">(Coming soon)</span>
                       </Link>
-                      <Link href="/faq" className="px-5 py-3 text-sm text-white hover:text-canary hover:bg-white/10 transition-all duration-200 font-semibold uppercase tracking-wide border-t border-white/10">
+                      <Link href="/faq" className="px-5 py-3 text-sm text-white bg-white/10 hover:text-canary hover:bg-white/20 transition-all duration-200 font-semibold uppercase tracking-wide border-t border-white/20">
                         <span style={{ fontFamily: '"din-condensed", sans-serif' }}>FAQs</span>
-                        <span className="block text-xs mt-0.5 text-gray-400/80 capitalize tracking-normal italic font-sans">(Coming soon)</span>
+                        <span className="block text-xs mt-0.5 text-gray-300/90 capitalize tracking-normal italic font-sans">(Coming soon)</span>
                       </Link>
                     </div>
                   </div>
@@ -301,34 +268,34 @@ const Header: React.FC = () => {
 
               <div className="flex-1 overflow-y-auto px-6 py-6 space-y-4 relative z-10 custom-scrollbar">
                 {/* Mobile Dropdowns and links upgraded with Glass styling */}
-                <div className="rounded-xl border border-white/10 bg-white/5 overflow-hidden">
+                <div className="rounded-xl border border-white/20 bg-white/15 backdrop-blur-xl overflow-hidden">
                   <button className="w-full text-left text-white hover:text-canary font-semibold uppercase tracking-widest text-lg flex items-center justify-between p-4" style={{ fontFamily: '"din-condensed", sans-serif' }} onClick={() => setMobileDropdown(mobileDropdown === 'membership' ? null : 'membership')}>
                     <span>Membership</span>
                     <svg className={`w-4 h-4 transition-transform duration-300 ${mobileDropdown === 'membership' ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
                   </button>
                   {mobileDropdown === 'membership' && (
-                    <div className="px-4 pb-4 bg-black/30 space-y-2">
+                    <div className="px-4 pb-4 bg-black/35 space-y-2">
                       <a href="https://forms.gle/xek7ovwUwodKYrkA7" target="_blank" rel="noopener noreferrer" className="block text-white/80 hover:text-canary py-2 transition-colors">Become a member</a>
                       <span className="block text-white/40 py-2 italic">Members rewards (Coming soon)</span>
                     </div>
                   )}
                 </div>
 
-                <Link href="/blogs" className="block w-full p-4 rounded-xl border border-white/10 bg-white/5 text-white hover:text-canary font-semibold uppercase tracking-widest text-lg" style={{ fontFamily: '"din-condensed", sans-serif' }}>
+                <Link href="/blogs" className="block w-full p-4 rounded-xl border border-white/20 bg-white/15 backdrop-blur-xl text-white hover:text-canary font-semibold uppercase tracking-widest text-lg" style={{ fontFamily: '"din-condensed", sans-serif' }}>
                   Blogs
                   <span className="block text-xs mt-1 text-gray-400/80 capitalize tracking-normal italic font-sans">(Coming soon)</span>
                 </Link>
-                <Link href="/fundraising" className="block w-full p-4 rounded-xl border border-white/10 bg-white/5 text-white hover:text-canary font-semibold uppercase tracking-widest text-lg" style={{ fontFamily: '"din-condensed", sans-serif' }}>Fundraising</Link>
-                <Link href="/merchandise" className="block w-full p-4 rounded-xl border border-white/10 bg-white/5 text-white hover:text-canary font-semibold uppercase tracking-widest text-lg" style={{ fontFamily: '"din-condensed", sans-serif' }}>Merchandise</Link>
-                <button onClick={() => handleScrollToSection('journey')} className="block w-full text-left p-4 rounded-xl border border-white/10 bg-white/5 text-white hover:text-canary font-semibold uppercase tracking-widest text-lg" style={{ fontFamily: '"din-condensed", sans-serif' }}>Our Story</button>
+                <Link href="/fundraising" className="block w-full p-4 rounded-xl border border-white/20 bg-white/15 backdrop-blur-xl text-white hover:text-canary font-semibold uppercase tracking-widest text-lg" style={{ fontFamily: '"din-condensed", sans-serif' }}>Fundraising</Link>
+                <Link href="/merchandise" className="block w-full p-4 rounded-xl border border-white/20 bg-white/15 backdrop-blur-xl text-white hover:text-canary font-semibold uppercase tracking-widest text-lg" style={{ fontFamily: '"din-condensed", sans-serif' }}>Merchandise</Link>
+                <Link href="/our-dugout" className="block w-full text-left p-4 rounded-xl border border-white/20 bg-white/15 backdrop-blur-xl text-white hover:text-canary font-semibold uppercase tracking-widest text-lg" style={{ fontFamily: '"din-condensed", sans-serif' }}>Our Dugout</Link>
 
-                <div className="rounded-xl border border-white/10 bg-white/5 overflow-hidden">
+                <div className="rounded-xl border border-white/20 bg-white/15 backdrop-blur-xl overflow-hidden">
                   <button className="w-full text-left text-white hover:text-canary font-semibold uppercase tracking-widest text-lg flex items-center justify-between p-4" style={{ fontFamily: '"din-condensed", sans-serif' }} onClick={() => setMobileDropdown(mobileDropdown === 'about' ? null : 'about')}>
                     <span>About Us</span>
                     <svg className={`w-4 h-4 transition-transform duration-300 ${mobileDropdown === 'about' ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
                   </button>
                   {mobileDropdown === 'about' && (
-                    <div className="px-4 pb-4 bg-black/30 space-y-2">
+                    <div className="px-4 pb-4 bg-black/35 space-y-2">
                       <Link href="/about-us" className="block py-2 transition-colors">
                         <span className="text-white/80 hover:text-canary">Who are we?</span>
                         <span className="block text-xs text-white/40 italic font-sans capitalize"> (Coming soon)</span>

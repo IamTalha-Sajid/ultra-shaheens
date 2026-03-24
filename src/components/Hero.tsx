@@ -87,12 +87,13 @@ const Hero: React.FC = () => {
         {/* Glassmorphic Card (Centered & Interactive) */}
         <div
           ref={cardRef}
-          className="bg-black/40 backdrop-blur-2xl border border-white/20 p-8 sm:p-10 md:p-14 rounded-[2rem] shadow-[0_20px_40px_rgba(0,0,0,0.6)] w-full md:w-4/5 lg:w-3/4 max-w-4xl relative overflow-hidden flex flex-col items-center will-change-transform"
+          className="bg-white/10 backdrop-blur-xl border border-white/20 p-8 sm:p-10 md:p-14 rounded-[2rem] shadow-[0_8px_32px_0_rgba(0,0,0,0.3)] w-full md:w-4/5 lg:w-3/4 max-w-4xl relative overflow-hidden flex flex-col items-center will-change-transform"
           style={{
             transform: calculateCardTransform(),
             transition: isHovering ? 'transform 0.1s cubic-bezier(0.25, 0.46, 0.45, 0.94)' : 'transform 0.7s cubic-bezier(0.23, 1, 0.32, 1)'
           }}
         >
+          <div className="absolute inset-0 bg-gradient-to-r from-white/5 to-transparent opacity-50 pointer-events-none"></div>
 
           {/* Reactive Inner Canary Glow specific to the card */}
           <div

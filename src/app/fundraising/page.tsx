@@ -180,11 +180,11 @@ const FundraisingPage: React.FC = () => {
           </div>
         </div>
 
-        {/* BANK DETAILS / HOW TO DONATE GLASS CARD */}
+        {/* BANK DETAILS / HOW TO CONTRIBUTE GLASS CARD */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-20 relative z-10">
           <div className="lg:col-span-7 bg-white/5 backdrop-blur-xl border border-white/10 p-8 sm:p-10 rounded-3xl shadow-xl">
             <h3 className="text-2xl sm:text-3xl font-bold text-white mb-6 uppercase tracking-widest" style={{ fontFamily: '"din-condensed", sans-serif' }}>
-              Donate directly via <span className="text-canary">Nayapay</span>
+              Contribute directly via <span className="text-canary">Nayapay</span>
             </h3>
 
             <div className="space-y-4">
@@ -219,7 +219,7 @@ const FundraisingPage: React.FC = () => {
                 </button>
               </div>
 
-              <p className="text-xs text-gray-400 mt-4 italic">* Please mention "Fundraising" in your transaction narrative.</p>
+              <p className="text-xs text-gray-400 mt-4 italic">* Please mention "Fundraising" in your transaction narrative and send the screenshot of the transaction to our WhatsApp number (03359169165).</p>
             </div>
           </div>
 

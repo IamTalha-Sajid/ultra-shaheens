@@ -184,7 +184,7 @@ const FundraisingPage: React.FC = () => {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-20 relative z-10">
           <div className="lg:col-span-7 bg-white/5 backdrop-blur-xl border border-white/10 p-8 sm:p-10 rounded-3xl shadow-xl">
             <h3 className="text-2xl sm:text-3xl font-bold text-white mb-6 uppercase tracking-widest" style={{ fontFamily: '"din-condensed", sans-serif' }}>
-              Donate directly via <span className="text-canary">Sada Pay</span>
+              Donate directly via <span className="text-canary">Nayapay</span>
             </h3>
 
             <div className="space-y-4">
@@ -211,9 +211,9 @@ const FundraisingPage: React.FC = () => {
               <div className="bg-black/30 p-5 rounded-2xl flex flex-col sm:flex-row items-start sm:items-center justify-between group border border-transparent hover:border-canary/20 transition-all duration-300">
                 <div className="overflow-hidden">
                   <div className="text-xs text-gray-400 uppercase tracking-widest mb-1 font-bold">IBAN (International / Interbank)</div>
-                  <div className="text-sm sm:text-base md:text-lg text-canary font-medium break-all tracking-wider">PK77SADA0000003359169165</div>
+                  <div className="text-sm sm:text-base md:text-lg text-canary font-medium break-all tracking-wider">PK16NAYA1234503359169165</div>
                 </div>
-                <button onClick={() => copyToClipboard('PK77SADA0000003359169165')} className="mt-3 sm:mt-0 p-3 bg-canary text-black hover:bg-white rounded-lg transition-colors duration-300 flex-shrink-0 font-bold flex items-center gap-2 text-sm uppercase" style={{ fontFamily: '"din-condensed", sans-serif' }}>
+                <button onClick={() => copyToClipboard('PK16NAYA1234503359169165')} className="mt-3 sm:mt-0 p-3 bg-canary text-black hover:bg-white rounded-lg transition-colors duration-300 flex-shrink-0 font-bold flex items-center gap-2 text-sm uppercase" style={{ fontFamily: '"din-condensed", sans-serif' }}>
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg>
                   Copy IBAN
                 </button>

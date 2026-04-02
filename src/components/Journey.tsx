@@ -122,7 +122,7 @@ const Journey: React.FC = () => {
     {
       id: 1,
       date: "November 21st, 2023",
-      title: "Beginnings of Ultra Shaheens and First Match",
+      title: "Beginnings of Ultra Shaheens",
       description: "Pakistan's most passionate football fanbase was officially born. Founded with a powerful vision to unite football lovers across the nation, we created an unforgettable matchday experience from day one.",
       image: "/created-ultra-shaheens.jpg",
       isLeft: true
@@ -130,7 +130,7 @@ const Journey: React.FC = () => {
     {
       id: 2,
       date: "March 21st, 2024",
-      title: "Second Official Match as Ultra Shaheens Community",
+      title: "Pakistan vs Jordan",
       description: "Over 50 dedicated fans gathered to cheer for Pakistan during our second official outing. The stadium energy was absolutely electric, making the growing community atmosphere completely unforgettable for everyone.",
       image: "/journey-first-match.jpg",
       isLeft: false
@@ -138,33 +138,51 @@ const Journey: React.FC = () => {
     {
       id: 3,
       date: "June 6th, 2024",
-      title: "Pakistan vs Saudi Arabia Match",
+      title: "Pakistan vs Saudi Arabia",
       description: "We built massive momentum! Our critical third match saw hundreds of roaring supporters join the cause. The community grew rapidly, forging lasting memories and deep football friendships within the stands.",
       image: "/journey-second-match.jpg",
       isLeft: true
     },
     {
       id: 4,
-      date: "August 21st, 2025",
-      title: "Attended Official PFF Dinner",
-      description: "Our executive committee proudly represented the fanbase at the Pakistan Football Federation's official dinner. We earned true recognition from PFF leadership and presented our jersey to the national head coach.",
-      image: "/Journey-ID-4.jpeg",
+      date: "March 25th, 2025",
+      title: "Pakistan vs Syria",
+      description:
+        "Ultra Shaheens met in Islamabad for an away-match screening of Pakistan vs Jordan. Under the lights with our banner and our colours, we brought stadium energy to the capital — chants, pride, and one more unforgettable night together.",
+      image: "/images/journey-pakistan-vs-jordan-screening.png",
       isLeft: false
     },
     {
       id: 5,
-      date: "October 9th, 2025",
-      title: "Pakistan vs Afghanistan",
-      description: "Ali Tareen joined the Ultra Shaheens stands as we witnessed Pakistan's most dominating performance yet. The immense crowd energy fueled an outstanding display that showcased true Pakistani football potential.",
-      image: "/pakistan-vs-afghanistan.jpg",
+      date: "August 21st, 2025",
+      title: "Pakistan Football Federation Dinner",
+      description: "Our executive committee proudly represented the fanbase at the Pakistan Football Federation's official dinner. We earned true recognition from PFF leadership and presented our jersey to the national head coach.",
+      image: "/Journey-ID-4.jpeg",
       isLeft: true
     },
     {
       id: 6,
+      date: "October 9th, 2025",
+      title: "Pakistan vs Afghanistan",
+      description: "Ali Tareen joined the Ultra Shaheens stands as we witnessed Pakistan's most dominating performance yet. The immense crowd energy fueled an outstanding display that showcased true Pakistani football potential.",
+      image: "/pakistan-vs-afghanistan.jpg",
+      isLeft: false
+    },
+    {
+      id: 7,
       date: "November 18th, 2025",
       title: "Pakistan vs Syria",
       description: "Despite a tough result on the pitch, our fans held their heads incredibly high. With drums beating for the very first time, the green stands roared with unyielding national pride.",
       image: "/pakistan-syria-home-match.jpg",
+      isLeft: true
+    },
+    {
+      id: 8,
+      date: "March 31st, 2026",
+      title: "Pakistan vs Myanmar",
+      description:
+        "The match was behind closed doors, so we could not be in the stands for this home fixture. Ultra Shaheens gathered for a community screening of Pakistan vs Myanmar in the AFC Asian Cup 2027 Qualifiers, sharing the same nerves, chants, and pride as we closed out the campaign together.",
+      image: "/images/journey-pakistan-myanmar-screening-2026.jpg",
       isLeft: false
     }
   ];

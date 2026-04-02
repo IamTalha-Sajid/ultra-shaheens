@@ -6,19 +6,6 @@ const Experiences: React.FC = () => {
   const experiences = [
     {
       id: 1,
-      title: "Pakistan vs Myanmar",
-      subtitle: "Match Preview",
-      event: "AFC Asian Cup 2027 Qualifiers",
-      date: "March 31, 2026",
-      description: "Close out the group stage with intensity! Pakistan faces Myanmar in a match that could make history for our qualification dream. Stand with the Ultra Shaheens and let's make the stadium roar for the boys in green—every chant counts!",
-      buttonText: "GET MATCH TICKETS",
-      link: "https://bookme.pk/events/afc-asian-cup-qualifier-pakistan-vs-myanmar",
-      image: "/afghanistan-pakistan-away.png",
-      isHome: true,
-      status: "active"
-    },
-    {
-      id: 2,
       title: "SAFF U17 Championship",
       subtitle: "Tournament",
       event: "South Asian Football Federation U-17",
@@ -131,7 +118,7 @@ const Experiences: React.FC = () => {
 
         {/* Experiences Grid with 3D Mouse Parallax */}
         <div
-          className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 max-w-5xl mx-auto will-change-transform"
+          className={`grid grid-cols-1 gap-8 lg:gap-12 mx-auto will-change-transform ${experiences.length === 1 ? 'md:max-w-2xl' : 'md:grid-cols-2 max-w-5xl'}`}
           style={{
             transform: calculateGridTransform(),
             transition: isHovering ? 'transform 0.1s cubic-bezier(0.25, 0.46, 0.45, 0.94)' : 'transform 0.7s cubic-bezier(0.23, 1, 0.32, 1)'

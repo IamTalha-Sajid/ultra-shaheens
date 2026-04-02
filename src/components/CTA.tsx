@@ -117,7 +117,7 @@ const CTA: React.FC = () => {
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 sm:gap-4 max-w-4xl mx-auto">
               <div className="text-center transform transition-transform duration-500 hover:-translate-y-2">
                 <div className="text-5xl sm:text-6xl font-bold text-canary mb-2 drop-shadow-[0_0_10px_rgba(255,255,0,0.3)]" style={{ fontFamily: '"din-condensed", sans-serif' }}>
-                  350+
+                  400+
                 </div>
                 <div className="text-sm text-gray-400 uppercase tracking-widest font-bold">
                   Official Members
@@ -125,7 +125,7 @@ const CTA: React.FC = () => {
               </div>
               <div className="text-center transform transition-transform duration-500 hover:-translate-y-2">
                 <div className="text-5xl sm:text-6xl font-bold text-canary mb-2 drop-shadow-[0_0_10px_rgba(255,255,0,0.3)]" style={{ fontFamily: '"din-condensed", sans-serif' }}>
-                  10+
+                  12+
                 </div>
                 <div className="text-sm text-gray-400 uppercase tracking-widest font-bold">
                   Match Events

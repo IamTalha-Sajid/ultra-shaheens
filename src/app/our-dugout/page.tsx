@@ -33,7 +33,7 @@ const teamMembers = [
     id: 3,
     name: "Muhammad Shoaib",
     email: "muhammad.shoaib@ultrashaheens.com",
-    role: "COO - Chief Operational Officer",
+    role: "COO - Chief Operating Officer",
     image: "/images/Team/shoaib.jpeg",
     socials: {
       instagram: "https://www.instagram.com/mohammadshoaib__",
@@ -48,7 +48,7 @@ const teamMembers = [
   },
   {
     id: 5,
-    name: "Arham Khan Rayyan",
+    name: "Arham Rayyan Khan",
     email: "arham.rayyan@ultrashaheens.com",
     role: "CMO - Chief Marketing Officer",
     image: "/images/Team/arham.jpeg",
@@ -72,10 +72,100 @@ const OurDugoutPage: React.FC = () => {
     });
   };
 
-  const getCardLayoutClass = (index: number) => {
-    if (index <= 2) return "lg:col-span-2";
-    if (index === 3) return "lg:col-start-2 lg:col-span-2";
-    return "lg:col-start-4 lg:col-span-2";
+  const [ceo, ...restTeam] = teamMembers;
+
+  const renderMemberCard = (member: (typeof teamMembers)[number]) => {
+    return (
+      <div className="group bg-white/10 backdrop-blur-xl border border-white/25 rounded-3xl overflow-hidden text-left shadow-[0_18px_45px_rgba(0,0,0,0.35)] hover:shadow-[0_24px_60px_rgba(0,0,0,0.5)] hover:border-canary/60 hover:-translate-y-1.5 transition-all duration-300">
+        <div className="relative w-full aspect-[3/4]">
+          <Image
+            src={member.image}
+            alt={`${member.name} profile`}
+            fill
+            className="object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
+
+          {member.socials && (
+            <div className="absolute inset-0 bg-black/45 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-3 backdrop-blur-[2px]">
+              {member.socials.facebook && (
+                <a
+                  href={member.socials.facebook}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={`${member.name} Facebook`}
+                  className="w-11 h-11 rounded-full border border-white/35 bg-white/15 backdrop-blur-xl text-[#90b8ff] flex items-center justify-center hover:scale-110 hover:bg-white/25 hover:border-canary/70 transition-all duration-300 shadow-[0_8px_24px_rgba(0,0,0,0.35)]"
+                >
+                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M24 12.073C24 5.404 18.627 0 12 0S0 5.404 0 12.073c0 6.019 4.388 11.009 10.125 11.927v-8.437H7.078v-3.49h3.047V9.413c0-3.007 1.792-4.669 4.533-4.669 1.313 0 2.686.236 2.686.236v2.953h-1.514c-1.491 0-1.956.927-1.956 1.875v2.265h3.328l-.532 3.49h-2.796V24C19.612 23.082 24 18.092 24 12.073z" />
+                  </svg>
+                </a>
+              )}
+
+              {member.socials.linkedin && (
+                <a
+                  href={member.socials.linkedin}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={`${member.name} LinkedIn`}
+                  className="w-11 h-11 rounded-full border border-white/35 bg-white/15 backdrop-blur-xl text-[#78b7ff] flex items-center justify-center hover:scale-110 hover:bg-white/25 hover:border-canary/70 transition-all duration-300 shadow-[0_8px_24px_rgba(0,0,0,0.35)]"
+                >
+                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+                  </svg>
+                </a>
+              )}
+
+              {member.socials.github && (
+                <a
+                  href={member.socials.github}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={`${member.name} GitHub`}
+                  className="w-11 h-11 rounded-full border border-white/35 bg-white/15 backdrop-blur-xl text-white flex items-center justify-center hover:scale-110 hover:bg-white/25 hover:border-canary/70 transition-all duration-300 shadow-[0_8px_24px_rgba(0,0,0,0.35)]"
+                >
+                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12 .5C5.65.5.5 5.66.5 12.02c0 5.08 3.29 9.39 7.85 10.9.57.1.78-.25.78-.55 0-.27-.01-1.16-.02-2.1-3.19.7-3.86-1.35-3.86-1.35-.52-1.33-1.27-1.69-1.27-1.69-1.04-.71.08-.69.08-.69 1.15.08 1.75 1.18 1.75 1.18 1.02 1.76 2.68 1.25 3.33.96.1-.74.4-1.25.72-1.54-2.55-.29-5.23-1.28-5.23-5.69 0-1.26.45-2.28 1.18-3.08-.12-.29-.51-1.46.11-3.05 0 0 .96-.31 3.15 1.18a10.9 10.9 0 0 1 5.74 0c2.19-1.49 3.15-1.18 3.15-1.18.62 1.59.23 2.76.11 3.05.73.8 1.18 1.82 1.18 3.08 0 4.42-2.68 5.4-5.24 5.69.41.35.77 1.03.77 2.08 0 1.5-.01 2.71-.01 3.08 0 .3.2.66.79.55a11.52 11.52 0 0 0 7.84-10.9C23.5 5.66 18.35.5 12 .5Z" />
+                  </svg>
+                </a>
+              )}
+
+              {member.socials.instagram && (
+                <a
+                  href={member.socials.instagram}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={`${member.name} Instagram`}
+                  className="w-11 h-11 rounded-full border border-white/35 bg-white/15 backdrop-blur-xl text-[#ff78b0] flex items-center justify-center hover:scale-110 hover:bg-white/25 hover:border-canary/70 transition-all duration-300 shadow-[0_8px_24px_rgba(0,0,0,0.35)]"
+                >
+                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M7.75 2h8.5A5.76 5.76 0 0 1 22 7.75v8.5A5.76 5.76 0 0 1 16.25 22h-8.5A5.76 5.76 0 0 1 2 16.25v-8.5A5.76 5.76 0 0 1 7.75 2Zm8.37 1.73h-8.24a4.15 4.15 0 0 0-4.15 4.15v8.24a4.15 4.15 0 0 0 4.15 4.15h8.24a4.15 4.15 0 0 0 4.15-4.15V7.88a4.15 4.15 0 0 0-4.15-4.15Zm-4.12 2.64A5.63 5.63 0 1 1 6.37 12 5.64 5.64 0 0 1 12 6.37Zm0 1.72A3.91 3.91 0 1 0 15.91 12 3.92 3.92 0 0 0 12 8.09Zm5.74-2.01a1.34 1.34 0 1 1-1.34 1.34 1.34 1.34 0 0 1 1.34-1.34Z" />
+                  </svg>
+                </a>
+              )}
+            </div>
+          )}
+        </div>
+
+        <div className="p-5 sm:p-6 bg-gradient-to-b from-racing-green/65 to-racing-green/45 border-t border-white/15">
+          <h3
+            className="text-xl sm:text-2xl font-bold text-white leading-tight"
+            style={{ fontFamily: '"din-condensed", sans-serif' }}
+          >
+            {member.name.toUpperCase()}
+          </h3>
+          <p className="mt-1 text-[11px] sm:text-xs md:text-sm text-gray-300 break-words">
+            {member.email}
+          </p>
+          <p
+            className="mt-2 text-xs sm:text-sm uppercase tracking-wider text-canary font-bold"
+            style={{ fontFamily: '"din-condensed", sans-serif' }}
+          >
+            {member.role}
+          </p>
+        </div>
+      </div>
+    );
   };
 
   return (
@@ -126,29 +216,25 @@ const OurDugoutPage: React.FC = () => {
               vision, energy, and matchday movement for Pakistan football fans.
             </p>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-5 sm:gap-7">
-              {teamMembers.map((member, index) => (
-                <div
-                  key={member.id}
-                  className={`group bg-white/10 backdrop-blur-xl border border-white/25 rounded-3xl overflow-hidden text-left shadow-[0_18px_45px_rgba(0,0,0,0.35)] hover:shadow-[0_24px_60px_rgba(0,0,0,0.5)] hover:border-canary/60 hover:-translate-y-1.5 transition-all duration-300 ${getCardLayoutClass(index)}`}
-                >
-                  <div className="relative w-full aspect-[3/4]">
+            <div className="max-w-5xl mx-auto">
+              <div className="bg-white/10 backdrop-blur-xl border border-white/25 rounded-3xl overflow-hidden shadow-[0_18px_45px_rgba(0,0,0,0.35)]">
+                <div className="grid grid-cols-1 md:grid-cols-2">
+                  <div className="relative w-full aspect-[3/4] md:aspect-auto md:min-h-[420px]">
                     <Image
-                      src={member.image}
-                      alt={`${member.name} profile`}
+                      src={ceo.image}
+                      alt={`${ceo.name} profile`}
                       fill
-                      className="object-cover"
+                      className="object-cover object-top"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
-
-                    {member.socials && (
-                      <div className="absolute inset-0 bg-black/45 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-3 backdrop-blur-[2px]">
-                        {member.socials.facebook && (
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/25 to-transparent"></div>
+                    {ceo.socials && (
+                      <div className="absolute bottom-4 left-4 flex items-center gap-3">
+                        {ceo.socials.facebook && (
                           <a
-                            href={member.socials.facebook}
+                            href={ceo.socials.facebook}
                             target="_blank"
                             rel="noopener noreferrer"
-                            aria-label={`${member.name} Facebook`}
+                            aria-label={`${ceo.name} Facebook`}
                             className="w-11 h-11 rounded-full border border-white/35 bg-white/15 backdrop-blur-xl text-[#90b8ff] flex items-center justify-center hover:scale-110 hover:bg-white/25 hover:border-canary/70 transition-all duration-300 shadow-[0_8px_24px_rgba(0,0,0,0.35)]"
                           >
                             <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
@@ -156,69 +242,63 @@ const OurDugoutPage: React.FC = () => {
                             </svg>
                           </a>
                         )}
-                        {member.socials.linkedin && (
-                        <a
-                          href={member.socials.linkedin}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          aria-label={`${member.name} LinkedIn`}
-                          className="w-11 h-11 rounded-full border border-white/35 bg-white/15 backdrop-blur-xl text-[#78b7ff] flex items-center justify-center hover:scale-110 hover:bg-white/25 hover:border-canary/70 transition-all duration-300 shadow-[0_8px_24px_rgba(0,0,0,0.35)]"
-                        >
-                          <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                            <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
-                          </svg>
-                        </a>
-                        )}
-
-                        {member.socials.github && (
-                        <a
-                          href={member.socials.github}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          aria-label={`${member.name} GitHub`}
-                          className="w-11 h-11 rounded-full border border-white/35 bg-white/15 backdrop-blur-xl text-white flex items-center justify-center hover:scale-110 hover:bg-white/25 hover:border-canary/70 transition-all duration-300 shadow-[0_8px_24px_rgba(0,0,0,0.35)]"
-                        >
-                          <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                            <path d="M12 .5C5.65.5.5 5.66.5 12.02c0 5.08 3.29 9.39 7.85 10.9.57.1.78-.25.78-.55 0-.27-.01-1.16-.02-2.1-3.19.7-3.86-1.35-3.86-1.35-.52-1.33-1.27-1.69-1.27-1.69-1.04-.71.08-.69.08-.69 1.15.08 1.75 1.18 1.75 1.18 1.02 1.76 2.68 1.25 3.33.96.1-.74.4-1.25.72-1.54-2.55-.29-5.23-1.28-5.23-5.69 0-1.26.45-2.28 1.18-3.08-.12-.29-.51-1.46.11-3.05 0 0 .96-.31 3.15 1.18a10.9 10.9 0 0 1 5.74 0c2.19-1.49 3.15-1.18 3.15-1.18.62 1.59.23 2.76.11 3.05.73.8 1.18 1.82 1.18 3.08 0 4.42-2.68 5.4-5.24 5.69.41.35.77 1.03.77 2.08 0 1.5-.01 2.71-.01 3.08 0 .3.2.66.79.55a11.52 11.52 0 0 0 7.84-10.9C23.5 5.66 18.35.5 12 .5Z" />
-                          </svg>
-                        </a>
-                        )}
-
-                        {member.socials.instagram && (
-                        <a
-                          href={member.socials.instagram}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          aria-label={`${member.name} Instagram`}
-                          className="w-11 h-11 rounded-full border border-white/35 bg-white/15 backdrop-blur-xl text-[#ff78b0] flex items-center justify-center hover:scale-110 hover:bg-white/25 hover:border-canary/70 transition-all duration-300 shadow-[0_8px_24px_rgba(0,0,0,0.35)]"
-                        >
-                          <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                            <path d="M7.75 2h8.5A5.76 5.76 0 0 1 22 7.75v8.5A5.76 5.76 0 0 1 16.25 22h-8.5A5.76 5.76 0 0 1 2 16.25v-8.5A5.76 5.76 0 0 1 7.75 2Zm8.37 1.73h-8.24a4.15 4.15 0 0 0-4.15 4.15v8.24a4.15 4.15 0 0 0 4.15 4.15h8.24a4.15 4.15 0 0 0 4.15-4.15V7.88a4.15 4.15 0 0 0-4.15-4.15Zm-4.12 2.64A5.63 5.63 0 1 1 6.37 12 5.64 5.64 0 0 1 12 6.37Zm0 1.72A3.91 3.91 0 1 0 15.91 12 3.92 3.92 0 0 0 12 8.09Zm5.74-2.01a1.34 1.34 0 1 1-1.34 1.34 1.34 1.34 0 0 1 1.34-1.34Z" />
-                          </svg>
-                        </a>
+                        {ceo.socials.instagram && (
+                          <a
+                            href={ceo.socials.instagram}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            aria-label={`${ceo.name} Instagram`}
+                            className="w-11 h-11 rounded-full border border-white/35 bg-white/15 backdrop-blur-xl text-[#ff78b0] flex items-center justify-center hover:scale-110 hover:bg-white/25 hover:border-canary/70 transition-all duration-300 shadow-[0_8px_24px_rgba(0,0,0,0.35)]"
+                          >
+                            <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                              <path d="M7.75 2h8.5A5.76 5.76 0 0 1 22 7.75v8.5A5.76 5.76 0 0 1 16.25 22h-8.5A5.76 5.76 0 0 1 2 16.25v-8.5A5.76 5.76 0 0 1 7.75 2Zm8.37 1.73h-8.24a4.15 4.15 0 0 0-4.15 4.15v8.24a4.15 4.15 0 0 0 4.15 4.15h8.24a4.15 4.15 0 0 0 4.15-4.15V7.88a4.15 4.15 0 0 0-4.15-4.15Zm-4.12 2.64A5.63 5.63 0 1 1 6.37 12 5.64 5.64 0 0 1 12 6.37Zm0 1.72A3.91 3.91 0 1 0 15.91 12 3.92 3.92 0 0 0 12 8.09Zm5.74-2.01a1.34 1.34 0 1 1-1.34 1.34 1.34 1.34 0 0 1 1.34-1.34Z" />
+                            </svg>
+                          </a>
                         )}
                       </div>
                     )}
                   </div>
 
-                  <div className="p-5 sm:p-6 bg-gradient-to-b from-racing-green/65 to-racing-green/45 border-t border-white/15">
-                    <h3
-                      className="text-xl sm:text-2xl font-bold text-white leading-tight"
+                  <div className="p-6 sm:p-8 md:p-10 bg-gradient-to-b from-racing-green/65 to-racing-green/45 border-t md:border-t-0 md:border-l border-white/15 text-left">
+                    <div
+                      className="inline-flex items-center px-3 py-1 rounded-full bg-canary/20 text-canary border border-canary/40 text-xs sm:text-sm uppercase tracking-wider font-bold"
                       style={{ fontFamily: '"din-condensed", sans-serif' }}
                     >
-                      {member.name}
-                    </h3>
-                    <p className="mt-1 text-[11px] sm:text-xs md:text-sm text-gray-300 whitespace-nowrap overflow-hidden text-ellipsis">
-                      {member.email}
-                    </p>
-                    <p
-                      className="mt-2 text-xs sm:text-sm uppercase tracking-wider text-canary font-bold"
+                      CEO MESSAGE
+                    </div>
+
+                    <h2
+                      className="mt-4 text-3xl sm:text-4xl md:text-5xl font-bold text-white leading-tight"
                       style={{ fontFamily: '"din-condensed", sans-serif' }}
                     >
-                      {member.role}
+                      {ceo.name.toUpperCase()}
+                    </h2>
+                    <div
+                      className="mt-2 text-sm sm:text-base text-canary font-bold uppercase tracking-wider"
+                      style={{ fontFamily: '"din-condensed", sans-serif' }}
+                    >
+                      {ceo.role}
+                    </div>
+                    <div className="mt-2 text-sm sm:text-base text-gray-200">
+                      {ceo.email}
+                    </div>
+
+                    <p className="mt-6 text-sm sm:text-base md:text-lg text-gray-100/90 leading-relaxed">
+                      Ultra Shaheens exists to unite Pakistan football supporters and bring real matchday energy — in the stands and beyond.
+                      We build together: chants, community, experiences, and support for the national team with pride.
                     </p>
+
+                    <div className="mt-6 text-xs sm:text-sm text-gray-200/80">
+                      Want to collaborate? Reach out at <span className="text-white font-semibold">{ceo.email}</span>.
+                    </div>
                   </div>
                 </div>
+              </div>
+            </div>
+
+            <div className="mt-6 sm:mt-8 grid grid-cols-1 sm:grid-cols-2 gap-5 sm:gap-7 max-w-5xl mx-auto">
+              {restTeam.map((member) => (
+                <div key={member.id}>{renderMemberCard(member)}</div>
               ))}
             </div>
           </div>

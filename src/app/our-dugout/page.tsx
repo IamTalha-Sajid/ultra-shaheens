@@ -14,7 +14,7 @@ const teamMembers = [
     image: "/images/Team/usama.jpeg",
     socials: {
       facebook: "https://www.facebook.com/bhuttausama",
-      instagram: "https://www.instagram.com/usamabhutta9",
+      instagram: "https://www.instagram.com/usamabhutt.a",
     },
   },
   {
@@ -45,6 +45,9 @@ const teamMembers = [
     email: "haseeb.zaigham@ultrashaheens.com",
     role: "CAO - Chief Apparel Officer",
     image: "/images/Team/haseeb.jpeg",
+    socials: {
+      instagram: "https://www.instagram.com/rhaseebz",
+    },
   },
   {
     id: 5,

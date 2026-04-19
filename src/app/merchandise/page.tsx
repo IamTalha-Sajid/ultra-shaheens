@@ -23,7 +23,7 @@ const MerchandisePage: React.FC = () => {
   const handleWhatsAppClick = () => {
     // WhatsApp link format: https://wa.me/[country code][phone number]
     // For Pakistan: 92 (without the + sign in URL)
-    const phoneNumber = '923359169165';
+    const phoneNumber = '923247749121';
     const message = encodeURIComponent('Hello, I am interested in Ultra Shaheens merchandise.');
     window.open(`https://wa.me/${phoneNumber}?text=${message}`, '_blank');
   };
@@ -75,7 +75,7 @@ const MerchandisePage: React.FC = () => {
           <div className="w-24 h-[2px] bg-gradient-to-r from-transparent via-canary to-transparent mx-auto mb-8"></div>
 
           <p className="text-lg sm:text-xl md:text-2xl text-gray-300 font-medium mb-12 leading-relaxed">
-            Represent the Ultra Shaheens with passion. <br className="hidden sm:block" /> Please contact our admin <span className="text-white font-bold">Usama Bhutta</span> for all exclusive merchandise inquiries.
+            Represent the Ultra Shaheens with passion. <br className="hidden sm:block" /> Please contact our Chief Apparel Officer (CAO) <span className="text-white font-bold">Haseeb Zaigham</span> for all exclusive merchandise inquiries.
           </p>
 
           <div className="flex justify-center flex-col sm:flex-row gap-6 relative z-10">

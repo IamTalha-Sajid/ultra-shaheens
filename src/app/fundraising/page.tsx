@@ -33,13 +33,13 @@ const FundraisingPage: React.FC = () => {
 
   // Previous Fundraising: Syria Game
   const previousFundraising: FundraisingData = {
-    match: "Syria Game",
+    match: "Syria Game (Nov 18, 2025)",
     raisedAmount: 29641,
     goalAmount: 15000,
     isCompleted: true,
     contributors: [
       { name: "Teymoor Sohail", amount: 6100, position: 1 },
-      { name: "Addel Mirza", amount: 5616, position: 2 },
+      { name: "Adeel Rizki", amount: 5616, position: 2 },
       { name: "Haseebullah Qureshi", amount: 3000, position: 3 }
     ]
   };

@@ -75,7 +75,7 @@ const MerchandisePage: React.FC = () => {
           <div className="w-24 h-[2px] bg-gradient-to-r from-transparent via-canary to-transparent mx-auto mb-8"></div>
 
           <p className="text-lg sm:text-xl md:text-2xl text-gray-300 font-medium mb-12 leading-relaxed">
-            Represent the Ultra Shaheens with passion. <br className="hidden sm:block" /> Please contact our Chief Apparel Officer (CAO) <span className="text-white font-bold">Haseeb Zaigham</span> for all exclusive merchandise inquiries.
+            <br className="hidden sm:block" /> Please contact our Chief Apparel Officer (CAO) <span className="text-white font-bold">Haseeb Zaigham</span> on WhatsApp (+92 324 7749121 ) for all exclusive merchandise inquiries or you can click/tap on the following box.
           </p>
 
           <div className="flex justify-center flex-col sm:flex-row gap-6 relative z-10">

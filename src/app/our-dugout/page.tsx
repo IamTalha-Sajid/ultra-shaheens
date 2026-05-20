@@ -287,8 +287,9 @@ const OurDugoutPage: React.FC = () => {
                     </div>
 
                     <p className="mt-6 text-sm sm:text-base md:text-lg text-gray-100/90 leading-relaxed">
-                      Ultra Shaheens exists to unite Pakistan football supporters and bring real matchday energy — in the stands and beyond.
-                      We build together: chants, community, experiences, and support for the national team with pride.
+                      Ultra Shaheens came into being, by end of 2023, for the fans who never stopped believing, the ones who showed up, sang louder and stood behind Pakistan football team no matter the result.
+                      <br />
+                      Today, we are community of hundreds of fans with whom we don’t just watch the game, we live it.
                     </p>
 
                     <div className="mt-6 text-xs sm:text-sm text-gray-200/80">

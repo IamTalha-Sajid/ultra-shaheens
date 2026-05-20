@@ -9,7 +9,7 @@ const Experiences: React.FC = () => {
       title: "SAFF U17 Championship",
       subtitle: "Tournament",
       event: "South Asian Football Federation U-17",
-      date: "TBD",
+      date: "26 Jul – 07 Aug 2026 · Islamabad, Pakistan",
       description: "Get ready to support the next generation of Pakistan football stars. The young Shaheens take on regional heavyweights in the SAFF U17 Championship. Details regarding match screenings and operations will be announced soon.",
       buttonText: "COMING SOON",
       link: "",

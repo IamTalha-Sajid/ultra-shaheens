@@ -119,7 +119,7 @@ const Merch: React.FC = () => {
                     style={{ backfaceVisibility: 'hidden', WebkitBackfaceVisibility: 'hidden', transform: 'translateZ(1px)' }}
                   >
                     <Image
-                      src="/Merch-01.png"
+                      src="/Merch-03.png"
                       alt="Ultra Shaheens Polo Shirt - Front"
                       fill
                       className="object-contain drop-shadow-[0_20px_40px_rgba(0,0,0,0.5)]"
@@ -133,7 +133,7 @@ const Merch: React.FC = () => {
                     style={{ backfaceVisibility: 'hidden', WebkitBackfaceVisibility: 'hidden', transform: 'rotateY(180deg) translateZ(1px)' }}
                   >
                     <Image
-                      src="/Merch-02.png"
+                      src="/Merch-04.png"
                       alt="Ultra Shaheens Polo Shirt - Back"
                       fill
                       className="object-contain drop-shadow-[0_20px_40px_rgba(0,0,0,0.5)]"

@@ -193,9 +193,9 @@ const Header: React.FC = () => {
               </Link>
 
               {/* Merchandise */}
-              <Link href="/merchandise" className="text-white hover:text-canary hover:drop-shadow-[0_0_8px_rgba(255,255,0,0.5)] font-semibold transition-all duration-300 flex items-center space-x-1 uppercase tracking-wider text-sm lg:text-base border-b-2 border-transparent hover:border-canary py-1" style={{ fontFamily: '"din-condensed", sans-serif' }}>
+              <a href="https://shop.ultrashaheens.com" target="_blank" rel="noopener noreferrer" className="text-white hover:text-canary hover:drop-shadow-[0_0_8px_rgba(255,255,0,0.5)] font-semibold transition-all duration-300 flex items-center space-x-1 uppercase tracking-wider text-sm lg:text-base border-b-2 border-transparent hover:border-canary py-1" style={{ fontFamily: '"din-condensed", sans-serif' }}>
                 Merchandise
-              </Link>
+              </a>
 
               {/* Our Dugout */}
               <Link href="/our-dugout" className="text-white hover:text-canary hover:drop-shadow-[0_0_8px_rgba(255,255,0,0.5)] font-semibold transition-all duration-300 flex items-center space-x-1 uppercase tracking-wider text-sm lg:text-base border-b-2 border-transparent hover:border-canary py-1" style={{ fontFamily: '"din-condensed", sans-serif' }}>
@@ -216,9 +216,8 @@ const Header: React.FC = () => {
                         <span style={{ fontFamily: '"din-condensed", sans-serif' }}>Who are we?</span>
                         <span className="block text-xs mt-0.5 text-gray-300/90 capitalize tracking-normal italic font-sans">(Coming soon)</span>
                       </Link>
-                      <Link href="/code-of-conduct" className="px-5 py-3 text-sm text-white bg-white/10 hover:text-canary hover:bg-white/20 transition-all duration-200 font-semibold uppercase tracking-wide border-t border-white/20">
-                        <span style={{ fontFamily: '"din-condensed", sans-serif' }}>Code of Conduct</span>
-                        <span className="block text-xs mt-0.5 text-gray-300/90 capitalize tracking-normal italic font-sans">(Coming soon)</span>
+                      <Link href="/constitution" className="px-5 py-3 text-sm text-white bg-white/10 hover:text-canary hover:bg-white/20 transition-all duration-200 font-semibold uppercase tracking-wide border-t border-white/20">
+                        <span style={{ fontFamily: '"din-condensed", sans-serif' }}>Ultra Shaheens Constitution</span>
                       </Link>
                       <Link href="/faq" className="px-5 py-3 text-sm text-white bg-white/10 hover:text-canary hover:bg-white/20 transition-all duration-200 font-semibold uppercase tracking-wide border-t border-white/20">
                         <span style={{ fontFamily: '"din-condensed", sans-serif' }}>FAQs</span>
@@ -286,7 +285,7 @@ const Header: React.FC = () => {
                   <span className="block text-xs mt-1 text-gray-400/80 capitalize tracking-normal italic font-sans">(Coming soon)</span>
                 </Link>
                 <Link href="/fundraising" className="block w-full p-4 rounded-xl border border-white/20 bg-white/15 backdrop-blur-xl text-white hover:text-canary font-semibold uppercase tracking-widest text-lg" style={{ fontFamily: '"din-condensed", sans-serif' }}>Fundraising</Link>
-                <Link href="/merchandise" className="block w-full p-4 rounded-xl border border-white/20 bg-white/15 backdrop-blur-xl text-white hover:text-canary font-semibold uppercase tracking-widest text-lg" style={{ fontFamily: '"din-condensed", sans-serif' }}>Merchandise</Link>
+                <a href="https://shop.ultrashaheens.com" target="_blank" rel="noopener noreferrer" className="block w-full p-4 rounded-xl border border-white/20 bg-white/15 backdrop-blur-xl text-white hover:text-canary font-semibold uppercase tracking-widest text-lg" style={{ fontFamily: '"din-condensed", sans-serif' }}>Merchandise</a>
                 <Link href="/our-dugout" className="block w-full text-left p-4 rounded-xl border border-white/20 bg-white/15 backdrop-blur-xl text-white hover:text-canary font-semibold uppercase tracking-widest text-lg" style={{ fontFamily: '"din-condensed", sans-serif' }}>Our Dugout</Link>
 
                 <div className="rounded-xl border border-white/20 bg-white/15 backdrop-blur-xl overflow-hidden">
@@ -300,9 +299,8 @@ const Header: React.FC = () => {
                         <span className="text-white/80 hover:text-canary">Who are we?</span>
                         <span className="block text-xs text-white/40 italic font-sans capitalize"> (Coming soon)</span>
                       </Link>
-                      <Link href="/code-of-conduct" className="block py-2 transition-colors">
-                        <span className="text-white/80 hover:text-canary">Code of Conduct</span>
-                        <span className="block text-xs text-white/40 italic font-sans capitalize"> (Coming soon)</span>
+                      <Link href="/constitution" className="block py-2 transition-colors">
+                        <span className="text-white/80 hover:text-canary">Ultra Shaheens Constitution</span>
                       </Link>
                       <Link href="/faq" className="block py-2 transition-colors">
                         <span className="text-white/80 hover:text-canary">FAQs</span>

@@ -1,7 +1,6 @@
 'use client';
 import React, { useState, useRef, useEffect } from 'react';
 import Image from 'next/image';
-import Link from 'next/link';
 
 const Merch: React.FC = () => {
   const [isFlipped, setIsFlipped] = useState(false);
@@ -78,13 +77,15 @@ const Merch: React.FC = () => {
                 </p>
 
                 <div className="flex justify-center lg:justify-start">
-                  <Link
-                    href="/merchandise"
+                  <a
+                    href="https://shop.ultrashaheens.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="w-full sm:w-auto bg-canary hover:bg-canary/90 text-black text-lg md:text-xl font-bold py-4 px-10 rounded-xl transition-all duration-300 uppercase tracking-widest hover:scale-105 shadow-lg hover:shadow-[0_0_25px_rgba(255,255,0,0.5)] inline-block text-center"
                     style={{ fontFamily: '"din-condensed", sans-serif' }}
                   >
                     GRAB YOURS NOW
-                  </Link>
+                  </a>
                 </div>
               </div>
             </div>

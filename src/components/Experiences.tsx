@@ -1,23 +1,86 @@
 'use client';
 import React, { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
+import { createPortal } from 'react-dom';
+
+type Screening = {
+  city: string;
+  venue: string;
+  note: string;
+  mapLink: string;
+  ticketLink?: string;
+};
+
+type Experience = {
+  id: number;
+  title: string;
+  subtitle: string;
+  event: string;
+  date: string;
+  description: string;
+  buttonText: string;
+  link: string;
+  image: string;
+  isHome: boolean;
+  status: 'upcoming' | 'live';
+  screenings?: Screening[];
+};
 
 const Experiences: React.FC = () => {
-  const experiences = [
+  const experiences: Experience[] = [
     {
       id: 1,
-      title: "SAFF U17 Championship",
-      subtitle: "Tournament",
-      event: "South Asian Football Federation U-17",
-      date: "26 Jul – 07 Aug 2026 · Islamabad, Pakistan",
-      description: "Get ready to support the next generation of Pakistan football stars. The young Shaheens take on regional heavyweights in the SAFF U17 Championship. Details regarding match screenings and operations will be announced soon.",
-      buttonText: "COMING SOON",
+      title: "Pakistan vs Thailand",
+      subtitle: "Match Screening",
+      event: "Lahore · Islamabad",
+      date: "26 Sep 2026 · 2:00 PM PKT",
+      description: "Watch the Shaheens take on Thailand with the loudest supporters in the country. Join us at our screenings in Lahore and Islamabad and bring the stadium atmosphere with you.",
+      buttonText: "CHOOSE YOUR SCREENING",
       link: "",
       image: "/Pakistan-Football-1.jpg",
       isHome: false,
-      status: "upcoming"
+      status: "live",
+      screenings: [
+        {
+          city: "Lahore",
+          venue: "Kudos Cafe",
+          note: "Free entry. Just show up and bring your voice.",
+          mapLink: "https://maps.app.goo.gl/fC551WyASWtwcJwH6?g_st=aw",
+        },
+        {
+          city: "Islamabad",
+          venue: "Ticketed Screening",
+          note: "Limited seats. Book your ticket in advance.",
+          mapLink: "https://maps.app.goo.gl/ajsd6VrwR2qvXCWR8",
+          ticketLink: "https://ticketwala.pk/event/pakistan-vs-thailand-football-match-screening-7482",
+        },
+      ],
     }
   ];
+
+  const [activeExperience, setActiveExperience] = useState<Experience | null>(null);
+
+  useEffect(() => {
+    if (!activeExperience) return;
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setActiveExperience(null);
+    };
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    window.addEventListener('keydown', onKeyDown);
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener('keydown', onKeyDown);
+    };
+  }, [activeExperience]);
+
+  const handleExperienceClick = (experience: Experience) => {
+    if (experience.screenings?.length) {
+      setActiveExperience(experience);
+    } else if (experience.link) {
+      window.open(experience.link, '_blank', 'noopener,noreferrer');
+    }
+  };
 
   const [isVisible, setIsVisible] = useState(false);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
@@ -183,7 +246,7 @@ const Experiences: React.FC = () => {
 
                 {/* Action Button */}
                 <button
-                  onClick={() => experience.link && window.open(experience.link, '_blank', 'noopener,noreferrer')}
+                  onClick={() => handleExperienceClick(experience)}
                   className={`w-full py-4 rounded-xl font-bold tracking-widest uppercase transition-all duration-300 text-lg ${experience.status === 'upcoming'
                     ? 'bg-white/5 text-gray-500 border border-white/10 cursor-not-allowed'
                     : 'bg-canary hover:bg-canary/90 text-black hover:shadow-[0_0_20px_rgba(255,255,0,0.4)] hover:scale-[1.02]'
@@ -198,6 +261,108 @@ const Experiences: React.FC = () => {
           ))}
         </div>
       </div>
+
+      {/* Screening Location Modal (portaled so the grid's 3D transform doesn't trap it) */}
+      {mounted && activeExperience && createPortal(
+        <div
+          className="fixed inset-0 bg-black/70 backdrop-blur-md flex items-center justify-center z-50 p-4"
+          onClick={() => setActiveExperience(null)}
+        >
+          <div
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="screening-modal-title"
+            className="bg-[#050e08] border border-white/10 rounded-3xl shadow-[0_30px_60px_rgba(0,0,0,0.8)] max-w-2xl w-full max-h-[90vh] overflow-y-auto relative"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Modal Glow */}
+            <div className="absolute top-0 right-0 w-[300px] h-[300px] bg-canary/10 rounded-full blur-[100px] pointer-events-none"></div>
+
+            {/* Modal Header */}
+            <div className="border-b border-white/10 bg-white/5 backdrop-blur-sm px-6 py-5 relative z-10">
+              <div className="flex items-center justify-between gap-4">
+                <div>
+                  <p className="text-xs sm:text-sm font-bold tracking-widest uppercase text-canary mb-1">
+                    {activeExperience.date}
+                  </p>
+                  <h3 id="screening-modal-title" className="text-2xl sm:text-3xl font-bold text-white uppercase tracking-widest drop-shadow-md" style={{ fontFamily: '"din-condensed", sans-serif' }}>
+                    CHOOSE YOUR <span className="text-canary">SCREENING</span>
+                  </h3>
+                </div>
+                <button
+                  onClick={() => setActiveExperience(null)}
+                  className="text-gray-400 hover:text-canary hover:bg-white/5 transition-all duration-200 p-2 min-h-[44px] min-w-[44px] flex items-center justify-center rounded-full shrink-0"
+                  aria-label="Close modal"
+                >
+                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
+              </div>
+            </div>
+
+            {/* Modal Content */}
+            <div className="p-6 sm:p-8 relative z-10">
+              <p className="text-gray-300 text-center mb-8 text-sm font-medium tracking-wide">
+                {activeExperience.title}. Pick the city closest to you.
+              </p>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {activeExperience.screenings?.map((screening) => (
+                  <div
+                    key={screening.city}
+                    className="flex flex-col p-6 bg-white/5 border border-white/10 hover:border-canary/40 hover:bg-white/10 hover:shadow-[0_0_20px_rgba(255,255,0,0.15)] rounded-2xl transition-all duration-300"
+                  >
+                    <span className={`self-start inline-flex items-center px-3 py-1 rounded-full text-[10px] font-bold tracking-wider uppercase border mb-4 ${screening.ticketLink
+                      ? 'bg-canary/10 text-canary border-canary/30'
+                      : 'bg-white/10 text-white border-white/20'
+                      }`}>
+                      {screening.ticketLink ? '🎟️ TICKETED' : '✅ FREE ENTRY'}
+                    </span>
+                    <h4 className="text-3xl font-bold text-white uppercase leading-none mb-1" style={{ fontFamily: '"din-condensed", sans-serif' }}>
+                      {screening.city}
+                    </h4>
+                    <p className="text-sm font-bold tracking-widest uppercase text-gray-400 mb-3">
+                      {screening.venue}
+                    </p>
+                    <p className="text-sm text-gray-300 leading-relaxed mb-6 flex-grow">
+                      {screening.note}
+                    </p>
+
+                    <div className="flex flex-col gap-3">
+                      {screening.ticketLink && (
+                        <a
+                          href={screening.ticketLink}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="w-full py-3 rounded-xl font-bold tracking-widest uppercase text-center transition-all duration-300 bg-canary hover:bg-canary/90 text-black hover:shadow-[0_0_20px_rgba(255,255,0,0.4)] hover:scale-[1.02]"
+                          style={{ fontFamily: '"din-condensed", sans-serif' }}
+                        >
+                          BOOK TICKET
+                        </a>
+                      )}
+                      <a
+                        href={screening.mapLink}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="w-full py-3 rounded-xl font-bold tracking-widest uppercase text-center transition-all duration-300 bg-white/5 text-white border border-white/20 hover:border-canary/40 hover:text-canary hover:bg-white/10 inline-flex items-center justify-center gap-2"
+                        style={{ fontFamily: '"din-condensed", sans-serif' }}
+                      >
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a2 2 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                        </svg>
+                        VIEW ON MAP
+                      </a>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>,
+        document.body
+      )}
     </section>
   );
 };

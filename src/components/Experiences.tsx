@@ -29,33 +29,31 @@ type Experience = {
 const Experiences: React.FC = () => {
   const experiences: Experience[] = [
     {
-      id: 1,
-      title: "Pakistan vs Thailand",
+      id: 2,
+      title: "Pakistan vs India",
       subtitle: "Match Screening",
-      event: "Lahore · Islamabad",
-      date: "26 Sep 2026 · 2:00 PM PKT",
-      description: "Watch the Shaheens take on Thailand with the loudest supporters in the country. Join us at our screenings in Lahore and Islamabad and bring the stadium atmosphere with you.",
-      buttonText: "CHOOSE YOUR SCREENING",
+      event: "SAFF Championship",
+      date: "5 Nov 2026 · 2:30 PM PKT",
+      description: "The biggest rivalry in South Asian football returns at the SAFF Championship. Screening details and tickets are on the way, so stay tuned.",
+      buttonText: "SCREENING TICKETS COMING SOON",
       link: "",
-      image: "/Pakistan-Football-1.jpg",
+      image: "/Pakistan-Football-2.jpg",
       isHome: false,
-      status: "live",
-      screenings: [
-        {
-          city: "Lahore",
-          venue: "Kudos Cafe",
-          note: "Free entry. Just show up and bring your voice.",
-          mapLink: "https://maps.app.goo.gl/fC551WyASWtwcJwH6?g_st=aw",
-        },
-        {
-          city: "Islamabad",
-          venue: "Ticketed Screening",
-          note: "Limited seats. Book your ticket in advance.",
-          mapLink: "https://maps.app.goo.gl/ajsd6VrwR2qvXCWR8",
-          ticketLink: "https://ticketwala.pk/event/pakistan-vs-thailand-football-match-screening-7482",
-        },
-      ],
-    }
+      status: "upcoming",
+    },
+    {
+      id: 3,
+      title: "Maldives vs Pakistan",
+      subtitle: "Match Screening",
+      event: "SAFF Championship",
+      date: "8 Nov 2026 · 2:30 PM PKT",
+      description: "The Shaheens continue their SAFF Championship campaign against Maldives. Screening details and tickets are on the way, so stay tuned.",
+      buttonText: "SCREENING TICKETS COMING SOON",
+      link: "",
+      image: "/Pakistan-Football.jpg",
+      isHome: false,
+      status: "upcoming",
+    },
   ];
 
   const [activeExperience, setActiveExperience] = useState<Experience | null>(null);
@@ -181,7 +179,7 @@ const Experiences: React.FC = () => {
 
         {/* Experiences Grid with 3D Mouse Parallax */}
         <div
-          className={`grid grid-cols-1 gap-8 lg:gap-12 mx-auto will-change-transform ${experiences.length === 1 ? 'md:max-w-2xl' : 'md:grid-cols-2 max-w-5xl'}`}
+          className={`grid grid-cols-1 gap-8 lg:gap-12 mx-auto will-change-transform ${experiences.length === 1 ? 'md:max-w-2xl' : experiences.length === 2 ? 'md:grid-cols-2 max-w-5xl' : 'md:grid-cols-2 lg:grid-cols-3 max-w-7xl'}`}
           style={{
             transform: calculateGridTransform(),
             transition: isHovering ? 'transform 0.1s cubic-bezier(0.25, 0.46, 0.45, 0.94)' : 'transform 0.7s cubic-bezier(0.23, 1, 0.32, 1)'
@@ -203,7 +201,7 @@ const Experiences: React.FC = () => {
                   alt={experience.title}
                   fill
                   className="object-cover object-top transition-transform duration-[1500ms] group-hover:scale-[1.05]"
-                  priority={experience.id === 1}
+                  priority={index === 0}
                 />
 
                 {/* Advanced Gradient Overlay */}

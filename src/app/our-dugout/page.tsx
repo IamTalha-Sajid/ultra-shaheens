@@ -10,11 +10,22 @@ const teamMembers = [
     id: 1,
     name: "Usama Bhutta",
     email: "usama.bhutta@ultrashaheens.com",
-    role: "CEO - Chief Executive Officer",
+    role: "Founder",
     image: "/images/Team/usama.jpeg",
     socials: {
       facebook: "https://www.facebook.com/bhuttausama",
       instagram: "https://www.instagram.com/usamabhutt.a",
+    },
+  },
+  {
+    id: 6,
+    name: "Aalayan Raza",
+    email: "aalayan.raza@ultrashaheens.com",
+    role: "President",
+    image: "/images/Team/Aalyan.jpeg",
+    socials: {
+      x: "https://x.com/aalayanraza",
+      instagram: "https://www.instagram.com/lil._alu",
     },
   },
   {
@@ -30,16 +41,6 @@ const teamMembers = [
     },
   },
   {
-    id: 3,
-    name: "Muhammad Shoaib",
-    email: "muhammad.shoaib@ultrashaheens.com",
-    role: "COO - Chief Operating Officer",
-    image: "/images/Team/shoaib.jpeg",
-    socials: {
-      instagram: "https://www.instagram.com/mohammadshoaib__",
-    },
-  },
-  {
     id: 4,
     name: "Haseeb Zaigham",
     email: "haseeb.zaigham@ultrashaheens.com",
@@ -51,10 +52,10 @@ const teamMembers = [
   },
   {
     id: 5,
-    name: "Arham Rayyan Khan",
-    email: "arham.rayyan@ultrashaheens.com",
+    name: "Aabyan Munawar",
+    email: "aabyan.munawar@ultrashaheens.com",
     role: "CMO - Chief Marketing Officer",
-    image: "/images/Team/arham.jpeg",
+    image: "/images/Team/Abiyan.jpg",
   },
 ];
 
@@ -75,11 +76,11 @@ const OurDugoutPage: React.FC = () => {
     });
   };
 
-  const [ceo, ...restTeam] = teamMembers;
+  const [founder, president, ...cxos] = teamMembers;
 
   const renderMemberCard = (member: (typeof teamMembers)[number]) => {
     return (
-      <div className="group bg-white/10 backdrop-blur-xl border border-white/25 rounded-3xl overflow-hidden text-left shadow-[0_18px_45px_rgba(0,0,0,0.35)] hover:shadow-[0_24px_60px_rgba(0,0,0,0.5)] hover:border-canary/60 hover:-translate-y-1.5 transition-all duration-300">
+      <div className="group h-full flex flex-col bg-white/10 backdrop-blur-xl border border-white/25 rounded-3xl overflow-hidden text-left shadow-[0_18px_45px_rgba(0,0,0,0.35)] hover:shadow-[0_24px_60px_rgba(0,0,0,0.5)] hover:border-canary/60 hover:-translate-y-1.5 transition-all duration-300">
         <div className="relative w-full aspect-[3/4]">
           <Image
             src={member.image}
@@ -119,6 +120,20 @@ const OurDugoutPage: React.FC = () => {
                 </a>
               )}
 
+              {member.socials.x && (
+                <a
+                  href={member.socials.x}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={`${member.name} X`}
+                  className="w-11 h-11 rounded-full border border-white/35 bg-white/15 backdrop-blur-xl text-white flex items-center justify-center hover:scale-110 hover:bg-white/25 hover:border-canary/70 transition-all duration-300 shadow-[0_8px_24px_rgba(0,0,0,0.35)]"
+                >
+                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                  </svg>
+                </a>
+              )}
+
               {member.socials.github && (
                 <a
                   href={member.socials.github}
@@ -150,7 +165,7 @@ const OurDugoutPage: React.FC = () => {
           )}
         </div>
 
-        <div className="p-5 sm:p-6 bg-gradient-to-b from-racing-green/65 to-racing-green/45 border-t border-white/15">
+        <div className="flex-1 p-5 sm:p-6 bg-gradient-to-b from-racing-green/65 to-racing-green/45 border-t border-white/15">
           <h3
             className="text-xl sm:text-2xl font-bold text-white leading-tight"
             style={{ fontFamily: '"din-condensed", sans-serif' }}
@@ -224,20 +239,20 @@ const OurDugoutPage: React.FC = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2">
                   <div className="relative w-full aspect-[3/4] md:aspect-auto md:min-h-[420px]">
                     <Image
-                      src={ceo.image}
-                      alt={`${ceo.name} profile`}
+                      src={founder.image}
+                      alt={`${founder.name} profile`}
                       fill
                       className="object-cover object-top"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/25 to-transparent"></div>
-                    {ceo.socials && (
+                    {founder.socials && (
                       <div className="absolute bottom-4 left-4 flex items-center gap-3">
-                        {ceo.socials.facebook && (
+                        {founder.socials.facebook && (
                           <a
-                            href={ceo.socials.facebook}
+                            href={founder.socials.facebook}
                             target="_blank"
                             rel="noopener noreferrer"
-                            aria-label={`${ceo.name} Facebook`}
+                            aria-label={`${founder.name} Facebook`}
                             className="w-11 h-11 rounded-full border border-white/35 bg-white/15 backdrop-blur-xl text-[#90b8ff] flex items-center justify-center hover:scale-110 hover:bg-white/25 hover:border-canary/70 transition-all duration-300 shadow-[0_8px_24px_rgba(0,0,0,0.35)]"
                           >
                             <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
@@ -245,12 +260,12 @@ const OurDugoutPage: React.FC = () => {
                             </svg>
                           </a>
                         )}
-                        {ceo.socials.instagram && (
+                        {founder.socials.instagram && (
                           <a
-                            href={ceo.socials.instagram}
+                            href={founder.socials.instagram}
                             target="_blank"
                             rel="noopener noreferrer"
-                            aria-label={`${ceo.name} Instagram`}
+                            aria-label={`${founder.name} Instagram`}
                             className="w-11 h-11 rounded-full border border-white/35 bg-white/15 backdrop-blur-xl text-[#ff78b0] flex items-center justify-center hover:scale-110 hover:bg-white/25 hover:border-canary/70 transition-all duration-300 shadow-[0_8px_24px_rgba(0,0,0,0.35)]"
                           >
                             <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
@@ -267,23 +282,23 @@ const OurDugoutPage: React.FC = () => {
                       className="inline-flex items-center px-3 py-1 rounded-full bg-canary/20 text-canary border border-canary/40 text-xs sm:text-sm uppercase tracking-wider font-bold"
                       style={{ fontFamily: '"din-condensed", sans-serif' }}
                     >
-                      CEO MESSAGE
+                      FOUNDER MESSAGE
                     </div>
 
                     <h2
                       className="mt-4 text-3xl sm:text-4xl md:text-5xl font-bold text-white leading-tight"
                       style={{ fontFamily: '"din-condensed", sans-serif' }}
                     >
-                      {ceo.name.toUpperCase()}
+                      {founder.name.toUpperCase()}
                     </h2>
                     <div
                       className="mt-2 text-sm sm:text-base text-canary font-bold uppercase tracking-wider"
                       style={{ fontFamily: '"din-condensed", sans-serif' }}
                     >
-                      {ceo.role}
+                      {founder.role}
                     </div>
                     <div className="mt-2 text-sm sm:text-base text-gray-200">
-                      {ceo.email}
+                      {founder.email}
                     </div>
 
                     <p className="mt-6 text-sm sm:text-base md:text-lg text-gray-100/90 leading-relaxed">
@@ -293,16 +308,88 @@ const OurDugoutPage: React.FC = () => {
                     </p>
 
                     <div className="mt-6 text-xs sm:text-sm text-gray-200/80">
-                      Want to collaborate? Reach out at <span className="text-white font-semibold">{ceo.email}</span>.
+                      Want to collaborate? Reach out at <span className="text-white font-semibold">{founder.email}</span>.
                     </div>
                   </div>
                 </div>
               </div>
             </div>
 
-            <div className="mt-6 sm:mt-8 grid grid-cols-1 sm:grid-cols-2 gap-5 sm:gap-7 max-w-5xl mx-auto">
-              {restTeam.map((member) => (
-                <div key={member.id}>{renderMemberCard(member)}</div>
+            <div className="mt-6 sm:mt-8 max-w-5xl mx-auto">
+              <div className="bg-white/10 backdrop-blur-xl border border-white/25 rounded-3xl overflow-hidden text-left shadow-[0_18px_45px_rgba(0,0,0,0.35)]">
+                <div className="grid grid-cols-1 md:grid-cols-5">
+                  <div className="relative w-full aspect-[3/4] md:aspect-auto md:col-span-2 md:min-h-[360px]">
+                    <Image
+                      src={president.image}
+                      alt={`${president.name} profile`}
+                      fill
+                      className="object-cover object-top"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
+                  </div>
+
+                  <div className="md:col-span-3 p-6 sm:p-8 md:p-10 bg-gradient-to-b from-racing-green/65 to-racing-green/45 border-t md:border-t-0 md:border-l border-white/15 flex flex-col justify-center">
+                    <div
+                      className="self-start inline-flex items-center px-3 py-1 rounded-full bg-canary/20 text-canary border border-canary/40 text-xs sm:text-sm uppercase tracking-wider font-bold"
+                      style={{ fontFamily: '"din-condensed", sans-serif' }}
+                    >
+                      {president.role}
+                    </div>
+                    <h2
+                      className="mt-4 text-3xl sm:text-4xl font-bold text-white leading-tight"
+                      style={{ fontFamily: '"din-condensed", sans-serif' }}
+                    >
+                      {president.name.toUpperCase()}
+                    </h2>
+                    <div className="mt-2 text-sm sm:text-base text-gray-200">
+                      {president.email}
+                    </div>
+                    <div
+                      className="mt-4 text-sm sm:text-base text-canary font-bold uppercase tracking-wider"
+                      style={{ fontFamily: '"din-condensed", sans-serif' }}
+                    >
+                      1st Official President
+                    </div>
+                    <div className="mt-1 text-sm sm:text-base text-gray-300">
+                      Tenure: Oct 2026 - Oct 2027
+                    </div>
+
+                    <div className="mt-6 flex items-center gap-3">
+                      {president.socials?.x && (
+                        <a
+                          href={president.socials.x}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          aria-label={`${president.name} X`}
+                          className="w-11 h-11 rounded-full border border-white/35 bg-white/15 backdrop-blur-xl text-white flex items-center justify-center hover:scale-110 hover:bg-white/25 hover:border-canary/70 transition-all duration-300 shadow-[0_8px_24px_rgba(0,0,0,0.35)]"
+                        >
+                          <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                          </svg>
+                        </a>
+                      )}
+                      {president.socials?.instagram && (
+                        <a
+                          href={president.socials.instagram}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          aria-label={`${president.name} Instagram`}
+                          className="w-11 h-11 rounded-full border border-white/35 bg-white/15 backdrop-blur-xl text-[#ff78b0] flex items-center justify-center hover:scale-110 hover:bg-white/25 hover:border-canary/70 transition-all duration-300 shadow-[0_8px_24px_rgba(0,0,0,0.35)]"
+                        >
+                          <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M7.75 2h8.5A5.76 5.76 0 0 1 22 7.75v8.5A5.76 5.76 0 0 1 16.25 22h-8.5A5.76 5.76 0 0 1 2 16.25v-8.5A5.76 5.76 0 0 1 7.75 2Zm8.37 1.73h-8.24a4.15 4.15 0 0 0-4.15 4.15v8.24a4.15 4.15 0 0 0 4.15 4.15h8.24a4.15 4.15 0 0 0 4.15-4.15V7.88a4.15 4.15 0 0 0-4.15-4.15Zm-4.12 2.64A5.63 5.63 0 1 1 6.37 12 5.64 5.64 0 0 1 12 6.37Zm0 1.72A3.91 3.91 0 1 0 15.91 12 3.92 3.92 0 0 0 12 8.09Zm5.74-2.01a1.34 1.34 0 1 1-1.34 1.34 1.34 1.34 0 0 1 1.34-1.34Z" />
+                          </svg>
+                        </a>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="mt-5 sm:mt-7 grid grid-cols-1 sm:grid-cols-3 gap-5 sm:gap-7 max-w-5xl mx-auto">
+              {cxos.map((member) => (
+                <div key={member.id} className="h-full">{renderMemberCard(member)}</div>
               ))}
             </div>
           </div>

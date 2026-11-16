@@ -1,400 +1,232 @@
-"use client";
+import React from 'react';
+import Image from 'next/image';
+import Header from '@/components/Header';
+import Footer from '@/components/Footer';
 
-import React, { useEffect, useState } from "react";
-import Image from "next/image";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
-
-const teamMembers = [
+const execs = [
   {
-    id: 1,
-    name: "Usama Bhutta",
-    email: "usama.bhutta@ultrashaheens.com",
-    role: "Founder",
-    image: "/images/Team/usama.jpeg",
-    socials: {
-      facebook: "https://www.facebook.com/bhuttausama",
-      instagram: "https://www.instagram.com/usamabhutt.a",
-    },
+    name: 'Talha Sajid',
+    role: 'CTO',
+    title: 'Chief Technology Officer',
+    image: '/images/team/talha-sajid.jpg',
+    mail: 'mailto:talha.sajid@ultrashaheens.com',
+    socials: [
+      { label: 'LinkedIn', href: 'https://www.linkedin.com/in/iamtalhasajid' },
+      { label: 'GitHub', href: 'https://github.com/iamtalha-sajid' },
+      { label: 'Instagram', href: 'https://www.instagram.com/iamtalha.sajid' },
+    ],
   },
   {
-    id: 6,
-    name: "Aalayan Raza",
-    email: "aalayan.raza@ultrashaheens.com",
-    role: "President",
-    image: "/images/Team/Aalyan.jpeg",
-    socials: {
-      x: "https://x.com/aalayanraza",
-      instagram: "https://www.instagram.com/lil._alu",
-    },
+    name: 'Haseeb Zaigham',
+    role: 'CAO',
+    title: 'Chief Apparel Officer',
+    image: '/images/team/haseeb-zaigham.jpeg',
+    mail: 'mailto:haseeb.zaigham@ultrashaheens.com',
+    socials: [{ label: 'Instagram', href: 'https://www.instagram.com/rhaseebz' }],
   },
   {
-    id: 2,
-    name: "Talha Sajid",
-    email: "talha.sajid@ultrashaheens.com",
-    role: "CTO - Chief Technology Officer",
-    image: "/images/Team/talha.jpg",
-    socials: {
-      linkedin: "https://www.linkedin.com/in/iamtalhasajid",
-      github: "https://github.com/iamtalha-sajid",
-      instagram: "https://www.instagram.com/iamtalha.sajid",
-    },
-  },
-  {
-    id: 4,
-    name: "Haseeb Zaigham",
-    email: "haseeb.zaigham@ultrashaheens.com",
-    role: "CAO - Chief Apparel Officer",
-    image: "/images/Team/haseeb.jpeg",
-    socials: {
-      instagram: "https://www.instagram.com/rhaseebz",
-    },
-  },
-  {
-    id: 5,
-    name: "Aabyan Munawar",
-    email: "aabyan.munawar@ultrashaheens.com",
-    role: "CMO - Chief Marketing Officer",
-    image: "/images/Team/Abiyan.jpg",
+    name: 'Aabyan Munawar',
+    role: 'CMO',
+    title: 'Chief Marketing Officer',
+    image: '/images/team/aabyan-munawar.jpg',
+    mail: 'mailto:aabyan.munawar@ultrashaheens.com',
+    socials: [] as { label: string; href: string }[],
   },
 ];
 
+const detailLabel =
+  'font-display font-semibold text-[13px] tracking-[0.16em] uppercase text-paper/55';
+
 const OurDugoutPage: React.FC = () => {
-  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
-  const [isHovering, setIsHovering] = useState(false);
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  const handleMouseMove = (e: React.MouseEvent<HTMLElement>) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    setMousePos({
-      x: e.clientX - rect.left,
-      y: e.clientY - rect.top,
-    });
-  };
-
-  const [founder, president, ...cxos] = teamMembers;
-
-  const renderMemberCard = (member: (typeof teamMembers)[number]) => {
-    return (
-      <div className="group h-full flex flex-col bg-white/10 backdrop-blur-xl border border-white/25 rounded-3xl overflow-hidden text-left shadow-[0_18px_45px_rgba(0,0,0,0.35)] hover:shadow-[0_24px_60px_rgba(0,0,0,0.5)] hover:border-canary/60 hover:-translate-y-1.5 transition-all duration-300">
-        <div className="relative w-full aspect-[3/4]">
-          <Image
-            src={member.image}
-            alt={`${member.name} profile`}
-            fill
-            className="object-cover"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
-
-          {member.socials && (
-            <div className="absolute inset-0 bg-black/45 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-3 backdrop-blur-[2px]">
-              {member.socials.facebook && (
-                <a
-                  href={member.socials.facebook}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={`${member.name} Facebook`}
-                  className="w-11 h-11 rounded-full border border-white/35 bg-white/15 backdrop-blur-xl text-[#90b8ff] flex items-center justify-center hover:scale-110 hover:bg-white/25 hover:border-canary/70 transition-all duration-300 shadow-[0_8px_24px_rgba(0,0,0,0.35)]"
-                >
-                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M24 12.073C24 5.404 18.627 0 12 0S0 5.404 0 12.073c0 6.019 4.388 11.009 10.125 11.927v-8.437H7.078v-3.49h3.047V9.413c0-3.007 1.792-4.669 4.533-4.669 1.313 0 2.686.236 2.686.236v2.953h-1.514c-1.491 0-1.956.927-1.956 1.875v2.265h3.328l-.532 3.49h-2.796V24C19.612 23.082 24 18.092 24 12.073z" />
-                  </svg>
-                </a>
-              )}
-
-              {member.socials.linkedin && (
-                <a
-                  href={member.socials.linkedin}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={`${member.name} LinkedIn`}
-                  className="w-11 h-11 rounded-full border border-white/35 bg-white/15 backdrop-blur-xl text-[#78b7ff] flex items-center justify-center hover:scale-110 hover:bg-white/25 hover:border-canary/70 transition-all duration-300 shadow-[0_8px_24px_rgba(0,0,0,0.35)]"
-                >
-                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
-                  </svg>
-                </a>
-              )}
-
-              {member.socials.x && (
-                <a
-                  href={member.socials.x}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={`${member.name} X`}
-                  className="w-11 h-11 rounded-full border border-white/35 bg-white/15 backdrop-blur-xl text-white flex items-center justify-center hover:scale-110 hover:bg-white/25 hover:border-canary/70 transition-all duration-300 shadow-[0_8px_24px_rgba(0,0,0,0.35)]"
-                >
-                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
-                  </svg>
-                </a>
-              )}
-
-              {member.socials.github && (
-                <a
-                  href={member.socials.github}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={`${member.name} GitHub`}
-                  className="w-11 h-11 rounded-full border border-white/35 bg-white/15 backdrop-blur-xl text-white flex items-center justify-center hover:scale-110 hover:bg-white/25 hover:border-canary/70 transition-all duration-300 shadow-[0_8px_24px_rgba(0,0,0,0.35)]"
-                >
-                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M12 .5C5.65.5.5 5.66.5 12.02c0 5.08 3.29 9.39 7.85 10.9.57.1.78-.25.78-.55 0-.27-.01-1.16-.02-2.1-3.19.7-3.86-1.35-3.86-1.35-.52-1.33-1.27-1.69-1.27-1.69-1.04-.71.08-.69.08-.69 1.15.08 1.75 1.18 1.75 1.18 1.02 1.76 2.68 1.25 3.33.96.1-.74.4-1.25.72-1.54-2.55-.29-5.23-1.28-5.23-5.69 0-1.26.45-2.28 1.18-3.08-.12-.29-.51-1.46.11-3.05 0 0 .96-.31 3.15 1.18a10.9 10.9 0 0 1 5.74 0c2.19-1.49 3.15-1.18 3.15-1.18.62 1.59.23 2.76.11 3.05.73.8 1.18 1.82 1.18 3.08 0 4.42-2.68 5.4-5.24 5.69.41.35.77 1.03.77 2.08 0 1.5-.01 2.71-.01 3.08 0 .3.2.66.79.55a11.52 11.52 0 0 0 7.84-10.9C23.5 5.66 18.35.5 12 .5Z" />
-                  </svg>
-                </a>
-              )}
-
-              {member.socials.instagram && (
-                <a
-                  href={member.socials.instagram}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={`${member.name} Instagram`}
-                  className="w-11 h-11 rounded-full border border-white/35 bg-white/15 backdrop-blur-xl text-[#ff78b0] flex items-center justify-center hover:scale-110 hover:bg-white/25 hover:border-canary/70 transition-all duration-300 shadow-[0_8px_24px_rgba(0,0,0,0.35)]"
-                >
-                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M7.75 2h8.5A5.76 5.76 0 0 1 22 7.75v8.5A5.76 5.76 0 0 1 16.25 22h-8.5A5.76 5.76 0 0 1 2 16.25v-8.5A5.76 5.76 0 0 1 7.75 2Zm8.37 1.73h-8.24a4.15 4.15 0 0 0-4.15 4.15v8.24a4.15 4.15 0 0 0 4.15 4.15h8.24a4.15 4.15 0 0 0 4.15-4.15V7.88a4.15 4.15 0 0 0-4.15-4.15Zm-4.12 2.64A5.63 5.63 0 1 1 6.37 12 5.64 5.64 0 0 1 12 6.37Zm0 1.72A3.91 3.91 0 1 0 15.91 12 3.92 3.92 0 0 0 12 8.09Zm5.74-2.01a1.34 1.34 0 1 1-1.34 1.34 1.34 1.34 0 0 1 1.34-1.34Z" />
-                  </svg>
-                </a>
-              )}
-            </div>
-          )}
-        </div>
-
-        <div className="flex-1 p-5 sm:p-6 bg-gradient-to-b from-racing-green/65 to-racing-green/45 border-t border-white/15">
-          <h3
-            className="text-xl sm:text-2xl font-bold text-white leading-tight"
-            style={{ fontFamily: '"din-condensed", sans-serif' }}
-          >
-            {member.name.toUpperCase()}
-          </h3>
-          <p className="mt-1 text-[11px] sm:text-xs md:text-sm text-gray-300 break-words">
-            {member.email}
-          </p>
-          <p
-            className="mt-2 text-xs sm:text-sm uppercase tracking-wider text-canary font-bold"
-            style={{ fontFamily: '"din-condensed", sans-serif' }}
-          >
-            {member.role}
-          </p>
-        </div>
-      </div>
-    );
-  };
-
   return (
-    <div className="font-sans min-h-screen bg-gradient-to-b from-[#05110a] via-[#0b1f13] to-[#040806] flex flex-col relative">
+    <div className="font-sans min-h-screen bg-ink-dark text-paper">
       <Header />
 
-      <main
-        className="flex-grow relative overflow-hidden pt-36 md:pt-40 pb-16"
-        onMouseMove={handleMouseMove}
-        onMouseEnter={() => setIsHovering(true)}
-        onMouseLeave={() => setIsHovering(false)}
-      >
-        <div className="absolute top-1/4 left-1/4 w-[400px] h-[400px] bg-dark-fern/20 rounded-full blur-[120px] pointer-events-none transform -translate-x-1/2"></div>
-        <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-canary/10 rounded-full blur-[120px] pointer-events-none transform translate-x-1/2"></div>
-
-        <div
-          className="pointer-events-none absolute inset-0 z-0 transition-opacity duration-700 ease-in-out mix-blend-overlay"
-          style={{
-            opacity: isHovering && mounted ? 1 : 0,
-            background: mounted
-              ? `radial-gradient(800px circle at ${mousePos.x}px ${mousePos.y}px, rgba(255, 255, 255, 0.15), transparent 50%)`
-              : "transparent",
-          }}
-        ></div>
-
-        <div className="absolute inset-0 flex items-center justify-center opacity-[0.03] pointer-events-none z-0 text-white">
-          <Image
-            src="/ultra-shaheens-logo.png"
-            alt="Ultra Shaheens Logo Background"
-            width={800}
-            height={800}
-            className="w-[80vw] max-w-4xl h-auto object-contain"
-          />
-        </div>
-
-        <section className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 mt-3 md:mt-6">
-          <div className="text-center bg-white/5 backdrop-blur-xl border border-white/10 p-8 sm:p-12 md:p-16 rounded-[2rem] shadow-[0_30px_60px_rgba(0,0,0,0.5)] overflow-hidden">
-            <div className="absolute inset-0 bg-gradient-to-tr from-canary/5 via-transparent to-transparent opacity-0 hover:opacity-100 transition-opacity duration-700 pointer-events-none"></div>
-
-            <h1
-              className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-3 tracking-wide uppercase"
-              style={{ fontFamily: '"din-condensed", sans-serif' }}
-            >
-              OUR DUGOUT
+      {/* Hero */}
+      <section className="px-[clamp(20px,4vw,48px)] pt-[clamp(56px,8vw,112px)] pb-[clamp(48px,6vw,72px)]">
+        <div className="wrap grid grid-cols-[repeat(auto-fit,minmax(min(100%,440px),1fr))] gap-x-16 gap-y-7 items-end">
+          <div className="flex flex-col gap-5">
+            <div className="eyebrow text-canary">The people behind the movement</div>
+            <h1 className="m-0 font-display font-extrabold uppercase text-[clamp(64px,10vw,148px)] leading-[0.84]">
+              Our
+              <br />
+              Dugout
             </h1>
-            <p className="text-base sm:text-lg md:text-xl text-gray-300 max-w-3xl mx-auto mb-10">
-              Meet the core team behind Ultra Shaheens. This dugout drives the
-              vision, energy, and matchday movement for Pakistan football fans.
-            </p>
+          </div>
+          <p className="m-0 text-[19px] leading-[1.55] text-paper/80 max-w-[480px]">
+            Meet the core team behind Ultra Shaheens. This dugout drives the vision, energy and
+            matchday movement for Pakistan football fans.
+          </p>
+        </div>
+      </section>
 
-            <div className="max-w-5xl mx-auto">
-              <div className="bg-white/10 backdrop-blur-xl border border-white/25 rounded-3xl overflow-hidden shadow-[0_18px_45px_rgba(0,0,0,0.35)]">
-                <div className="grid grid-cols-1 md:grid-cols-2">
-                  <div className="relative w-full aspect-[3/4] md:aspect-auto md:min-h-[420px]">
-                    <Image
-                      src={founder.image}
-                      alt={`${founder.name} profile`}
-                      fill
-                      className="object-cover object-top"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/25 to-transparent"></div>
-                    {founder.socials && (
-                      <div className="absolute bottom-4 left-4 flex items-center gap-3">
-                        {founder.socials.facebook && (
-                          <a
-                            href={founder.socials.facebook}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            aria-label={`${founder.name} Facebook`}
-                            className="w-11 h-11 rounded-full border border-white/35 bg-white/15 backdrop-blur-xl text-[#90b8ff] flex items-center justify-center hover:scale-110 hover:bg-white/25 hover:border-canary/70 transition-all duration-300 shadow-[0_8px_24px_rgba(0,0,0,0.35)]"
-                          >
-                            <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                              <path d="M24 12.073C24 5.404 18.627 0 12 0S0 5.404 0 12.073c0 6.019 4.388 11.009 10.125 11.927v-8.437H7.078v-3.49h3.047V9.413c0-3.007 1.792-4.669 4.533-4.669 1.313 0 2.686.236 2.686.236v2.953h-1.514c-1.491 0-1.956.927-1.956 1.875v2.265h3.328l-.532 3.49h-2.796V24C19.612 23.082 24 18.092 24 12.073z" />
-                            </svg>
-                          </a>
-                        )}
-                        {founder.socials.instagram && (
-                          <a
-                            href={founder.socials.instagram}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            aria-label={`${founder.name} Instagram`}
-                            className="w-11 h-11 rounded-full border border-white/35 bg-white/15 backdrop-blur-xl text-[#ff78b0] flex items-center justify-center hover:scale-110 hover:bg-white/25 hover:border-canary/70 transition-all duration-300 shadow-[0_8px_24px_rgba(0,0,0,0.35)]"
-                          >
-                            <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                              <path d="M7.75 2h8.5A5.76 5.76 0 0 1 22 7.75v8.5A5.76 5.76 0 0 1 16.25 22h-8.5A5.76 5.76 0 0 1 2 16.25v-8.5A5.76 5.76 0 0 1 7.75 2Zm8.37 1.73h-8.24a4.15 4.15 0 0 0-4.15 4.15v8.24a4.15 4.15 0 0 0 4.15 4.15h8.24a4.15 4.15 0 0 0 4.15-4.15V7.88a4.15 4.15 0 0 0-4.15-4.15Zm-4.12 2.64A5.63 5.63 0 1 1 6.37 12 5.64 5.64 0 0 1 12 6.37Zm0 1.72A3.91 3.91 0 1 0 15.91 12 3.92 3.92 0 0 0 12 8.09Zm5.74-2.01a1.34 1.34 0 1 1-1.34 1.34 1.34 1.34 0 0 1 1.34-1.34Z" />
-                            </svg>
-                          </a>
-                        )}
-                      </div>
-                    )}
-                  </div>
+      {/* Founder */}
+      <section className="px-[clamp(20px,4vw,48px)] pb-[clamp(64px,8vw,104px)]">
+        <div className="wrap grid grid-cols-[repeat(auto-fit,minmax(min(100%,420px),1fr))] bg-paper text-ink">
+          <div className="relative min-h-[520px] bg-[#d9d4c6]">
+            <Image
+              src="/images/team/usama-bhutta.jpeg"
+              alt="Usama Bhutta"
+              fill
+              sizes="(min-width: 1024px) 592px, 100vw"
+              className="object-cover object-top"
+            />
+          </div>
+          <div className="p-[clamp(28px,5vw,64px)] flex flex-col gap-6 justify-center">
+            <div className="font-display font-bold text-sm tracking-[0.2em] uppercase text-green-accent">
+              Founder&apos;s message
+            </div>
+            <blockquote className="m-0 font-book text-[clamp(22px,2.2vw,28px)] leading-[1.4] text-ink text-pretty">
+              “Ultra Shaheens came into being at the end of 2023, for the fans who never stopped
+              believing: the ones who showed up, sang louder and stood behind the Pakistan football
+              team no matter the result. Today we are a community of hundreds of fans with whom we
+              don&apos;t just watch the game, we live it.”
+            </blockquote>
+            <div className="flex flex-col gap-1 pt-5 border-t-[1.5px] border-ink">
+              <span className="font-display font-extrabold text-[32px] uppercase leading-none">Usama Bhutta</span>
+              <span className="font-display font-semibold text-[15px] tracking-[0.14em] uppercase text-muted-light">
+                Founder
+              </span>
+            </div>
+            <div className="flex flex-wrap gap-x-6 gap-y-2.5 text-[15px]">
+              <a
+                href="mailto:usama.bhutta@ultrashaheens.com"
+                className="text-ink border-b border-ink hover:text-green-accent hover:border-green-accent"
+              >
+                usama.bhutta@ultrashaheens.com
+              </a>
+              <a
+                href="https://www.instagram.com/usamabhutt.a"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-ink hover:text-green-accent"
+              >
+                Instagram ↗
+              </a>
+              <a
+                href="https://www.facebook.com/bhuttausama"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-ink hover:text-green-accent"
+              >
+                Facebook ↗
+              </a>
+            </div>
+            <p className="m-0 text-sm text-muted-light">Want to collaborate? Reach out by email.</p>
+          </div>
+        </div>
+      </section>
 
-                  <div className="p-6 sm:p-8 md:p-10 bg-gradient-to-b from-racing-green/65 to-racing-green/45 border-t md:border-t-0 md:border-l border-white/15 text-left">
-                    <div
-                      className="inline-flex items-center px-3 py-1 rounded-full bg-canary/20 text-canary border border-canary/40 text-xs sm:text-sm uppercase tracking-wider font-bold"
-                      style={{ fontFamily: '"din-condensed", sans-serif' }}
-                    >
-                      FOUNDER MESSAGE
-                    </div>
-
-                    <h2
-                      className="mt-4 text-3xl sm:text-4xl md:text-5xl font-bold text-white leading-tight"
-                      style={{ fontFamily: '"din-condensed", sans-serif' }}
-                    >
-                      {founder.name.toUpperCase()}
-                    </h2>
-                    <div
-                      className="mt-2 text-sm sm:text-base text-canary font-bold uppercase tracking-wider"
-                      style={{ fontFamily: '"din-condensed", sans-serif' }}
-                    >
-                      {founder.role}
-                    </div>
-                    <div className="mt-2 text-sm sm:text-base text-gray-200">
-                      {founder.email}
-                    </div>
-
-                    <p className="mt-6 text-sm sm:text-base md:text-lg text-gray-100/90 leading-relaxed">
-                      Ultra Shaheens came into being, by end of 2023, for the fans who never stopped believing, the ones who showed up, sang louder and stood behind Pakistan football team no matter the result.
-                      <br />
-                      Today, we are community of hundreds of fans with whom we don’t just watch the game, we live it.
-                    </p>
-
-                    <div className="mt-6 text-xs sm:text-sm text-gray-200/80">
-                      Want to collaborate? Reach out at <span className="text-white font-semibold">{founder.email}</span>.
-                    </div>
-                  </div>
-                </div>
+      {/* President */}
+      <section className="px-[clamp(20px,4vw,48px)] pb-[clamp(64px,8vw,104px)]">
+        <div className="wrap grid grid-cols-[repeat(auto-fit,minmax(min(100%,340px),1fr))] gap-x-16 gap-y-8 items-center">
+          <div className="relative aspect-[4/5] bg-panel-dark overflow-hidden">
+            <Image
+              src="/images/team/aalayan-raza.jpeg"
+              alt="Aalayan Raza"
+              fill
+              sizes="(min-width: 1024px) 560px, 100vw"
+              className="object-cover object-top"
+            />
+          </div>
+          <div className="flex flex-col gap-5">
+            <span className="self-start bg-canary text-ink-dark px-3 py-1.5 font-display font-bold text-sm tracking-[0.14em] uppercase">
+              President
+            </span>
+            <h2 className="m-0 font-display font-extrabold uppercase text-[clamp(48px,6vw,84px)] leading-[0.88]">
+              Aalayan
+              <br />
+              Raza
+            </h2>
+            <div className="grid grid-cols-[repeat(auto-fit,minmax(180px,1fr))] gap-5 py-5 border-y border-paper/20">
+              <div className="flex flex-col gap-1">
+                <span className={detailLabel}>Office</span>
+                <span className="text-[17px]">1st Official President</span>
+              </div>
+              <div className="flex flex-col gap-1">
+                <span className={detailLabel}>Tenure</span>
+                <span className="text-[17px]">Oct 2026 – Oct 2027</span>
               </div>
             </div>
-
-            <div className="mt-6 sm:mt-8 max-w-5xl mx-auto">
-              <div className="bg-white/10 backdrop-blur-xl border border-white/25 rounded-3xl overflow-hidden text-left shadow-[0_18px_45px_rgba(0,0,0,0.35)]">
-                <div className="grid grid-cols-1 md:grid-cols-5">
-                  <div className="relative w-full aspect-[3/4] md:aspect-auto md:col-span-2 md:min-h-[360px]">
-                    <Image
-                      src={president.image}
-                      alt={`${president.name} profile`}
-                      fill
-                      className="object-cover object-top"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
-                  </div>
-
-                  <div className="md:col-span-3 p-6 sm:p-8 md:p-10 bg-gradient-to-b from-racing-green/65 to-racing-green/45 border-t md:border-t-0 md:border-l border-white/15 flex flex-col justify-center">
-                    <div
-                      className="self-start inline-flex items-center px-3 py-1 rounded-full bg-canary/20 text-canary border border-canary/40 text-xs sm:text-sm uppercase tracking-wider font-bold"
-                      style={{ fontFamily: '"din-condensed", sans-serif' }}
-                    >
-                      {president.role}
-                    </div>
-                    <h2
-                      className="mt-4 text-3xl sm:text-4xl font-bold text-white leading-tight"
-                      style={{ fontFamily: '"din-condensed", sans-serif' }}
-                    >
-                      {president.name.toUpperCase()}
-                    </h2>
-                    <div className="mt-2 text-sm sm:text-base text-gray-200">
-                      {president.email}
-                    </div>
-                    <div
-                      className="mt-4 text-sm sm:text-base text-canary font-bold uppercase tracking-wider"
-                      style={{ fontFamily: '"din-condensed", sans-serif' }}
-                    >
-                      1st Official President
-                    </div>
-                    <div className="mt-1 text-sm sm:text-base text-gray-300">
-                      Tenure: Oct 2026 - Oct 2027
-                    </div>
-
-                    <div className="mt-6 flex items-center gap-3">
-                      {president.socials?.x && (
-                        <a
-                          href={president.socials.x}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          aria-label={`${president.name} X`}
-                          className="w-11 h-11 rounded-full border border-white/35 bg-white/15 backdrop-blur-xl text-white flex items-center justify-center hover:scale-110 hover:bg-white/25 hover:border-canary/70 transition-all duration-300 shadow-[0_8px_24px_rgba(0,0,0,0.35)]"
-                        >
-                          <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                            <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
-                          </svg>
-                        </a>
-                      )}
-                      {president.socials?.instagram && (
-                        <a
-                          href={president.socials.instagram}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          aria-label={`${president.name} Instagram`}
-                          className="w-11 h-11 rounded-full border border-white/35 bg-white/15 backdrop-blur-xl text-[#ff78b0] flex items-center justify-center hover:scale-110 hover:bg-white/25 hover:border-canary/70 transition-all duration-300 shadow-[0_8px_24px_rgba(0,0,0,0.35)]"
-                        >
-                          <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                            <path d="M7.75 2h8.5A5.76 5.76 0 0 1 22 7.75v8.5A5.76 5.76 0 0 1 16.25 22h-8.5A5.76 5.76 0 0 1 2 16.25v-8.5A5.76 5.76 0 0 1 7.75 2Zm8.37 1.73h-8.24a4.15 4.15 0 0 0-4.15 4.15v8.24a4.15 4.15 0 0 0 4.15 4.15h8.24a4.15 4.15 0 0 0 4.15-4.15V7.88a4.15 4.15 0 0 0-4.15-4.15Zm-4.12 2.64A5.63 5.63 0 1 1 6.37 12 5.64 5.64 0 0 1 12 6.37Zm0 1.72A3.91 3.91 0 1 0 15.91 12 3.92 3.92 0 0 0 12 8.09Zm5.74-2.01a1.34 1.34 0 1 1-1.34 1.34 1.34 1.34 0 0 1 1.34-1.34Z" />
-                          </svg>
-                        </a>
-                      )}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="mt-5 sm:mt-7 grid grid-cols-1 sm:grid-cols-3 gap-5 sm:gap-7 max-w-5xl mx-auto">
-              {cxos.map((member) => (
-                <div key={member.id} className="h-full">{renderMemberCard(member)}</div>
-              ))}
+            <div className="flex flex-wrap gap-x-6 gap-y-2.5 text-[15px]">
+              <a
+                href="mailto:aalayan.raza@ultrashaheens.com"
+                className="text-paper border-b border-paper/50 hover:text-canary hover:border-canary"
+              >
+                aalayan.raza@ultrashaheens.com
+              </a>
+              <a
+                href="https://x.com/aalayanraza"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-paper hover:text-canary"
+              >
+                X ↗
+              </a>
+              <a
+                href="https://www.instagram.com/lil._alu"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-paper hover:text-canary"
+              >
+                Instagram ↗
+              </a>
             </div>
           </div>
-        </section>
-      </main>
+        </div>
+      </section>
+
+      {/* Executive committee */}
+      <section className="px-[clamp(20px,4vw,48px)] pb-[clamp(72px,9vw,128px)]">
+        <div className="wrap flex flex-col gap-8">
+          <div className="flex flex-wrap justify-between items-baseline gap-4 pt-7 border-t border-paper/20">
+            <h2 className="m-0 font-display font-extrabold uppercase text-[clamp(36px,4.4vw,56px)] leading-[0.9]">
+              Executive committee
+            </h2>
+            <span className="font-display font-semibold text-[15px] tracking-[0.18em] uppercase text-paper/55">
+              {String(execs.length).padStart(2, '0')} members
+            </span>
+          </div>
+          <div className="grid grid-cols-[repeat(auto-fit,minmax(min(100%,280px),1fr))] gap-8">
+            {execs.map((m) => (
+              <div key={m.name} className="flex flex-col gap-4">
+                <div className="relative aspect-[3/4] overflow-hidden bg-panel-dark group">
+                  <Image
+                    src={m.image}
+                    alt={m.name}
+                    fill
+                    sizes="(min-width: 1024px) 360px, 100vw"
+                    className="object-cover object-top transition-transform duration-[1200ms] ease-in-out group-hover:scale-[1.03]"
+                  />
+                </div>
+                <div className="flex flex-col gap-1.5">
+                  <span className="font-display font-semibold text-sm tracking-[0.14em] uppercase text-canary">
+                    {m.role}
+                  </span>
+                  <span className="font-display font-extrabold text-[30px] uppercase leading-none">{m.name}</span>
+                  <span className="text-sm text-paper/60 mt-0.5">{m.title}</span>
+                </div>
+                <div className="flex flex-wrap gap-x-[18px] gap-y-2 text-sm pt-3 border-t border-paper/[0.14]">
+                  <a href={m.mail} className="text-paper hover:text-canary">
+                    Email
+                  </a>
+                  {m.socials.map((s) => (
+                    <a
+                      key={s.label}
+                      href={s.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-paper hover:text-canary"
+                    >
+                      {s.label} ↗
+                    </a>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
 
       <Footer />
     </div>

@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect, useRef, useState, useCallback } from 'react';
-import type { PDFDocumentProxy } from 'pdfjs-dist';
+import type { PDFDocumentProxy, RenderTask } from 'pdfjs-dist';
 
 type PdfViewerProps = {
   fileUrl: string;
@@ -10,9 +10,14 @@ type PdfViewerProps = {
 const MIN_ZOOM = 0.6;
 const MAX_ZOOM = 2.4;
 const ZOOM_STEP = 0.2;
-// A4 width at 96dpi — pages render at this width (× zoom) regardless of the PDF's own page size,
-// so every document previews at a consistent, print-like size.
+// A4 width at 96dpi: the widest a page renders at 100% zoom. On narrower screens pages
+// shrink to fit the viewer width, so nothing scrolls sideways until the user zooms in.
 const A4_WIDTH_PX = 794;
+// Horizontal padding of the scroller (px-4 on each side).
+const SCROLLER_PADDING_PX = 32;
+
+const iconButton =
+  'w-11 h-11 sm:w-10 sm:h-10 flex items-center justify-center border border-ink bg-transparent text-ink hover:bg-ink hover:text-paper transition-colors disabled:opacity-30 disabled:hover:bg-transparent disabled:hover:text-ink';
 
 const PdfViewer: React.FC<PdfViewerProps> = ({ fileUrl }) => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -20,15 +25,33 @@ const PdfViewer: React.FC<PdfViewerProps> = ({ fileUrl }) => {
   const canvasRefs = useRef<(HTMLCanvasElement | null)[]>([]);
   const pdfDocRef = useRef<PDFDocumentProxy | null>(null);
   const renderGenerationRef = useRef(0);
+  const renderTaskRef = useRef<RenderTask | null>(null);
+  const renderPassRef = useRef<Promise<void> | null>(null);
 
   const [numPages, setNumPages] = useState(0);
   const [pageNum, setPageNum] = useState(1);
-  const [baseScale, setBaseScale] = useState<number | null>(null);
+  const [naturalWidth, setNaturalWidth] = useState<number | null>(null);
+  const [availableWidth, setAvailableWidth] = useState<number | null>(null);
   const [zoom, setZoom] = useState(1);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  const scale = baseScale !== null ? baseScale * zoom : null;
+  const scale =
+    naturalWidth !== null && availableWidth !== null
+      ? (Math.min(A4_WIDTH_PX, availableWidth) / naturalWidth) * zoom
+      : null;
+
+  // Fit pages to the viewer width.
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+    const observer = new ResizeObserver(([entry]) => {
+      const width = Math.floor(entry.contentRect.width - SCROLLER_PADDING_PX);
+      setAvailableWidth((prev) => (prev === width ? prev : Math.max(width, 120)));
+    });
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
 
   // Load the document once.
   useEffect(() => {
@@ -43,11 +66,10 @@ const PdfViewer: React.FC<PdfViewerProps> = ({ fileUrl }) => {
         if (cancelled) return;
 
         const firstPage = await doc.getPage(1);
-        const naturalWidth = firstPage.getViewport({ scale: 1 }).width;
 
         pdfDocRef.current = doc;
         setNumPages(doc.numPages);
-        setBaseScale(A4_WIDTH_PX / naturalWidth);
+        setNaturalWidth(firstPage.getViewport({ scale: 1 }).width);
         canvasRefs.current = new Array(doc.numPages).fill(null);
         pageWrapperRefs.current = new Array(doc.numPages).fill(null);
         setLoading(false);
@@ -74,29 +96,42 @@ const PdfViewer: React.FC<PdfViewerProps> = ({ fileUrl }) => {
     const generation = ++renderGenerationRef.current;
     const dpr = typeof window !== 'undefined' ? window.devicePixelRatio || 1 : 1;
 
-    for (let i = 1; i <= doc.numPages; i++) {
-      if (renderGenerationRef.current !== generation) return; // superseded by a newer render pass (e.g. zoom changed)
+    // Stop the in-flight render and wait for the previous pass to finish, so two passes
+    // never draw on the same canvas at once.
+    renderTaskRef.current?.cancel();
+    await renderPassRef.current;
+    if (renderGenerationRef.current !== generation) return;
 
-      const canvas = canvasRefs.current[i - 1];
-      if (!canvas) continue;
+    const pass = (async () => {
+      for (let i = 1; i <= doc.numPages; i++) {
+        if (renderGenerationRef.current !== generation) return; // superseded by a newer pass (zoom or resize)
 
-      const page = await doc.getPage(i);
-      const viewport = page.getViewport({ scale });
-      const context = canvas.getContext('2d');
-      if (!context) continue;
+        const canvas = canvasRefs.current[i - 1];
+        if (!canvas) continue;
 
-      canvas.width = viewport.width * dpr;
-      canvas.height = viewport.height * dpr;
-      canvas.style.width = `${viewport.width}px`;
-      canvas.style.height = `${viewport.height}px`;
-      context.setTransform(dpr, 0, 0, dpr, 0, 0);
+        const page = await doc.getPage(i);
+        if (renderGenerationRef.current !== generation) return;
 
-      try {
-        await page.render({ canvasContext: context, viewport }).promise;
-      } catch {
-        // superseded render — ignore
+        const viewport = page.getViewport({ scale });
+        const context = canvas.getContext('2d');
+        if (!context) continue;
+
+        canvas.width = viewport.width * dpr;
+        canvas.height = viewport.height * dpr;
+        canvas.style.width = `${viewport.width}px`;
+        canvas.style.height = `${viewport.height}px`;
+        context.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+        try {
+          renderTaskRef.current = page.render({ canvasContext: context, viewport });
+          await renderTaskRef.current.promise;
+        } catch {
+          // cancelled by a newer pass — ignore
+        }
       }
-    }
+    })();
+    renderPassRef.current = pass;
+    await pass;
   }, [scale]);
 
   useEffect(() => {
@@ -133,30 +168,29 @@ const PdfViewer: React.FC<PdfViewerProps> = ({ fileUrl }) => {
   const zoomOut = () => setZoom((z) => Math.max(MIN_ZOOM, +(z - ZOOM_STEP).toFixed(2)));
 
   return (
-    <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl shadow-[0_30px_60px_rgba(0,0,0,0.5)] overflow-hidden">
+    <div className="bg-paper text-ink border border-ink/20">
       {/* Toolbar */}
-      <div className="flex flex-wrap items-center justify-between gap-3 px-4 sm:px-6 py-3 border-b border-white/10 bg-black/20">
+      <div className="flex flex-wrap items-center justify-between gap-3 px-3 sm:px-4 py-3 border-b border-ink/20">
         <div className="flex items-center gap-2">
           <button
+            type="button"
             onClick={() => goToPage(pageNum - 1)}
             disabled={pageNum <= 1 || loading}
-            className="w-9 h-9 flex items-center justify-center rounded-lg border border-white/15 bg-white/5 text-white hover:bg-canary hover:text-dark-fern hover:border-canary transition-all disabled:opacity-30 disabled:hover:bg-white/5 disabled:hover:text-white disabled:hover:border-white/15"
+            className={iconButton}
             aria-label="Previous page"
           >
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>
           </button>
 
-          <span
-            className="text-sm text-white/80 font-semibold tracking-wide tabular-nums min-w-[92px] text-center"
-            style={{ fontFamily: '"din-condensed", sans-serif' }}
-          >
-            {loading ? '—' : `PAGE ${pageNum} / ${numPages}`}
+          <span className="font-display font-semibold text-sm tracking-[0.14em] uppercase tabular-nums min-w-[96px] text-center">
+            {loading ? '—' : `Page ${pageNum} / ${numPages}`}
           </span>
 
           <button
+            type="button"
             onClick={() => goToPage(pageNum + 1)}
             disabled={pageNum >= numPages || loading}
-            className="w-9 h-9 flex items-center justify-center rounded-lg border border-white/15 bg-white/5 text-white hover:bg-canary hover:text-dark-fern hover:border-canary transition-all disabled:opacity-30 disabled:hover:bg-white/5 disabled:hover:text-white disabled:hover:border-white/15"
+            className={iconButton}
             aria-label="Next page"
           >
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
@@ -165,59 +199,46 @@ const PdfViewer: React.FC<PdfViewerProps> = ({ fileUrl }) => {
 
         <div className="flex items-center gap-2">
           <button
+            type="button"
             onClick={zoomOut}
             disabled={zoom <= MIN_ZOOM || loading}
-            className="w-9 h-9 flex items-center justify-center rounded-lg border border-white/15 bg-white/5 text-white hover:bg-canary hover:text-dark-fern hover:border-canary transition-all disabled:opacity-30 disabled:hover:bg-white/5 disabled:hover:text-white disabled:hover:border-white/15"
+            className={iconButton}
             aria-label="Zoom out"
           >
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 12H4" /></svg>
           </button>
 
-          <span className="text-xs text-white/50 font-semibold tabular-nums w-12 text-center">
+          <span className="font-display font-semibold text-sm tracking-[0.08em] tabular-nums w-12 text-center text-muted-light">
             {Math.round(zoom * 100)}%
           </span>
 
           <button
+            type="button"
             onClick={zoomIn}
             disabled={zoom >= MAX_ZOOM || loading}
-            className="w-9 h-9 flex items-center justify-center rounded-lg border border-white/15 bg-white/5 text-white hover:bg-canary hover:text-dark-fern hover:border-canary transition-all disabled:opacity-30 disabled:hover:bg-white/5 disabled:hover:text-white disabled:hover:border-white/15"
+            className={iconButton}
             aria-label="Zoom in"
           >
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" /></svg>
           </button>
-
-          <a
-            href={fileUrl}
-            download
-            className="ml-1 flex items-center gap-1.5 rounded-lg border border-canary/40 bg-canary/10 text-canary hover:bg-canary hover:text-dark-fern transition-all px-3 h-9 text-xs font-bold uppercase tracking-wider"
-            style={{ fontFamily: '"din-condensed", sans-serif' }}
-          >
-            <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M7 10l5 5 5-5M12 15V3" /></svg>
-            Download
-          </a>
         </div>
       </div>
 
       {/* Continuous page scroller */}
       <div
         ref={containerRef}
-        className="relative bg-[#0a1710] h-[70vh] sm:h-[75vh] overflow-y-auto flex flex-col items-center gap-6 py-6 px-4"
+        className="relative bg-paper-2 h-[70vh] sm:h-[75vh] overflow-auto [scrollbar-gutter:stable] flex flex-col gap-4 py-4 px-4"
       >
         {loading && (
           <div className="absolute inset-0 flex items-center justify-center">
-            <div className="w-10 h-10 border-2 border-canary/30 border-t-canary rounded-full animate-spin" />
+            <div className="w-10 h-10 border-2 border-ink/20 border-t-ink rounded-full animate-spin" />
           </div>
         )}
 
         {error && (
           <div className="flex flex-col items-center justify-center gap-4 text-center px-6 my-auto">
-            <p className="text-gray-300">{error}</p>
-            <a
-              href={fileUrl}
-              download
-              className="inline-block bg-canary text-dark-fern font-bold uppercase tracking-wide px-6 py-3 rounded-xl hover:bg-white transition-colors"
-              style={{ fontFamily: '"din-condensed", sans-serif' }}
-            >
+            <p className="text-body-light">{error}</p>
+            <a href={fileUrl} download className="btn btn-dark !px-6 !py-3 !text-base">
               Download the Constitution
             </a>
           </div>
@@ -229,10 +250,11 @@ const PdfViewer: React.FC<PdfViewerProps> = ({ fileUrl }) => {
               key={i}
               ref={(el) => { pageWrapperRefs.current[i] = el; }}
               data-page-num={i + 1}
+              className="mx-auto flex-none"
             >
               <canvas
                 ref={(el) => { canvasRefs.current[i] = el; }}
-                className="rounded-lg shadow-[0_10px_40px_rgba(0,0,0,0.6)]"
+                className="bg-white shadow-[0_2px_12px_rgba(20,33,26,0.18)]"
               />
             </div>
           ))}

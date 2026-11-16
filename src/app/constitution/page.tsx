@@ -5,43 +5,59 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import PdfViewer from '@/components/PdfViewer';
 
-const CONSTITUTION_PDF = '/constitution/Ultra_Shaheens_Constitution_v1.0.pdf';
+const CONSTITUTION_PDF = '/documents/Ultra_Shaheens_Constitution_v1.0.pdf';
+const CONSTITUTION_FILE = 'Ultra_Shaheens_Constitution_v1.0.pdf';
 
 const ConstitutionPage: React.FC = () => {
   return (
-    <div className="font-sans min-h-screen bg-gradient-to-b from-[#05110a] via-[#0b1f13] to-[#040806] flex flex-col relative">
+    <div className="font-sans min-h-screen bg-ink-dark text-paper">
       <Header />
 
-      <main className="flex-grow flex flex-col items-center relative overflow-hidden pt-40 sm:pt-48 pb-12 px-4">
-        {/* Abstract Background Orbs */}
-        <div className="absolute top-1/4 left-1/4 w-[400px] h-[400px] bg-dark-fern/20 rounded-full blur-[120px] pointer-events-none transform -translate-x-1/2"></div>
-        <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-canary/10 rounded-full blur-[120px] pointer-events-none transform translate-x-1/2"></div>
-
-        <div className="relative z-10 w-full max-w-5xl">
-          <div className="text-center mb-8">
-            <h1
-              className="text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-3 tracking-wide drop-shadow-md uppercase"
-              style={{ fontFamily: '"din-condensed", sans-serif' }}
-            >
-              Ultra Shaheens Constitution
-            </h1>
-            <a
-              href={CONSTITUTION_PDF}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 text-canary hover:text-white text-sm font-semibold uppercase tracking-wide transition-colors"
-              style={{ fontFamily: '"din-condensed", sans-serif' }}
-            >
-              Open in new tab
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-              </svg>
-            </a>
+      <section className="px-[clamp(20px,4vw,48px)] pt-[clamp(56px,8vw,112px)] pb-[clamp(72px,9vw,120px)]">
+        <div className="wrap flex flex-col gap-[clamp(40px,5vw,56px)]">
+          <div className="grid grid-cols-[repeat(auto-fit,minmax(min(100%,440px),1fr))] gap-x-16 gap-y-7 items-end">
+            <div className="flex flex-col gap-5">
+              <div className="eyebrow text-canary">Governing document · Version 1.0</div>
+              <h1 className="m-0 font-display font-extrabold uppercase text-[clamp(56px,9vw,132px)] leading-[0.84]">
+                The
+                <br />
+                Constitution
+              </h1>
+            </div>
+            <div className="flex flex-col gap-6">
+              <p className="m-0 text-lg leading-[1.55] text-paper/80 max-w-[460px]">
+                The rules, roles and values that govern Ultra Shaheens as a supporters&apos;
+                organisation.
+              </p>
+              <div className="flex flex-wrap gap-3">
+                <a
+                  href={CONSTITUTION_PDF}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn btn-primary !px-6 !py-4 !text-[17px]"
+                >
+                  Open in new tab ↗
+                </a>
+                <a
+                  href={CONSTITUTION_PDF}
+                  download={CONSTITUTION_FILE}
+                  className="btn btn-secondary !px-6 !py-[15px] !text-[17px]"
+                >
+                  Download PDF
+                </a>
+              </div>
+            </div>
           </div>
 
-          <PdfViewer fileUrl={CONSTITUTION_PDF} />
+          <div className="bg-paper p-[clamp(8px,1.5vw,16px)]">
+            <div className="flex justify-between gap-3 px-1.5 pt-1.5 pb-3.5 font-display font-semibold text-[13px] tracking-[0.16em] uppercase text-muted-light">
+              <span>{CONSTITUTION_FILE}</span>
+              <span>PDF</span>
+            </div>
+            <PdfViewer fileUrl={CONSTITUTION_PDF} />
+          </div>
         </div>
-      </main>
+      </section>
 
       <Footer />
     </div>

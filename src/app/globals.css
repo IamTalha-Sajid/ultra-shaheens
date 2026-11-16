@@ -1,23 +1,21 @@
 @import "tailwindcss";
 @import "../styles/colors.css";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+  --font-sans: var(--font-barlow), sans-serif;
+  --font-display: var(--font-barlow-condensed), sans-serif;
+  --font-book: var(--font-newsreader), serif;
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --color-canary: #f3f754;
+  --color-canary-hover: #f7fa86;
+  --color-ink-dark: #0d1611;
+  --color-panel-dark: #17241c;
+  --color-paper: #f2efe6;
+  --color-paper-2: #e6e1d3;
+  --color-ink: #14211a;
+  --color-body-light: #3a443e;
+  --color-muted-light: #6b6a60;
+  --color-green-accent: #2f6b1c;
 }
 
 html {
@@ -25,75 +23,111 @@ html {
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: #0d1611;
+  color: #f2efe6;
+  font-family: var(--font-barlow), sans-serif;
   margin: 0;
   padding: 0;
 }
 
-/* Mobile menu slide-in animation */
-@keyframes slide-in-right {
-  from {
-    transform: translateX(100%);
+@layer components {
+  .section-pad {
+    padding: clamp(72px, 10vw, 136px) clamp(20px, 4vw, 48px);
   }
-  to {
-    transform: translateX(0);
+
+  .wrap {
+    max-width: 1184px;
+    margin: 0 auto;
+  }
+
+  .split {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr));
+  }
+
+  .eyebrow {
+    font-family: var(--font-barlow-condensed), sans-serif;
+    font-weight: 600;
+    font-size: 15px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+  }
+
+  .h2-display {
+    margin: 0;
+    font-family: var(--font-barlow-condensed), sans-serif;
+    font-weight: 800;
+    text-transform: uppercase;
+    font-size: clamp(44px, 6vw, 84px);
+    line-height: 0.9;
+  }
+
+  .btn {
+    display: inline-block;
+    font-family: var(--font-barlow-condensed), sans-serif;
+    font-weight: 700;
+    font-size: 18px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    border-radius: 2px;
+    padding: 17px 28px;
+    transition: background-color 0.2s, color 0.2s, border-color 0.2s;
+  }
+
+  .btn-primary {
+    background: #f3f754;
+    color: #0d1611;
+  }
+  .btn-primary:hover {
+    background: #ffffff;
+  }
+
+  .btn-secondary {
+    border: 1px solid rgba(242, 239, 230, 0.5);
+    color: #f2efe6;
+    padding: 16px 28px;
+  }
+  .btn-secondary:hover {
+    border-color: #f2efe6;
+    background: rgba(242, 239, 230, 0.08);
+  }
+
+  .btn-dark {
+    background: #14211a;
+    color: #f2efe6;
+  }
+  .btn-dark:hover {
+    background: #2f6b1c;
+  }
+
+  .btn-on-canary {
+    background: #0d1611;
+    color: #f3f754;
+  }
+  .btn-on-canary:hover {
+    background: #1f3a26;
+  }
+
+  .btn-outline-on-canary {
+    border: 1.5px solid #0d1611;
+    color: #0d1611;
+    padding: 15.5px 28px;
+  }
+  .btn-outline-on-canary:hover {
+    background: #0d1611;
+    color: #f3f754;
   }
 }
 
-@keyframes slide-out-right {
-  from {
-    transform: translateX(0);
-  }
-  to {
-    transform: translateX(100%);
-  }
-}
-
-.animate-slide-in-right {
-  animation: slide-in-right 0.3s ease-in-out;
-}
-
-.animate-slide-out-right {
-  animation: slide-out-right 0.3s ease-in-out;
-}
-
-/* 3D Flip Card Styles */
-.perspective-1000 {
-  perspective: 1000px;
-}
-
-.transform-style-preserve-3d {
-  transform-style: preserve-3d;
-}
-
-.backface-hidden {
-  backface-visibility: hidden;
-}
-
-.rotate-y-180 {
-  transform: rotateY(180deg);
-}
-
-/* Progress bar animation */
-@keyframes progressFill {
+/* Journey book page-flip shade */
+@keyframes usShade {
   0% {
-    width: 0%;
-    transform: translateX(-100%);
+    opacity: 0;
+  }
+  50% {
+    opacity: 0.55;
   }
   100% {
-    width: var(--progress-width, 38%);
-    transform: translateX(0);
-  }
-}
-
-/* Shimmer animation for progress bar */
-@keyframes shimmer {
-  0% {
-    transform: translateX(-100%);
-  }
-  100% {
-    transform: translateX(100%);
+    opacity: 0;
   }
 }

@@ -22,7 +22,7 @@ const newsreader = Newsreader({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://ultrashaheens.com"),
+  metadataBase: new URL("https://www.ultrashaheens.com"),
   title: "Ultra Shaheens · Pakistan Football's Ultra Fanbase",
   description: "Matchdays, screenings and a seat in the stands. Join the most passionate community of Pakistan football supporters.",
   keywords: ["Ultra Shaheens", "community", "fans", "sports", "membership"],
@@ -31,12 +31,12 @@ export const metadata: Metadata = {
     type: "website",
     url: "/",
     siteName: "Ultra Shaheens",
-    images: [{ url: "/images/brand/og-image.png", width: 1200, height: 630, alt: "Ultra Shaheens supporters in the stands" }],
+    images: [{ url: "/images/brand/og-image.jpg", width: 1200, height: 630, type: "image/jpeg", alt: "Ultra Shaheens supporters in the stands" }],
   },
   twitter: {
     card: "summary_large_image",
     site: "@ultrashaheens",
-    images: ["/images/brand/og-image.png"],
+    images: ["/images/brand/og-image.jpg"],
   },
   icons: {
     icon: [

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Barlow, Barlow_Condensed, Newsreader } from "next/font/google";
+import SiteLoader from "@/components/SiteLoader";
 import "./globals.css";
 
 const barlow = Barlow({
@@ -21,14 +22,21 @@ const newsreader = Newsreader({
 });
 
 export const metadata: Metadata = {
-  title: "Ultra Shaheens",
-  description: "Join the ultimate community of passionate fans, where dedication meets excellence and every moment counts.",
+  metadataBase: new URL("https://ultrashaheens.com"),
+  title: "Ultra Shaheens · Pakistan Football's Ultra Fanbase",
+  description: "Matchdays, screenings and a seat in the stands. Join the most passionate community of Pakistan football supporters.",
   keywords: ["Ultra Shaheens", "community", "fans", "sports", "membership"],
   authors: [{ name: "Ultra Shaheens" }],
   openGraph: {
-    title: "Ultra Shaheens",
-    description: "Join the ultimate community of passionate fans, where dedication meets excellence and every moment counts.",
-    images: ["/images/brand/ultra-shaheens-logo.png"],
+    type: "website",
+    url: "/",
+    siteName: "Ultra Shaheens",
+    images: [{ url: "/images/brand/og-image.png", width: 1200, height: 630, alt: "Ultra Shaheens supporters in the stands" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    site: "@ultrashaheens",
+    images: ["/images/brand/og-image.png"],
   },
   icons: {
     icon: [
@@ -51,13 +59,21 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <head>
         <link rel="manifest" href="/site.webmanifest" />
+        {/* Hide the intro loader before first paint on repeat visits or reduced motion. */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html:
+              "try{if(sessionStorage.getItem('us-loader-seen')||matchMedia('(prefers-reduced-motion: reduce)').matches)document.documentElement.setAttribute('data-loader-seen','')}catch(e){}",
+          }}
+        />
       </head>
       <body
         className={`${barlow.variable} ${barlowCondensed.variable} ${newsreader.variable} antialiased`}
       >
+        <SiteLoader />
         {children}
       </body>
     </html>

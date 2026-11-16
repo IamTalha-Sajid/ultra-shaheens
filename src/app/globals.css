@@ -119,6 +119,50 @@ body {
   }
 }
 
+/* Site loader: hidden before hydration for repeat visits (see layout.tsx) */
+html[data-loader-seen] #site-loader {
+  display: none;
+}
+
+@keyframes usRise {
+  0% {
+    opacity: 0;
+    transform: translateY(18px) scale(0.94);
+  }
+  100% {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes usBreath {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.035);
+  }
+}
+
+@keyframes usFade {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes usBar {
+  0% {
+    transform: scaleY(0);
+  }
+  100% {
+    transform: scaleY(1);
+  }
+}
+
 /* Journey book page-flip shade */
 @keyframes usShade {
   0% {

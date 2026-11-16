@@ -34,12 +34,38 @@ const Experiences: React.FC = () => {
       subtitle: "Match Screening",
       event: "SAFF Championship Final",
       date: "17 Nov 2026 · 7:00 PM PKT",
-      description: "The biggest rivalry in South Asian football meets in the SAFF Championship final at the National Stadium, Dhaka. Screening details and tickets are on the way, so stay tuned.",
-      buttonText: "SCREENING TICKETS COMING SOON",
+      description: "The biggest rivalry in South Asian football meets in the SAFF Championship final at the National Stadium, Dhaka. Watch it live with fellow supporters at one of our four free screenings across Pakistan.",
+      buttonText: "FIND A SCREENING",
       link: "",
       image: "/Pakistan-Football-2.jpg",
       isHome: false,
-      status: "upcoming",
+      status: "live",
+      screenings: [
+        {
+          city: "Lahore",
+          venue: "Kudos Cafe",
+          note: "Tue 17 Nov · 7:00 PM. Block Q, Phase 2, Johar Town, Lahore.",
+          mapLink: "https://www.google.com/maps/search/?api=1&query=Kudos+Cafe+Block+Q+Phase+2+Johar+Town+Lahore",
+        },
+        {
+          city: "Islamabad",
+          venue: "Crema Lounge",
+          note: "Tue 17 Nov · 7:00 PM. Lower Ground, Foliage Mall, Bhittai Rd, F-7.",
+          mapLink: "https://www.google.com/maps/search/?api=1&query=Crema+Lounge+Foliage+Mall+Bhittai+Rd+F-7+Islamabad",
+        },
+        {
+          city: "Peshawar",
+          venue: "The Nook Café",
+          note: "Tue 17 Nov · 7:30 PM. Lower Ground, Uhad Tower, Phase 3 Chowk, Jamrud Road, Shaheen Town.",
+          mapLink: "https://www.google.com/maps/search/?api=1&query=The+Nook+Cafe+Uhad+Tower+Jamrud+Road+Shaheen+Town+Peshawar",
+        },
+        {
+          city: "Attock",
+          venue: "Musafir Cafe",
+          note: "Tue 17 Nov · 7:30 PM. Kamra Road, opposite Tahir Byco Pump, Attock, Punjab.",
+          mapLink: "https://www.google.com/maps/search/?api=1&query=Musafir+Cafe+Kamra+Road+Attock",
+        },
+      ],
     },
   ];
 
